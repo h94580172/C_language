@@ -4,14 +4,7 @@
 
 ## ***1. point***
 
-* 指標 (pointer)：一個指向某個儲存位址的變數，語法為
-
-```c
-int *ptr = &var;
-
-// & : 取變數位址
-// * : 表示為指標變數
-```
+* 指標 (pointer)：
 
 ```c
 #include <stdio.h>
@@ -21,36 +14,43 @@ int main(void)
     int var = 10;
     int *ptr;
     ptr = &var;          
-    printf("ptr = %d\n ", ptr);   // ptr = 6422296
+    printf("ptr = %p\n ", ptr);   // 0061FF18 <<取得var的記憶體位置
+    printf("ptr = %d\n ", *ptr);   // 10 <<取得*ptr的數值
 }
+
 ```
 
-* 也可用於函數變為函式指標 (function pointer)，語法為
+* 函式指標 (function pointer) : 
 
 ```c
-void (*fptr)(type_a, type_b) = &func;
-```
-
-```c
-#include <stdio.h>
-
-int add(int a, int b)
-{
-    return a + b;
+void printInt(int num){
+    printf("%d\n", num);
 }
 
-int mult(int a, int b)
-{
-    return a * b;
+void applyFunction(int num, void (*functionPtr)(int)){  //void (functionPtr)(int)也一樣意思
+    functionPtr(num);
 }
 
-int main(void)
-{
-    int (*op)(int a, int b);
-    op = add;
-    printf("add = %d\n", op(3, 5)); // add = 8
-    op = mult;
-    printf("mult = %d\n", op(3, 5)); // mult = 15
+int main(){
+    applyFunction(5, printInt);
+    return 0;
+}
+
+//也可用typedef方式
+
+typedef void (*functionPtr)(int);
+
+void printInt(int num){
+    printf("%d\n", num);
+}
+
+void applyFunction(int num, functionPtr func){
+    func(num);
+}
+
+int main(){
+    applyFunction(5, printInt);
+    return 0;
 }
 ```
 
@@ -59,7 +59,7 @@ int main(void)
 ```c
 int a; // 一個整數型別
 int *a; // 一個指向整數的指標
-int **a; // 一個指向指標的指標，它指向的指標是指向一個整數型別
+int **a; // 一個指向指標的指標，而"指向的指標"是指向一個整數型別
 int a[10]; // 一個有10個整數型的陣列
 int *a[10]; // 一個有10個指標的陣列，該指標是指向一個整數型別
 int [*a](10); // 一個指向有10個整數型陣列的指標
