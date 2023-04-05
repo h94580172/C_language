@@ -713,41 +713,85 @@ int main()
 在語法結構上，union與 struct 類似，都是使用者自定義的資料結構。但union 與 struct 差別最大的地方，就在於 union 結構中的各變數是共用記憶體位置。
 並且在任何時候，只有一個變數的值是有效的，這取決於最後一次賦值的變數。
 
-struct 稱為結構體，可以包含數個不同資料型態的變數，所有變數佔用不同的內存。
-union 稱為聯合體，也可以包涵不同資料型態的變數，但是所有辨識站又相同內存。
+struct 稱為結構體，可以包含數個不同資料型態的變數，所有變數佔用不同的記憶體。
+union 稱為聯合體，也可以包涵不同資料型態的變數，但是所有變數佔用相同記憶體。
 
 * union範例 :
 
 ```c
+union myUnion {
+    int i;
+    float f;
+    char c;
+};
+
+int main() {
+    union myUnion u;
+    u.i = 42;
+    printf("u.i = %d\n", u.i);  // output : u.i = 42
+    u.f = 3.14;
+    printf("u.f = %f\n", u.f);  // output : u.f = 3.140000
+    u.c = 'A';
+    printf("u.c = %c\n", u.c);  // output : u.c = A
+    printf("u.i = %d\n", u.i);  // output : u.i = 1092616192 
+    //在對 f 和 c 進行賦值之後，u.i 的值也發生了變化，這是因為 i、f 和 c 共享同一塊記憶體
+    return 0;
+}
+```
+
+* union應用 :
+
+```c
+//1. 存儲不同類型的數據
+
 #include <stdio.h>
+#include <stddef.h>
 
-struct St {
-  int i;
-  float f;
+struct {
+    char c;
+    int i;
+    double d;
+} myStruct;
+
+union {
+    char c;
+    int i;
+    double d;
+} myUnion;
+
+int main() {
+    printf("Size of struct: %lu\n", sizeof(myStruct));   // output : 16
+    printf("Size of struct members: %lu %lu %lu\n", sizeof(myStruct.c), sizeof(myStruct.i), sizeof(myStruct.d));   // output : 1,4,8
+
+    printf("Size of union: %lu\n", sizeof(myUnion));   // output : 8
+    printf("Size of union members: %lu %lu %lu\n", sizeof(myUnion.c), sizeof(myUnion.i), sizeof(myUnion.d));   // output : 1,4,8
+
+    return 0;
+}
+
+//2. 位元應用
+union flags {
+    struct {
+        unsigned int flag0 : 1;
+        unsigned int flag1 : 1;
+        unsigned int flag2 : 1;
+        unsigned int flag3 : 1;
+        unsigned int : 4; /* 4 bits reserved */
+    } bits;
+    unsigned char value;
 };
 
-union Un {
-  int i;
-  float f;
-};
+int main() {
+    union flags f;
+    f.value = 255;
+    f.bits.flag0 = 0;
+    f.bits.flag1 = 0;
+    printf("f.bits.flag0 = %d\n", f.bits.flag0);   // output : 0
+    printf("f.bits.flag1 = %d\n", f.bits.flag1);   // output : 0
+    printf("f.bits.flag2 = %d\n", f.bits.flag2);   // output : 1
+    printf("f.bits.flag3 = %d\n", f.bits.flag3);   // output : 1
 
-int main () {
-  struct St st;
-  st.i = 10;
-  st.f = 10.25;
-  
-  printf("%d %f\n", st.i, st.f);
-  // 輸出: 10 10.250000
-  
-  // union 和 struct 的使用方式真的很像
-  union Un un;
-  un.i = 10;
-  un.f = 10.25;
-  
-  printf("%d %f\n", un.i, un.f);
-  // 輸出: 1092878336 10.250000 <= 錯誤!!
-  
-  return 0;
+    return 0;
 }
 ```
 
