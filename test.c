@@ -1,9 +1,13 @@
-#include <stdio.h>
-
-int main(void)
+void swap(int &c, int &d)
 {
-    int var = 10;
-    int *ptr = &var;          
-    printf("ptr = %p\n ", ptr);   // 0061FF18 <<取得var的記憶體位置
-    printf("ptr = %d\n ", *ptr);   // 10 <<取得*ptr的數值
+    int temp = c;
+    c = d;
+    d = temp;
+}
+int main()
+{
+    int a = 5, b = 10;
+    swap(a, b);
+    printf(" %d %d ", a, b);
+    return 0;
 }
