@@ -573,21 +573,14 @@ int main()
 * 實作qsort :
 
 ```c
-void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*)) 
-```
-
-* qsort範例 :
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
+
 int values[] = { 40, 10, 100, 90, 20, 25 };
 
 int compare(const void *a, const void *b)
 {
-    int num1 = *(int*)a;
-    int num2 = *(int*)b;
-    return (num1 - num2);
+    return (*(const int*)a - *(const int*)b);
 }
 
 int main()
@@ -599,7 +592,7 @@ int main()
     for (i = 0; i < n; i++)
         printf("%d ", values[i]); // 40 10 100 90 20 25
 
-    qsort(values, n, sizeof(values[0]), compare);
+    qsort(values, n, sizeof(int), compare);
 
     printf("\nAfter sorting the list is: \n");
     for (i = 0; i < n; i++)
