@@ -218,36 +218,25 @@ Global : 包含 BSS (未初始化的靜態變數)、data section (全域變數�
 
 ## ***4. extern***
 
-當程式只有一個檔案，變數就用定義就夠了。
-不需要使用到變數宣告，當程式是多個檔案，才有使用宣告的必要。
-現代習慣做法，原則為：『把宣告寫在.h檔，把定義寫在.c檔』
+C 語言中，extern 關鍵字用於聲明外部變數，表示該變數在當前文件中未定義，但在其他文件中已經定義了。使用 extern 關鍵字聲明變數時，不會為該變數分配存儲空間，只是告訴編譯器在連結時在其他文件中查找該變數的定義。
 
-```c
-// var.h
-extern int globalVar; // 變數宣告
-void function( void ); // 函式宣告
-```
+如果在聲明變數時沒有使用 extern 關鍵字，則表示該變數是一個全局變數，需要在當前文件中定義並分配存儲空間。在其他文件中使用該變數時，需要使用 extern 關鍵字聲明該變數。
+
+簡單來說，如果變數需要在多個文件中共享，就需要使用 extern 關鍵字聲明該變數；如果變數只在當前文件中使用，可以不使用 extern 關鍵字聲明。
 
 ```c
 // var.c
-#include "var.h"
-#include <stdio.h>
-
-int globalVar = 1; // 變數定義，並且設定初始值
-void function( void ) // 函式定義
-{
-    printf("Variable is = %d\n", globalVar);
-}
+int a = 10;
 ```
 
 ```c
-// file.c
-#include "var.h" // 只要 include .h檔的宣告，即可使用定義在其他檔案的全局變數
+// main.c
+#include "var.c" 
 
-int main( void )
-{
-    globalVar++;
-    function(); // Variable is = 2
+extern int a;
+
+int main() {
+    printf("a = %d\n", a); //a = 10
     return 0;
 }
 ```
@@ -573,21 +562,14 @@ int main()
 * 實作qsort :
 
 ```c
-void qsort(void *base, size_t nitems, size_t size, int (*compar)(const void *, const void*)) 
-```
-
-* qsort範例 :
-
-```c
 #include <stdio.h>
 #include <stdlib.h>
+
 int values[] = { 40, 10, 100, 90, 20, 25 };
 
 int compare(const void *a, const void *b)
 {
-    int num1 = *(int*)a;
-    int num2 = *(int*)b;
-    return (num1 - num2);
+    return (*(const int*)a - *(const int*)b);
 }
 
 int main()
@@ -599,7 +581,7 @@ int main()
     for (i = 0; i < n; i++)
         printf("%d ", values[i]); // 40 10 100 90 20 25
 
-    qsort(values, n, sizeof(values[0]), compare);
+    qsort(values, n, sizeof(int), compare);
 
     printf("\nAfter sorting the list is: \n");
     for (i = 0; i < n; i++)
