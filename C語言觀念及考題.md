@@ -20,7 +20,7 @@ int main(void)
 
 ```
 
-* 函式指標 (function pointer) : 
+* 函式指標 (function pointer) :
 
 ```c
 void printInt(int num){
