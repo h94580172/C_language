@@ -245,7 +245,7 @@ int main() {
 
 const 通常表示只可讀取不可寫入的變數，常用來宣告常數。使用const有以下好處：
 
-1. 使編譯器保護那些不希望被改變的參數
+1. 使編譯器保護那些不希望被改變的參數。
 2. 編譯器處理方式 : define 在預處理階段展開；const 在編譯階段使用。
 3. 類型和安全檢查 : const 會在編譯階段會執行類型檢查，define 則不會。
 4. 存儲方式 : define 直接展開不會分配記憶體，const 則會在記憶體中分配。
@@ -255,7 +255,7 @@ const 通常表示只可讀取不可寫入的變數，常用來宣告常數。�
 
 int main(void)
 {
-    int n1 = 10, n2 = 100, n3 = 50;
+    int n1 = 10, n2 = 100;
 
     const int *ptr1 = &n1; // const int* ptr(int const* ptr), ptr是一個指向const int的指標
     *ptr1 = 20; // X
@@ -264,12 +264,6 @@ int main(void)
     int* const ptr2 = &n1; // int* const ptr, ptr是一個指向一個整數的const指標
     *ptr2 = 20; // O (ptr2 = 20)
     ptr2 = &n2; // X
-
-    int const * ptr3 const; //一個指向const int的const指標 (指標指向的整數不可修改，同時指標也不可修改)
-    *ptr3 = 20; // X 
-    ptr3 = &n3; // X
-
-    //const int* const ptr, ptr是一個指向一個const int的const指標
 }
 ```
 
@@ -324,7 +318,7 @@ printf("\n %d", SQUARE(3+2)); // 但如果是以下，卻會得到 11 (3+2 * 3+2
 ```c
 #define PI 3.1415926 //常數巨集
 #define A(x) x //函數巨集
-#define MIN(A，B)  ( (A)  <= (B) ? (A) : (B))
+#define MIN(A,B)  ((A) <= (B) ? (A) : (B))
 ```
 
 * 引入防護和條件編譯 :
@@ -344,9 +338,12 @@ printf("\n %d", SQUARE(3+2)); // 但如果是以下，卻會得到 11 (3+2 * 3+2
 
 ## ***10. strlen***
 
-* 實作strlen :
+* strlen範例 :
 
 ```c
+#include <stdio.h>
+#include <string.h>
+
 int strlen( const char *str )
 {
     int len;
@@ -356,13 +353,6 @@ int strlen( const char *str )
     }
     return len;
 }
-```
-
-* strlen範例 :
-
-```c
-#include <stdio.h>
-#include <string.h>
 
 int main ()
 {
@@ -379,46 +369,38 @@ int main ()
 
 ## ***11. strcpy***
 
-* 實作strcpy :
-
-```c
-void strcpy(char *s, char *t)
-{  
-    while((*s = *t) != '\0') 
-    {
-       s++;
-       t++;
-    }
-}
-```
-
 * strcpy範例 :
 
 ```c
 #include <stdio.h>
-#include <string.h>
- 
+
+void mystrcpy (char *s, char *t)
+{
+    while(*t != '\0')
+    {
+        *s = *t;
+        s++;
+        t++;
+    }
+}
+
 int main()
 {
    char src[40];
-   char dest[100];
-  
-   memset(dest, '\0', sizeof(dest));
-   strcpy(src, "This is runoob.com");
-   strcpy(dest, src);
- 
-   printf("dest = %s\n", dest); // dest = This is runoob.com
-   
-   return(0);
+   mystrcpy(src, "This is runoob.com");
+   printf("src = %s\n", src); // src = This is runoob.com
+   return 0;
 }
 ```
 
 ## ***12. memcpy***
 
-* 實作memcpy :
+* memcpy範例 :
 
 ```c
-void *memcpy(void *dest, const void *src, unsigned long count)
+#include <stdio.h>
+
+void *mymemcpy(void *dest, const void *src, unsigned long count)
 {
     char *tmp = dest;
     const char *s = src;
@@ -426,43 +408,25 @@ void *memcpy(void *dest, const void *src, unsigned long count)
         *tmp++ = *s++;
     return dest;
 }
-```
-
-* memcpy範例 :
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-struct 
-{
-  char name[40];
-  int age;
-} person, person_copy;
 
 int main ()
 {
-  char myname[] = "Pierre de Fermat";
-
-  /* using memcpy to copy string: */
-  memcpy ( person.name, myname, strlen(myname)+1 );
-  person.age = 46;
-
-  /* using memcpy to copy structure: */
-  memcpy ( &person_copy, &person, sizeof(person) );
-
-  printf ("person_copy: %s, %d \n", person_copy.name, person_copy.age );
-
+  char myname[20];
+  char name[] = "Apple";
+  mymemcpy(myname, name, strlen(name)+1);
+  printf("myname : %s\n", myname);
   return 0;
 }
 ```
 
 ## ***13. memset***
 
-* 實作memset :
+* memset範例 :
 
 ```c
-void *memset(void *s, char c, unsigned long n)
+#include <stdio.h>
+
+void *mymemset(void *s, char c, unsigned long n)
 {
     unsigned long i;
     char *ss = (char *)s;
@@ -470,19 +434,12 @@ void *memset(void *s, char c, unsigned long n)
         ss[i] = (char)c;
     return s;
 }
-```
-
-* memset範例 :
-
-```c
-#include <stdio.h>
-#include <string.h>
 
 int main ()
 {
     char str[] = "almost";
     printf("str1=%s\n", str); // str1=almost
-    memset (str,'-',6);
+    mymemset (str,'-',6);
     printf("str2=%s\n", str); // str2=------
     return 0;
 }
@@ -490,10 +447,12 @@ int main ()
 
 ## ***13. memcmp***
 
-* 實作memcmp :
+* memcmp範例 :
 
 ```c
-int memcmp(const void *cs, const void *ct, unsigned long count)
+#include <stdio.h>
+
+int mymemcmp(const void *cs, const void *ct, unsigned long count)
 {
     const unsigned char *su1, *su2;
     int res = 0;
@@ -504,20 +463,13 @@ int memcmp(const void *cs, const void *ct, unsigned long count)
     }
     return res;
 }
-```
-
-* memcmp範例 :
-
-```c
-#include <stdio.h>
-#include <string.h>
 
 int main() 
 {
     char buffer1[] = "abcde";
     char buffer2[] = "abcDE";
     
-    int ret = memcmp(buffer1, buffer2, 3);
+    int ret = mymemcmp(buffer1, buffer2, 3);
     if (ret > 0) {
         printf("buffer1 is greater than buffer2\n");
     } else if (ret < 0) {
@@ -532,12 +484,6 @@ int main()
 
 ## ***14. malloc***
 
-* 實作malloc :
-
-```c
-void* malloc (size_t size);
-```
-
 * malloc範例 :
 
 ```c
@@ -547,19 +493,21 @@ void* malloc (size_t size);
 
 int main() 
 {
-    char * ptr;
-    ptr = (char *) malloc(sizeof(char) * 20);
-    strcpy(ptr, "Hello World");
-    printf("%s\n", ptr); // Hello World
-    free(ptr);
-    printf("%s\n", ptr); // NULL
+    const char *str = "Hello World";
+    size_t len = strlen(str) + 1;  // 加1是为了包含结尾的空字符 '\0'
+    char *ptr = malloc(sizeof(char) * len);
+    if (ptr != NULL) {
+        strcpy(ptr, str);
+        printf("%s\n", ptr);
+        free(ptr);
+    }
     return 0;
 }
 ```
 
 ## ***15. qsort***
 
-* 實作qsort :
+* qsort範例 :
 
 ```c
 #include <stdio.h>
@@ -600,15 +548,12 @@ int main()
 
 void bubbleSort(int arr[], int n)
 {
-    int i, j;
-    for (i = 0; i < n-1; i++)
+    for (int i = 0; i < n-1; i++)
     {
-        // Last i elements are already sorted
-        for (j = 0; j < n-i-1; j++)
+        for (int j = 0; j < n-i-1; j++)
         {
             if (arr[j] > arr[j+1])
             {
-                // Swap arr[j] and arr[j+1]
                 int temp = arr[j];
                 arr[j] = arr[j+1];
                 arr[j+1] = temp;
@@ -617,23 +562,14 @@ void bubbleSort(int arr[], int n)
     }
 }
 
-// Function to print an array
-void printArray(int arr[], int size)
-{
-    int i;
-    for (i=0; i < size; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
-}
-
-// Driver program to test above functions
 int main()
 {
     int arr[] = {64, 34, 25, 12, 22, 11, 90};
     int n = sizeof(arr)/sizeof(arr[0]);
     bubbleSort(arr, n);
     printf("Sorted array: \n");
-    printArray(arr, n);
+    for (int i=0; i < n; i++)
+        printf("%d ", arr[i]);
     return 0;
 }
 ```
@@ -643,26 +579,6 @@ int main()
 struct 是使用者自定的型態，包含數個不同資料型態的變數，將不同的資料型態關聯在一起，使他們的關聯更直覺。
 
 * struct範例 :
-
-```c
-#include <stdio.h>
-
-int main()
-{
-    struct student
-    {
-        char name[50];
-        int id;
-        float grade;
-    };
-
-    struct student s1 = {"John Doe", 12345, 90.5};
-
-    printf("學生姓名：%s\n", s1.name); // 學生姓名：John Doe
-    printf("學生學號：%d\n", s1.id); // 學生學號：12345
-    printf("學生成績：%.2f\n", s1.grade); // 學生成績：90.50
-}
-```
 
 ```c
 #include <stdio.h>
@@ -1641,45 +1557,4 @@ sizeof(long long)    = 8
 sizeof(size_t)       = 4
 sizeof(double)       = 8
 sizeof(long double)  = 12    //看作long+double = 4 + 8 =12
-```
-
-## ***42. 多執行緒***
-
-```c
-為了提高 CPU 的使用率，將某些需要耗時較多的任務或是大量 I/O 操作 (I/O處理速度很慢)，採用多執行緒可以適當地提高程式的執行效率。
-
-在介紹多執行緒之前，先來說明多執行緒的相關概念。
-
-程式 (Program) : 指尚未被 Load 到記憶體的 Code
-程序 (Process) : 指正在執行的程式，Operating System (OS) 會分配其所需要的資源，至少存在一個或多個執行緒，主要包含: Code, Data, Heap, Stack
-Code (Text Section) 儲存程序執行的代碼
-Data 可分為 global variable 跟 static variable
-Heap 動態配置記憶體空間給變數或函式
-Stack 儲存暫時性的資料 (local variable, function)
-執行緒 (Thread) : 指 OS 分配 CPU 進行運算的基本單位，存在於 Process中。一旦CPU開始執行程式，就會至少有一個Thread運作
-多執行緒 (Multithreading) : 指將一個程序中的任務分配給不同的執行緒，各個執行緒平行運作，不互相影響，並且在同一個程序的執行緒共享記憶體 (shared memory)
-❗ 不同的程序間沒辦法共享記憶體，若有需要互相通訊，唯有依賴特別的設計才能擁有共享記憶體
-
-使用多執行緒有什麼優點跟缺點呢~~
-
-🔹 優點:
-
-1. 提高 CPU 的使用效率
-
-2. 當一個執行緒必須停下來等待與服務器連接或是需要佔據長時間處理的程序，可以放在後台處理，其他執行緒還是可以繼續運作，可以提高處理效能
-
-🔹 缺點:
-
-1. 若有大量的執行緒，就會影響其效能，因為 OS 需要在它們之間做切換 (Context Switch)
-
-2. 更多的執行緒需要更多的記憶體空間
-
-3. 因為資料是多個執行緒共享的，因此有可能會發生 Race Condition 的狀況
-
-上下文切換 (Context Switch) : 指當 CPU 要從一個執行緒切換至另一個執行緒時，需要先儲存當前執行緒的狀態，再讀回將要執行的執行緒狀態。在切換的過程中，需要花費一些時間
-Context Switch 的發生時機 : 因為一顆 CPU 同時只能處理一項程序，OS 就會利用時間輪轉的方式，讓使用者感覺這些程序都是同時運作。當CPU 認為某執行緒執行夠久的時候，就會發出一個中斷 (Interrupt) 訊號，切換至另一個執行緒去運作
-競爭危害 (Race Condition) : 指當一個 Thread 修改動作執行到一半時被切換，而另一個 Thread 也正好執行修改同一個地方時，可能會導致記憶體洩漏 (memory leak)
-Race Condition 的發生時機 : 因為程序有時間排程的問題 (發生 Context Switch)，在多個執行緒的情況下，當兩個 Thread 同時修改一個資料時，可能造成變數的值錯誤，形成不可預期的結果，便造成了 Race Condition， 解決 Race Condition 的方法就是使用 Critical Section
-臨界區段 (Critical Section) : 指存取共享資源的程式碼區域，而這些共享資源不能被多個執行緒存取，也就是指這些要受保護的程式區段稱為 Critical Section。
-❗ 當執行緒進入臨界區段時，必須使用一些同步機制在臨界區段的進入點與離開點實現，以確保這些執行緒的安全。
 ```
