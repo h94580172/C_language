@@ -31,21 +31,31 @@
 // }
 #include <stdio.h>
 #include <string.h>
+// 給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素
 
-int main()
+void functionq(int *a,int size){
+    for(int i = 0,j = 0; i<=size; i++){
+        if(a[j] == i)
+            j++;
+        else
+            printf("i=%d\n",i);
+    }
+}
+
+// void functionq(int *a,int size)
+// {
+//  for(int i=0; i<=500; i++)
+//  {
+//     if(i == *a)
+//         a++;
+//     else
+//         printf("%d\n",i);
+//     }
+// }
+
+int main(void) 
 {
-    typedef struct student{
-        char name[20];
-        int id;
-        float grade;
-    }student_t;
-
-    student_t st;
-    strcpy(st.name,"eden");
-    st.id = 10776123;
-    st.grade = 100;
-
-    printf("學生姓名：%s\n", st.name);    // 學生姓名：John Doe
-    printf("學生學號：%d\n", st.id);      // 學生學號：12345
-    printf("學生成績：%.2f\n", st.grade); // 學生成績：90.50
+    int a[20] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21};
+    functionq(a,500);
+    return 0;
 }

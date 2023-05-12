@@ -738,7 +738,7 @@ int main(void)
 ## ***2. Ｎ是否為判斷2的次方***
 
 ```c
-bool isPowerof2(int n) {
+int isPowerof2(int n) {
     return n > 0 && (n & (n - 1)) == 0;
 }
 ```
@@ -766,14 +766,15 @@ int main(void)
 
 void func(void)
 {
-    static int i = 0 ;
+    static int i = 0 ;  //若沒static，i會一直歸零
     i++ ;
     printf("%d" , i ) ;
 }
 
 int main(void)
 {
-    func(); // 12345678910
+    for(int i=0; i<10; i++)
+        func(); // 12345678910
 }
 ```
 
@@ -813,10 +814,10 @@ int clear_bit(int x, int n) {
 }
 ```
 
-## ***8. Inverse a bit***
+## ***8. Toggle a bit***
 
 ```c
-int inverse_bit(int x, int n) {
+int toggle_bit(int x, int n) {
     return x ^ (1 << n);
 }
 ```
@@ -824,7 +825,7 @@ int inverse_bit(int x, int n) {
 ## ***9. Checking a bit***
 
 ```c
-int clear_bit(int x, int n) {
+int check_bit(int x, int n) {
     return (x >> n) & 1;
 }
 ```
@@ -855,15 +856,22 @@ int func(int x){
 ## ***12. What is the content of array a***
 
 ```c
+#include <stdio.h>
+
 int main() {
     int a[] = {6, 7, 8, 9, 10};
     int *p = a;
-    *(p++) += 123;
-    *(++p) += 123;
+    *(p++) += 100;
+    *(++p) += 50;
     for (int i = 0; i < 5; i++) {
-        printf("a[%d] = %d\n", i, a[i]); // a = {129, 7, 131, 9, 10}
+        printf("a[%d] = %d\n", i, a[i]);
     }
 }
+// a[0] = 106
+// a[1] = 7
+// a[2] = 58
+// a[3] = 9
+// a[4] = 10
 ```
 
 ## ***13. define vs typedef***
@@ -909,18 +917,28 @@ int main() {
 
 ## ***16. declaration（宣告）和 definition（定義）的差異***
 
+* declaration（宣告）
 宣告是指告訴編譯器一個變數、函數、類型等識別符號的名稱和類型，
 但不分配存儲空間，也不執行初始化。例如，以下是一個變數的宣告：
 
 ```c
-int a;
+extern int x;       
+void foo();       
+struct MyStruct;     
 ```
 
+* definition（定義）
 定義是指為變數、函數、類型等識別符號分配存儲空間，
 並且可能進行初始化。例如，以下是一個變數的定義：
 
 ```c
-int a;
+int x;                 
+void foo() {             
+    //content
+}
+struct MyStruct {            
+    //content
+};
 ```
 
 在C語言中，每個變數和函數只能有一個定義，但可以有多個宣告。
@@ -973,16 +991,6 @@ int main() {
 
 ## ***19. 算出以下數值***
 
-輸出 *(str+1)，也就是陣列 str 中第二個字串，即 "WelcomeToHere"。
-
-輸出 str[3]+8，也就是陣列 str 中第四個字串的第九個字元開始的子字串，即 "Genius"。
-
-輸出 *m，也就是指標 m 指向的字元，即 "HopeEverythingGood" 的第五個字元，即 "E"。
-
-輸出 *(n+3)，也就是指標 n 指向的字串的第四個字元，即 "WelcomeToHere" 的第四個字元，即 "c"。
-
-輸出 *p + 1，也就是指標 p 指向的子字串的第一個字元加一，即 "l" + 1，結果是 "m"。注意這裡加一的是字元的 ASCII 碼，而不是數值。
-
 ```c
 #include <stdio.h>
 
@@ -996,7 +1004,7 @@ int main(void) {
  };
  char* m = str[4] + 4;
  char* n = str[1];
- char* p = *(str+2) + 4;
+ char* p = *(str+2) + 1;
  printf("1. %s\n", *(str+1));
  printf("2. %s\n", (str[3]+8));
  printf("3. %c\n", *m);
@@ -1010,6 +1018,15 @@ int main(void) {
  return 0;
 }
 ```
+輸出 *(str+1)，也就是陣列 str 中第二個字串，即 "WelcomeToHere"。
+
+輸出 str[3]+8，也就是陣列 str 中第四個字串的第九個字元開始的子字串，即 "Genius"。
+
+輸出 *m，也就是指標 m 指向的字元，即 "HopeEverythingGood" 的第五個字元，即 "E"。
+
+輸出 *(n+3)，也就是指標 n 指向的字串的第四個字元，即 "WelcomeToHere" 的第四個字元，即 "c"。
+
+輸出 *p + 1，也就是指標 p 指向的子字串的第一個字元加一，即 "e" + 1，結果是 "f"。注意這裡加一的是字元的 ASCII 碼，而不是數值。
 
 ## ***20. 判斷Big-Endian or Little-Endian***
 
