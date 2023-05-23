@@ -1116,29 +1116,25 @@ Ans : 這題因為b是unsigned int 所以永遠不會小於0，你就回答爆�
 
 ## ***25. 費式數列***
 
-11,12,23,35,58,....n,寫一個函數,輸入值是位置的值"n",要找出相對應的值
+0 1 1 2 3 5 8 13 21 34 55...n,寫一個函數,輸入值是位置的值"n",要找出相對應的值
 
 ```c
 #include <stdio.h>
+#include <string.h>
+
+int fibonacci(int n)
+{
+    if(n==0)
+        return 0;
+    if(n==1)
+        return 1;
+    if (n >= 2) 
+        return fibonacci(n - 2) + fibonacci(n - 1);
+}
 
 int main() 
 {
-    int n, temp, a = 11, b = 12;
-    printf("n = ");
-    scanf("%d", &n);
-
-    if(n==0)
-        return a;
-    if(n==1)
-        return b;
-    
-    for(int i = 2 ; i <= n ; ++i)
-    {
-        temp = b;
-        b = a + b;
-        a = temp;
-    }
-    printf("b : %d",b);
+    printf("ans : %d",fibonacci(5));
 }
 ```
 
@@ -1178,20 +1174,37 @@ void QuickSort(int *array, int left, int right)
 ## ***27. binary serach***
 
 ```c
-int binsearch(int* arr, int k, int n) {
-  int left = 0, right = n;
-  while (left <= right) {
-    int mid = (left+right)/2;
-    if (arr[mid] > k) {       // 往左半部找
-      right = mid - 1;
+#include <stdio.h>
+
+int binarySearch(int arr[], int left, int right, int target) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target)
+            return mid;
+
+        if (arr[mid] > target)
+            right = mid - 1;
+        else
+            left = mid + 1;
     }
-    else if (arr[mid] < k) {  // 往右半部找
-      left = mid + 1;
-    }
+
+    return -1;
+}
+
+int main() {
+    int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 12;
+
+    int result = binarySearch(arr, 0, n - 1, target);
+
+    if (result == -1)
+        printf("目標值 %d 不存在於陣列中。\n", target);
     else
-      return mid;
-  }
-  return -1; // not found
+        printf("目標值 %d 在陣列中的索引為 %d。\n", target, result);
+
+    return 0;
 }
 ```
 
@@ -1199,7 +1212,6 @@ int binsearch(int* arr, int k, int n) {
 
 ```c
 int isHexEqaul(unsigned short input) {     // input = 0xAAAA;
-    unsigned short input;
     unsigned short hex[4]; // 0xFFFF ==> 0000 0000 0000 0000
     int is_eqaul;
 
@@ -1208,25 +1220,29 @@ int isHexEqaul(unsigned short input) {     // input = 0xAAAA;
     hex[2] = (input & 0x00F0) >> 4;
     hex[3] = input & 0x000F;
 
-    is_eqaul = ((hex[0] == hex[1]) && (hex[1] == hex[2]) && (hex[2] == hex[3]));
-    return is_eqaul;
+    is_eqaul = (hex[0] ^ hex[1] ^ hex[2] ^ hex[3]);
+    return !(is_eqaul);
 }
 ```
 
 ## ***29. 求一個數的最高位1在第幾位***
 
 ```c
-int main()
-{
-    unsigned int a = 0x65; // 0110 0101
-    unsigned int test_bit = 128; // 1000 0000
-    int count = 7;  // sizeof(unsigned int)*8   == 該data type的bit數
-    while (((a & test_bit) >> count) != 1) {
-        count--;
-        test_bit >>= 1;
+#include <stdio.h>
+
+int bit1(int temp) {
+    int cnt = 0;
+    while(temp)
+    {
+        cnt++;        
+        temp = temp>>1;
     }
-    printf("hightest bit is %d th bit\n", count);
-    
+    return cnt-1;
+}
+
+int main() {
+
+    printf("%d\n", bit1(7));
     return 0;
 }
 ```
@@ -1234,11 +1250,18 @@ int main()
 ## ***30. 最大公因數 遞迴寫法***
 
 ```c
-int gcd(int x, int y) { // x > y
-    if (y == 0)  /* 餘 0，除數 x 即為最大公因數 */
-        return x;
-    else
-        return gcd(y, x % y);  /* 前一步驟的除數為被除數，餘數為除數 */
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    if(b == 0)
+        return a;
+    return gcd(b,a%b);
+}
+
+int main() {
+    printf("GCD: %d\n", gcd(15,5));
+
+    return 0;
 }
 ```
 

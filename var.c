@@ -30,32 +30,15 @@
 //     return 0;
 // }
 #include <stdio.h>
-#include <string.h>
-// 給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素
 
-void functionq(int *a,int size){
-    for(int i = 0,j = 0; i<=size; i++){
-        if(a[j] == i)
-            j++;
-        else
-            printf("i=%d\n",i);
-    }
+int gcd(int a, int b) {
+    if(b == 0)
+        return a;
+    return gcd(b,a%b);
 }
 
-// void functionq(int *a,int size)
-// {
-//  for(int i=0; i<=500; i++)
-//  {
-//     if(i == *a)
-//         a++;
-//     else
-//         printf("%d\n",i);
-//     }
-// }
+int main() {
+    printf("GCD: %d\n", gcd(15,30));
 
-int main(void) 
-{
-    int a[20] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,21};
-    functionq(a,500);
     return 0;
 }
