@@ -1285,22 +1285,8 @@ int main()
     return 0;
 }
 
-///answer
-
-初始化時給予的數值類型不符合 union 成員的類型。
-
-在此程式碼中，union 的成員包含 char、int 和 double 三種類型，因此在初始化時需要確保給予的值類型符合 union 成員的類型。在此程式碼中，給予的值是整數 123，這個值的類型為 int，因此可以正確初始化 union 中的 int 成員，但 char 和 double 成員則可能會出現未定義的行為。
-
-讀取 union 成員時沒有確定該成員的值是否有效。
-
-在此程式碼中，雖然已經對 union 進行了初始化，但是只給了其中一個成員變量 var.num1 一個值。因此，在讀取其他成員變量之前，必須先確定該成員變量的值是否有效，否則可能會出現未定義的行為。
-
-要正確初始化此程式碼中的 union，可以按照以下方式進行：
-
-初始化時給予的值需要與 union 成員的類型相符。
-
-在此程式碼中，如果要同時初始化 char、int 和 double 成員變量，可以使用以下程式碼進行初始化：
-
+// 初始化時給予的數值類型不符合 union 成員的類型。
+// %c是印出字元,%f是印出浮點數,而var是整數所以他們兩個錯。
 ```
 
 ## ***32. struct佔幾byte?***
@@ -1373,31 +1359,29 @@ typedef struct MyStruct
 ```c
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define MAX_NUM 500
+
+int random(int *arr) {
+    int count = 0; // 已經抽出的數字個數
+    while (count < MAX_NUM) {
+    int num = rand() % (MAX_NUM + 1); // 隨機產生一個數字
+        if (arr[num] == 0) { // 如果這個數字還沒被抽過
+            arr[num] = 1; // 標記為已經抽過
+            count++; // 已經抽出的數字個數加 1
+            printf("%d ", num); // 輸出這個數字
+        }
+    }
+}
 
 int main() {
     int nums[MAX_NUM + 1]; // 儲存 0~500 的數字，初始化為 0
     for (int i = 0; i <= MAX_NUM; i++) {
         nums[i] = 0;
     }
-
-    srand(time(NULL)); // 使用當前時間作為種子，產生亂數
-
-    int count = 0; // 已經抽出的數字個數
-    while (count < MAX_NUM) {
-        int num = rand() % (MAX_NUM + 1); // 隨機產生一個數字
-        if (nums[num] == 0) { // 如果這個數字還沒被抽過
-            nums[num] = 1; // 標記為已經抽過
-            count++; // 已經抽出的數字個數加 1
-            printf("%d ", num); // 輸出這個數字
-        }
-    }
-
+    random(nums);
     return 0;
 }
-
 ```
 
 ## ***34. #define MIN(A,B) A < B ? A:B; 這樣會有甚麼問題?***
@@ -1405,74 +1389,6 @@ int main() {
 ```c
 int result = 2 * MIN(6,10); // 2*6<10?6:10;
 //result 會變成10，但我們要的是12
-```
-
-## ***35. Linked list 實作queue的 push, pop***
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-// 定義鏈結串列節點結構
-struct Node {
-    int data;
-    struct Node* next;
-};
-
-// 定義 Queue 結構
-struct Queue {
-    struct Node* front;
-    struct Node* rear;
-    int size;
-};
-
-// 創建一個新節點
-struct Node* newNode(int data) {
-    struct Node* node = (struct Node*)malloc(sizeof(struct Node));
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
-
-// 創建一個新的 Queue
-struct Queue* newQueue() {
-    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
-    queue->front = NULL;
-    queue->rear = NULL;
-    queue->size = 0;
-    return queue;
-}
-
-// 在 Queue 尾部插入一個節點
-void push(struct Queue* queue, int data) {
-    struct Node* node = newNode(data);
-    if (queue->rear == NULL) {
-        queue->front = node;
-        queue->rear = node;
-    } else {
-        queue->rear->next = node;
-        queue->rear = node;
-    }
-    queue->size++;
-}
-
-// 從 Queue 頭部刪除一個節點
-int pop(struct Queue* queue) {
-    if (queue->front == NULL) {
-        printf("Queue is empty.\n");
-        return -1;
-    }
-    int data = queue->front->data;
-    struct Node* temp = queue->front;
-    queue->front = queue->front->next;
-    free(temp);
-    if (queue->front == NULL) {
-        queue->rear = NULL;
-    }
-    queue->size--;
-    return data
-}
 ```
 
 ## ***36. 解釋C語言中的 "#error"***
@@ -1548,30 +1464,7 @@ int main() {
 }
 ```
 
-## ***41. 大小寫轉換***
-
-```c
-// 輸出大寫
-#include <stdio.h>
-
-int main() {
-    char lowercase = 'a';
-    char uppercase = lowercase - 32; 
-    printf("%c\n", uppercase); 
-    return 0;
-}
-// 輸出小寫
-#include <stdio.h>
-
-int main() {
-    char uppercase = 'A';
-    char lowercase = uppercase + 32; 
-    printf("%c\n", lowercase); 
-    return 0;
-}
-```
-
-## ***42. Sizeof***
+## ***41. Sizeof***
 
 ```c
 64bit

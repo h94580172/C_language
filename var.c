@@ -31,14 +31,26 @@
 // }
 #include <stdio.h>
 
-int gcd(int a, int b) {
-    if(b == 0)
-        return a;
-    return gcd(b,a%b);
+int binarySearch(int arr[], int left, int right, int target){
+    int mid = left+((right-left)/2);
+    if(mid > target)
+        return right = mid-1;
+    else   
+        return left = mid+1;
+
 }
 
 int main() {
-    printf("GCD: %d\n", gcd(15,30));
+    int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 12;
+
+    int result = binarySearch(arr, 0, n - 1, target);
+
+    if (result == -1)
+        printf("目標值 %d 不存在於陣列中。\n", target);
+    else
+        printf("目標值 %d 在陣列中的索引為 %d。\n", target, result);
 
     return 0;
 }
