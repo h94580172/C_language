@@ -30,27 +30,27 @@
 //     return 0;
 // }
 #include <stdio.h>
+#include <stdlib.h>
 
-int binarySearch(int arr[], int left, int right, int target){
-    int mid = left+((right-left)/2);
-    if(mid > target)
-        return right = mid-1;
-    else   
-        return left = mid+1;
+// int main(){
+//     char str[] = "GOOD";
+//     memset(str,'-',2);
+//     printf("%s\n",str);
+//     return 0;
+// }
 
-}
-
-int main() {
-    int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int target = 12;
-
-    int result = binarySearch(arr, 0, n - 1, target);
-
-    if (result == -1)
-        printf("目標值 %d 不存在於陣列中。\n", target);
+int main() 
+{
+    char buffer1[] = "abcde";
+    char buffer2[] = "abcDE";
+    
+    int ret = memcmp(buffer1, buffer2, 3);
+    if (ret > 0) 
+        printf("buffer1 > buffer2\n");
+    else if (ret < 0)
+        printf("buffer1 < buffer2\n");
     else
-        printf("目標值 %d 在陣列中的索引為 %d。\n", target, result);
+        printf("buffer1 = buffer2\n"); // ans : abc = abc
 
     return 0;
 }
