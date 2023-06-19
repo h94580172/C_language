@@ -1,11 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int main(void)
+int main()
 {
-    unsigned int var = 0x67a9;
-    int *ptr = &var;
-    printf("p1=%x\n", ptr); // p1=67a9
-    // ptr = 0xaa55;
-    // printf("p2=%x\n", ptr); // p2=aa55
+    int i = 5;
+    int j = i++ 
+    printf("i1 = %d\n",i);  
+    printf("j1 = %d\n",j); 
+
+    i = 5;
+    j = ++i; 
+    printf("i2 = %d\n",i);  
+    printf("j2 = %d\n",j);  
+    return 0;
 }

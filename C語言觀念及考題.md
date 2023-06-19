@@ -67,6 +67,29 @@ int (*a)(int);      // 一個指向函數的指標，該函數有一個整數型
 int (*a[10])(int);  // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數   !!!
 ```
 
+* 基礎指標判讀
+  
+```c
+#include <stdio.h>
+int main(void) {
+    int b = 2;
+    int* pointer = &b;
+
+    printf("變數 b 的值：%d\n", b);
+    printf("變數 b 的地址：%p\n", &b);
+    printf("pointer 的值：%p\n", &pointer);
+    printf("\n"); //換行
+    
+    *pointer = 100;
+
+    printf("*pointer 的值：%d\n", *pointer);
+    printf("變數 b 的值：%d\n", b);
+    printf("變數 pointer 的地址：%p\n", &pointer);
+
+    return 0;
+}
+```
+
 ## ***2. call by value, call by reference, call by address***
 
 * Call by value : 參數以數值方式傳遞，複製一份到另一個呼叫此參數的副程式。
@@ -850,35 +873,24 @@ struct MyStruct {
 #include <stdio.h>
 #include <string.h>
 
-void reverse_string(char *str) {
-    int len = strlen(str);
-    for (int i = 0; i < len / 2; i++) {
-        char temp = str[i];
-        str[i] = str[len - i - 1];
-        str[len - i - 1] = temp;
+void reverseString(char *str) {
+    int left = 0;
+    int right = strlen(str) - 1;
+    while (left < right) {
+        char temp = str[left];
+        str[left] = str[right];
+        str[right] = temp;
+        left++;
+        right--;
     }
 }
 
 int main() {
-    char str[] = "Hello, world!";
-    printf("Original string: %s\n", str);
-    reverse_string(str);
-    printf("Reversed string: %s\n", str);
+    char str[] = "ABCDE";
+    reverseString(str);
+    printf("反轉後字串: %s\n", str);
     return 0;
 }
-```
-
-## ***18. point考題***
-
-```c
-int a;              // 一個整數型別
-int *a;             // 一個指向整數的指標
-int **a;            // 一個指向指標的指標，而"指向的指標"是指向一個整數型別  !!!
-int a[10];          // 一個有10個整數型的陣列   !!!
-int *a[10];         // 一個有10個指標的陣列，該指標是指向一個整數型別   !!!
-int [*a](10);       // 一個指向有10個整數型陣列的指標   !!!
-int (*a)(int);      // 一個指向函數的指標，該函數有一個整數型參數並返回一個整數 !!!
-int (*a[10])(int);  // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數   !!!
 ```
 
 ## ***19. 算出以下數值***
@@ -906,7 +918,7 @@ int main(void) {
  // 2. Genius
  // 3. E
  // 4. c
- // 5. p
+ // 5. f
  return 0;
 }
 ```
@@ -978,18 +990,13 @@ void function(int *a, int size, int b)
 
 #include <stdio.h>
 
-int main() {
-    int i,j;
-    for(i=0;i<5;i++){
-        for(j=0;j<5-i;j++){
-            printf(" ");
-        }
-        for(j=0;j<i+1;j++){
-            printf("*"); 
-        }
-        printf("\n"); 
+int main() 
+{
+    for(int i=0; i<5; i++){
+        for(int j=0+i; j<5; j++)    printf(" ");
+        for(int j=5-i; j<=5; j++)   printf("*");
+        printf("\n");
     }
-    return 0;
 }
 ```
 
@@ -1013,22 +1020,35 @@ Ans : 這題因為b是unsigned int 所以永遠不會小於0，你就回答爆�
 
 ```c
 #include <stdio.h>
-#include <string.h>
 
-int fibonacci(int n)
-{
-    if(n==0)
-        return 0;
-    if(n==1)
-        return 1;
-    if (n >= 2) 
-        return fibonacci(n - 2) + fibonacci(n - 1);
+int fibonacci(int n) {
+    if (n <= 1)
+        return n;
+    
+    int prev = 0;
+    int current = 1;
+    int next;
+
+    for (int i = 2; i <= n; i++) {
+        next = prev + current;
+        prev = current;
+        current = next;
+    }
+
+    return current;
 }
 
-int main() 
-{
-    printf("ans : %d",fibonacci(5));
+int main() {
+    int n = 10;  // 要計算費式數列的項數
+    printf("費式數列的前 %d 項：\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("%d ", fibonacci(i));
+    }
+    printf("\n");
+
+    return 0;
 }
+
 ```
 
 ## ***26. quick sort***
@@ -1069,39 +1089,29 @@ void QuickSort(int *array, int left, int right)
 ```c
 #include <stdio.h>
 
-int binarySearch(int arr[], int left, int right, int target) {
-    while (left <= right) {
-        int mid = left + (right - left) / 2;
-
-        if (arr[mid] == target)
+int binary_search(int arr[], int left, int right, int target){
+    while(left <= right){
+        int mid = left + (right - left);
+        if(arr[mid] == target)
             return mid;
-
-        if (arr[mid] > target)
+        else if(arr[mid] > target)
             right = mid - 1;
         else
             left = mid + 1;
     }
-
     return -1;
 }
 
-int main() {
-    int arr[] = {2, 4, 6, 8, 10, 12, 14, 16, 18, 20};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    int target = 12;
-
-    int result = binarySearch(arr, 0, n - 1, target);
-
-    if (result == -1)
-        printf("目標值 %d 不存在於陣列中。\n", target);
-    else
-        printf("目標值 %d 在陣列中的索引為 %d。\n", target, result);
-
+int main(){
+    int arr[] ={1,2,3,5,7,9,12,18,22};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int result = binary_search(arr,0,n-1,2);
+    printf("res=%d\n",result);
     return 0;
 }
 ```
 
-## ***28. 給一個unsigned short, 問換算成16進制後四個值是否相同? 若是回傳1,否則回傳0***
+## ***28. 給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0***
 
 ```c
 int isHexEqaul(unsigned short input) {     // input = 0xAAAA;
@@ -1123,19 +1133,17 @@ int isHexEqaul(unsigned short input) {     // input = 0xAAAA;
 ```c
 #include <stdio.h>
 
-int bit1(int temp) {
+int max_bit(int bit){
     int cnt = 0;
-    while(temp)
-    {
-        cnt++;        
-        temp = temp>>1;
+    while(bit){
+        cnt++;
+        bit >>= 1;
     }
-    return cnt-1;
+    return cnt - 1; 
 }
 
-int main() {
-
-    printf("%d\n", bit1(7));
+int main(){
+    printf("%d",max_bit(2));
     return 0;
 }
 ```
@@ -1384,3 +1392,38 @@ sizeof(size_t)       = 4
 sizeof(double)       = 8
 sizeof(long double)  = 12    //看作long+double = 4 + 8 =12
 ```
+
+
+sizeof集錦(二維陣列的各大小)
+
+在 C 語言中，sizeof 是一個運算符，用於計算變數、資料型別或陣列的大小（以位元組為單位）。下面是關於二維陣列的幾個常見 sizeof 應用的示例：
+
+二維整數陣列的大小：
+c
+Copy code
+int arr[3][4];
+size_t size = sizeof(arr);
+printf("二維整數陣列的大小：%zu\n", size);  // 結果為 48（3 * 4 * sizeof(int)）
+二維字符陣列的大小：
+c
+Copy code
+char str[2][10];
+size_t size = sizeof(str);
+printf("二維字符陣列的大小：%zu\n", size);  // 結果為 20（2 * 10 * sizeof(char)）
+二維指標陣列的大小：
+c
+Copy code
+int* ptr[5][3];
+size_t size = sizeof(ptr);
+printf("二維指標陣列的大小：%zu\n", size);  // 結果為 60（5 * 3 * sizeof(int*)）
+二維結構體陣列的大小：
+c
+Copy code
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point points[4][3];
+size_t size = sizeof(points);
+printf("二維結構體陣列的大小：%zu\n", size);  // 結果為 96（4 * 3 * sizeof(struct Point)）
