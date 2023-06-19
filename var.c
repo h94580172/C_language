@@ -1,15 +1,16 @@
 #include <stdio.h>
 
-int main()
-{
-    int i = 5;
-    int j = i++ 
-    printf("i1 = %d\n",i);  
-    printf("j1 = %d\n",j); 
-
-    i = 5;
-    j = ++i; 
-    printf("i2 = %d\n",i);  
-    printf("j2 = %d\n",j);  
-    return 0;
+int main() {
+    long ans = 0;
+    short a = 0x1234;
+    short b = 0x5600;
+    ans += a << 16;
+    ans += b << 0;
+    ans += (b >> 2) + 0x22;
+    printf("a=%x\n",ans);
 }
+// 1234 5600 +1580+0022
+// 1234 1580
+//      0022
+// 1234 6BA2
+// 1 5 8 0

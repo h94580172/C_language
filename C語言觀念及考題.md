@@ -4,56 +4,6 @@
 
 ## ***1. point***
 
-* 指標 (pointer)：
-
-```c
-#include <stdio.h>
-
-int main(void)
-{
-    int var = 10;
-    int *ptr;
-    ptr = &var;          
-    printf("ptr = %p\n ", ptr);   // 0061FF18 <<取得var的記憶體位置
-    printf("ptr = %d\n ", *ptr);   // 10 <<取得*ptr的數值
-}
-
-```
-
-* 函式指標 (function pointer) :
-
-```c
-void printInt(int num){
-    printf("%d\n", num);
-}
-
-void applyFunction(int num, void (*functionPtr)(int)){  //void (functionPtr)(int)也一樣意思
-    functionPtr(num);
-}
-
-int main(){
-    applyFunction(5, printInt);
-    return 0;
-}
-
-//也可用typedef方式
-
-typedef void (*functionPtr)(int);
-
-void printInt(int num){
-    printf("%d\n", num);
-}
-
-void applyFunction(int num, functionPtr func){
-    func(num);
-}
-
-int main(){
-    applyFunction(5, printInt);
-    return 0;
-}
-```
-
 * 基礎指標判讀
 
 ```c
@@ -66,8 +16,6 @@ int [*a](10);       // 一個指向有10個整數型陣列的指標   !!!
 int (*a)(int);      // 一個指向函數的指標，該函數有一個整數型參數並返回一個整數 !!!
 int (*a[10])(int);  // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數   !!!
 ```
-
-* 基礎指標判讀
   
 ```c
 #include <stdio.h>
@@ -356,95 +304,6 @@ Interrupt 和 Polling 差異在中斷具有即時性,而輪循是定時檢查
 interrupt : 當中斷觸發時,處理器會暫停目前處理的任務,轉而去執行中斷相關程序,等到處理完畢時才會回到原本的任務上。
 
 polling : 它是一種定時檢查的方式,當檢查到有事件發生時才會去執行它。
-
-## ***11. strlen***
-
-* strlen範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-    int len = strlen("GOOD");
-    printf("%d\n",len); // ans : 4
-    return 0;
-}
-```
-
-## ***12. strcpy***
-
-* strcpy範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-    int len[30];
-    strcpy(len,"GOOD");
-    printf("%s\n",len);
-    return 0;
-}
-```
-
-## ***13. memcpy***
-
-* memcpy範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-    char len[30];
-    char str[] = "GOOD";
-    memcpy(len,str,strlen(str));
-    printf("%s\n",len);
-    return 0;
-}
-```
-
-## ***14. memset***
-
-* memset範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-    char str[] = "GOOD";
-    memset(str,'-',2);
-    printf("%s\n",str); // ans : --OD
-    return 0;
-}
-```
-
-## ***15. memcmp***
-
-* memcmp範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() 
-{
-    char buffer1[] = "abcde";
-    char buffer2[] = "abcDE";
-    
-    int ret = memcmp(buffer1, buffer2, 3);
-    if (ret > 0) 
-        printf("buffer1 > buffer2\n");
-    else if (ret < 0)
-        printf("buffer1 < buffer2\n");
-    else
-        printf("buffer1 = buffer2\n"); // ans : abc = abc
-
-    return 0;
-}
-```
 
 ## ***16. qsort***
 
@@ -1054,33 +913,42 @@ int main() {
 ## ***26. quick sort***
 
 ```c
-void swap(int *a, int *b)
-{
-    int tmp;
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
+void quick_sort(int arr[], int first_index, int last_index) {
+  // 宣告索引變數
+  int pivotIndex, temp, index_a, index_b;
 
-void QuickSort(int *array, int left, int right)
-{
-    if (left < right) {
-        int i= left-1, j=right+1;
-        int mid = info[(left+right)/2].signal_level;
+  if (first_index < last_index) {
+    // 以第一個元素作為基準
+    pivotIndex = first_index;
+    index_a = first_index;
+    index_b = last_index;
 
-        while (true) {
-            while(info[++i].signal_level > mid);
-            while(info[--j].signal_level < mid);
+    // 以遞增方式排序
+    while (index_a < index_b) {
+      while (arr[index_a] <= arr[pivotIndex] && index_a < last_index) {
+        index_a++;
+      }
+      while (arr[index_b] > arr[pivotIndex]) {
+        index_b--;
+      }
 
-            if (i>=j)
-                break;
-
-            swap(info, i, j);
-        }
-
-        QuickSort(info, left, i-1);
-        QuickSort(info, j+1, right);
+      if (index_a < index_b) {
+        // 交換元素
+        temp = arr[index_a];
+        arr[index_a] = arr[index_b];
+        arr[index_b] = temp;
+      }
     }
+
+    // 交換基準元素與 index_b 元素
+    temp = arr[pivotIndex];
+    arr[pivotIndex] = arr[index_b];
+    arr[index_b] = temp;
+
+    // 遞迴呼叫快速排序法函數
+    quick_sort(arr, first_index, index_b - 1);
+    quick_sort(arr, index_b + 1, last_index);
+  }
 }
 ```
 
@@ -1361,7 +1229,7 @@ int main() {
     ans += a << 16;
     ans += b << 0;
     ans += (b >> 2) + 0x22;
-    printf("a=%d\n",ans);   // 12346BA2
+    printf("a=%x\n",ans);   // 12346BA2
 }
 ```
 
