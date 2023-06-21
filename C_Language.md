@@ -1,41 +1,122 @@
-# **C語言觀念及考題**
+# **C Language**
 
 ---
 
 ## ***1. point***
 
-* 基礎指標判讀
+### *指標也算是一種變數，只是裡面存的不是一般的數值，而是記憶體位置*
 
-```c
-int a;              // 一個整數型別
-int *a;             // 一個指向整數的指標
-int **a;            // 一個指向指標的指標，而"指向的指標"是指向一個整數型別  !!!
-int a[10];          // 一個有10個整數型的陣列   !!!
-int *a[10];         // 一個有10個指標的陣列，該指標是指向一個整數型別   !!!
-int [*a](10);       // 一個指向有10個整數型陣列的指標   !!!
-int (*a)(int);      // 一個指向函數的指標，該函數有一個整數型參數並返回一個整數 !!!
-int (*a[10])(int);  // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數   !!!
-```
-  
 ```c
 #include <stdio.h>
-int main(void) {
-    int b = 2;
-    int* pointer = &b;
 
-    printf("變數 b 的值：%d\n", b);
-    printf("變數 b 的地址：%p\n", &b);
-    printf("pointer 的值：%p\n", &pointer);
-    printf("\n"); //換行
-    
-    *pointer = 100;
+void func(int *ptr){
+    (*ptr)++;
+}
 
-    printf("*pointer 的值：%d\n", *pointer);
-    printf("變數 b 的值：%d\n", b);
-    printf("變數 pointer 的地址：%p\n", &pointer);
-
+int main(){
+    int num = 5;
+    func(&num);
+    printf("num:%d\n",num);
     return 0;
 }
+```
+
+### *解釋以下指標意義*
+
+```c
+int a;             
+int *a;            
+int **a;           
+int a[10];         
+int *a[10];        
+int [*a](10);      
+int (*a)(int);     
+int (*a[10])(int); 
+
+// 一個整數型別
+// 一個指向整數的指標
+// 一個指向指標的指標，而"指向的指標"是指向一個整數型別
+// 一個有10個整數型的陣列
+// 一個有10個指標的陣列，該指標是指向一個整數型別
+// 一個指向有10個整數型陣列的指標
+// 一個指向函數的指標，該函數有一個整數型參數並返回一個整數
+// 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數
+```
+
+### *寫一個function讓變數a跟b能夠交換，不透過暫存變數*
+
+```c
+#include <stdio.h>
+
+void swap(int *a, int *b) {
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+}
+
+int main() {
+    int a = 5;
+    int b = 10;
+    printf("Before: a = %d, b = %d\n", a, b);
+    swap(&a, &b);
+    printf("After: a = %d, b = %d\n", a, b);
+    return 0;
+}
+```
+
+### *回答printf的答案*
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    char *str[] = {
+        {"MediaTekOnlineTesting"},
+        {"WelcomeToHere"},
+        {"Hello"},
+        {"EverydayGenius"},
+        {"HopeEverythingGood"}
+    };    
+    int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    char* m = str[4] + 4;
+    char* n = str[1];
+    char* p = *(str+2) + 1;
+    int *q = &(a + 1)[3];
+    printf("1. %s\n", *(str+1));
+    printf("2. %s\n", (str[3]+8));
+    printf("3. %c\n", *m);
+    printf("4. %c\n", *(n+3));
+    printf("5. %c\n", *p + 1);
+    printf("6. %d\n", *q);
+    return 0;
+} 
+// 1. WelcomeToHere
+// 2. Genius
+// 3. E
+// 4. c
+// 5. f
+// 6. 5
+```
+
+### *回答陣列的答案*
+
+```c
+#include <stdio.h>
+
+int main() {
+    int a[] = {6, 7, 8, 9, 10};
+    int *p = a;
+    *(p++) += 100;
+    *(++p) += 50;
+    for (int i = 0; i < 5; i++) {
+        printf("a[%d] = %d\n", i, a[i]);
+    }
+}
+// a[0] = 106
+// a[1] = 7
+// a[2] = 58
+// a[3] = 9
+// a[4] = 10
 ```
 
 ## ***2. call by value, call by reference, call by address***
@@ -305,39 +386,6 @@ interrupt : 當中斷觸發時,處理器會暫停目前處理的任務,轉而去
 
 polling : 它是一種定時檢查的方式,當檢查到有事件發生時才會去執行它。
 
-## ***16. qsort***
-
-* qsort範例 :
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int compare(const int *a, const int *b)
-{
-    return (*(const int*)a - *(const int*)b);
-}
-
-int main()
-{
-    int n, i;
-    int values[] = { 40, 10, 100, 90, 20, 25 };
-    n = sizeof(values) / sizeof(values[0]);
-
-    printf("Before sorting the list is: \n");
-    for (i = 0; i < n; i++)
-        printf("%d ", values[i]); // 40 10 100 90 20 25
-
-    qsort(values, n, sizeof(int), compare);
-
-    printf("\nAfter sorting the list is: \n");
-    for (i = 0; i < n; i++)
-        printf("%d ", values[i]); // 10 20 25 40 90 100
-
-    return 0;
-}
-```
-
 ## ***17. bubbleSort***
 
 * bubbleSort範例 :
@@ -373,32 +421,69 @@ int main()
 
 struct 是使用者自定的型態，包含數個不同資料型態的變數，將不同的資料型態關聯在一起，使他們的關聯更直覺。
 
-* struct範例 :
+* struct佔幾byte
 
 ```c
-#include <stdio.h>
-#include <string.h>
-
-int main()
+typedef struct MyStruct
 {
-    typedef struct student
+    char a[2];
+    int  b;
+    double c;
+};
+//ans = 1+3(對齊int)+4+8=16byte
+
+typedef struct MyStruct
+{
+    char a[2];
+    int  b;
+    double c;
+    int *Pint;
+    char d;
+    char*Pchar;
+};
+//ans = 1+3(對齊int)+4+8+4+1+3+4(由於(4+1+3+4)不是8的倍數故需要補4)+4=32byte
+
+typedef struct MyStruct
+{
+    char a;
+    char b;
+    struct str2
     {
-        char name[50];
-        int id;
-        float grade;
-    } student;
+        int d;
+    } c;
+};
+//ans = 1+1+4+2(對齊int)=8byte
 
-    student s1;
-    strcpy(s1.name, "John Doe"); 
-    // 字符串是常量，不能直接分配給字符數組，需要使用 strcpy 函數將字符串複制到字符數組中。
-    s1.id = 12345;
-    s1.grade = 90.50;
+typedef struct MyStruct
+{
+    char a;
+    int b;
+    char c;
+    char* d;
+    double* e;
+    struct str2
+    {
+        int f;
+        char g;
+        struct str3
+        {
+            char* p;
+        }n;
+    } m;
+};
+//ans = 1+3+4+1+3+4+4+4+1+3+4=32byte
 
-
-    printf("學生姓名：%s\n", s1.name);    // 學生姓名：John Doe
-    printf("學生學號：%d\n", s1.id);      // 學生學號：12345
-    printf("學生成績：%.2f\n", s1.grade); // 學生成績：90.50
-}
+typedef struct MyStruct
+{
+    char a;
+    char b;
+    struct str2
+    {
+        char c;
+        char d;
+    };
+};
+//ans = 1+1=2byte  *並沒有申明這個結構體的變數所以str2不用計算
 ```
 
 ## ***19. union***
@@ -502,6 +587,93 @@ enum color2 {red=10, green, blue=20, yellow};
 //red = 10, green = 11, blue = 20, yellow = 21
 ```
 
+## ***41. sizeof***
+
+* 各型態大小
+
+```c
+64-bit / 32-bit    
+sizeof(string)       : 8   : 4    
+sizeof(char)         : 1   : 1    
+sizeof(p)            : 8   : 4  
+sizeof(short)        : 2   : 2    
+sizeof(int)          : 4   : 4 
+sizeof(long)         : 8   : 4    
+sizeof(long long)    : 8   : 8    
+sizeof(size_t)       : 8   : 4    
+sizeof(double)       : 8   : 8    
+sizeof(long double)  : 16  : 12    
+```
+
+* 二維陣列大小
+
+```c
+#include <stdio.h>
+int main()
+{
+    int arr[3][4];
+    printf("1:%d\n", sizeof(arr));  // 結果為 48（3 * 4 * 4(int)）
+    char str[2][10];
+    printf("2:%d\n", sizeof(str));  // 結果為 20（2 * 10 * 1(char)）
+    int* ptr[5][3];
+    printf("3:%d\n", sizeof(ptr));  // 結果為 120（5 * 3 * 8(int*)）
+    struct Point 
+    {
+        int x;
+        int y;
+    };
+    struct Point points[4][3];
+    printf("4:%d\n", sizeof(points));  // 結果為 96（4 * 3 * 8(struct Point)）
+    return 0;
+}
+```
+
+## ***6. bit operation***
+
+### setting a bit
+
+```c
+int set_bit(int x, int n)
+    return x | (1 << n);
+```
+
+### clearing a bit
+
+```c
+int clear_bit(int x, int n)
+    return x & ~(1 << n);
+```
+
+### fliping a bit
+
+```c
+int flip_bit(int x, int n)
+    return x ^ (1 << n);
+```
+
+### checking a bit
+
+```c
+int check_bit(int x, int n)
+    return (x >> n) & 1;
+```
+
+### 回答ans的數值
+
+```c
+#include <stdio.h>
+
+int main() {
+    long ans = 0;
+    short a = 0x1234;
+    short b = 0x5600;
+    ans += a << 16;
+    ans += b << 0;
+    ans += (b >> 2) + 0x22;
+    printf("a=%x\n",ans);   // 12346BA2
+}
+```
+
 ---
 
 ## ***1. 設定一個絕對位址為0x67a9的整數型變數的值為0xaa55***
@@ -523,22 +695,6 @@ int main(void)
 ```c
 int isPowerof2(int n) {
     return n > 0 && (n & (n - 1)) == 0;
-}
-```
-
-## ***3. 下列程式碼輸出什麼***
-
-```c
-#include <stdio.h>
-
-int main(void)
-{
-    int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int *p = &(a + 1)[3];
-    printf("%d\n", *p); // 5
-    // 因為a+1指向a的第二個元素，[3]表示再向後移動3個元素
-    // a+1是跳一個int的大小(a想成指標)
-    // &a+1是跳一整個array的大小
 }
 ```
 
@@ -581,38 +737,6 @@ int main()
 }
 ```
 
-## ***6. Setting a bit***
-
-```c
-int set_bit(int x, int n){
-    return x | (1 << n);
-}
-```
-
-## ***7. Clearing a bit***
-
-```c
-int clear_bit(int x, int n) {
-    return x & ~(1 << n);
-}
-```
-
-## ***8. Toggle a bit***
-
-```c
-int toggle_bit(int x, int n) {
-    return x ^ (1 << n);
-}
-```
-
-## ***9. Checking a bit***
-
-```c
-int check_bit(int x, int n) {
-    return (x >> n) & 1;
-}
-```
-
 ## ***10. 寫個function判斷基數偶數***
 
 ```c
@@ -634,27 +758,6 @@ int func(int x){
     }
     return sum;
 }
-```
-
-## ***12. What is the content of array a***
-
-```c
-#include <stdio.h>
-
-int main() {
-    int a[] = {6, 7, 8, 9, 10};
-    int *p = a;
-    *(p++) += 100;
-    *(++p) += 50;
-    for (int i = 0; i < 5; i++) {
-        printf("a[%d] = %d\n", i, a[i]);
-    }
-}
-// a[0] = 106
-// a[1] = 7
-// a[2] = 58
-// a[3] = 9
-// a[4] = 10
 ```
 
 ## ***13. define vs typedef***
@@ -751,46 +854,6 @@ int main() {
     return 0;
 }
 ```
-
-## ***19. 算出以下數值***
-
-```c
-#include <stdio.h>
-
-int main(void) {
- char *str[] = {
-     {"MediaTekOnlineTesting"},
-     {"WelcomeToHere"},
-     {"Hello"},
-     {"EverydayGenius"},
-     {"HopeEverythingGood"}
- };
- char* m = str[4] + 4;
- char* n = str[1];
- char* p = *(str+2) + 1;
- printf("1. %s\n", *(str+1));
- printf("2. %s\n", (str[3]+8));
- printf("3. %c\n", *m);
- printf("4. %c\n", *(n+3));
- printf("5. %c\n", *p + 1);
- // 1. WelcomeToHere
- // 2. Genius
- // 3. E
- // 4. c
- // 5. f
- return 0;
-}
-```
-
-輸出 *(str+1)，也就是陣列 str 中第二個字串，即 "WelcomeToHere"。
-
-輸出 str[3]+8，也就是陣列 str 中第四個字串的第九個字元開始的子字串，即 "Genius"。
-
-輸出 *m，也就是指標 m 指向的字元，即 "HopeEverythingGood" 的第五個字元，即 "E"。
-
-輸出 *(n+3)，也就是指標 n 指向的字串的第四個字元，即 "WelcomeToHere" 的第四個字元，即 "c"。
-
-輸出 *p + 1，也就是指標 p 指向的子字串的第一個字元加一，即 "e" + 1，結果是 "f"。注意這裡加一的是字元的 ASCII 碼，而不是數值。
 
 ## ***20. 判斷Big-Endian or Little-Endian***
 
@@ -1058,71 +1121,6 @@ int main()
 // %c是印出字元,%f是印出浮點數,而var是整數所以他們兩個錯。
 ```
 
-## ***32. struct佔幾byte?***
-
-```c
-typedef struct MyStruct
-{
-    char a[2];
-    int  b;
-    double c;
-};
-//ans = 1+3(對齊int)+4+8=16byte
-
-typedef struct MyStruct
-{
-    char a[2];
-    int  b;
-    double c;
-    int *Pint;
-    char d;
-    char*Pchar;
-};
-//ans = 1+3(對齊int)+4+8+4+1+3+4(由於(4+1+3+4)不是8的倍數故需要補4)+4=32byte
-
-typedef struct MyStruct
-{
-    char a;
-    char b;
-    struct str2
-    {
-        int d;
-    } c;
-};
-//ans = 1+1+4+2(對齊int)=8byte
-
-typedef struct MyStruct
-{
-    char a;
-    int b;
-    char c;
-    char* d;
-    double* e;
-    struct str2
-    {
-        int f;
-        char g;
-        struct str3
-        {
-            char* p;
-        }n;
-    } m;
-};
-//ans = 1+3+4+1+3+4+4+4+1+3+4=32byte
-
-typedef struct MyStruct
-{
-    char a;
-    char b;
-    struct str2
-    {
-        char c;
-        char d;
-    };
-};
-//ans = 1+1=2byte  *並沒有申明這個結構體的變數所以str2不用計算
-```
-
 ## ***33. 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現。***
 
 ```c
@@ -1195,103 +1193,3 @@ int main()
     printf("min=%d\n",MIN(10,5));
 }
 ```
-
-## ***39. Write a code to swap integer a, b, without temporary variable.***
-
-```c
-#include <stdio.h>
-
-void swap(int *a, int *b) {
-    *a = *a ^ *b;
-    *b = *a ^ *b;
-    *a = *a ^ *b;
-}
-
-int main() {
-    int a = 5;
-    int b = 10;
-    printf("Before swapping: a = %d, b = %d\n", a, b);
-    swap(&a, &b);
-    printf("After swapping: a = %d, b = %d\n", a, b);
-    return 0;
-}
-```
-
-## ***40. bitwise 運算***
-
-```c
-#include <stdio.h>
-
-int main() {
-    long ans = 0;
-    short a = 0x1234;
-    short b = 0x5600;
-    ans += a << 16;
-    ans += b << 0;
-    ans += (b >> 2) + 0x22;
-    printf("a=%x\n",ans);   // 12346BA2
-}
-```
-
-## ***41. Sizeof***
-
-```c
-64bit
-sizeof(string)       = 8
-sizeof(char)         = 1
-sizeof(p)            = 8
-sizeof(short)        = 2
-sizeof(int)          = 4
-sizeof(long)         = 8
-sizeof(long long)    = 8
-sizeof(size_t)       = 8
-sizeof(double)       = 8
-sizeof(long double)  = 16
-
-32bit
-sizeof(string)       = 4
-sizeof(char)         = 1
-sizeof(p)            = 4  //指標
-sizeof(short)        = 2
-sizeof(int)          = 4  //怕因環境影響程式,絕大多數64,32的編譯器是一樣大
-sizeof(long)         = 4      
-sizeof(long long)    = 8
-sizeof(size_t)       = 4
-sizeof(double)       = 8
-sizeof(long double)  = 12    //看作long+double = 4 + 8 =12
-```
-
-
-sizeof集錦(二維陣列的各大小)
-
-在 C 語言中，sizeof 是一個運算符，用於計算變數、資料型別或陣列的大小（以位元組為單位）。下面是關於二維陣列的幾個常見 sizeof 應用的示例：
-
-二維整數陣列的大小：
-c
-Copy code
-int arr[3][4];
-size_t size = sizeof(arr);
-printf("二維整數陣列的大小：%zu\n", size);  // 結果為 48（3 * 4 * sizeof(int)）
-二維字符陣列的大小：
-c
-Copy code
-char str[2][10];
-size_t size = sizeof(str);
-printf("二維字符陣列的大小：%zu\n", size);  // 結果為 20（2 * 10 * sizeof(char)）
-二維指標陣列的大小：
-c
-Copy code
-int* ptr[5][3];
-size_t size = sizeof(ptr);
-printf("二維指標陣列的大小：%zu\n", size);  // 結果為 60（5 * 3 * sizeof(int*)）
-二維結構體陣列的大小：
-c
-Copy code
-struct Point {
-    int x;
-    int y;
-};
-
-struct Point points[4][3];
-size_t size = sizeof(points);
-printf("二維結構體陣列的大小：%zu\n", size);  // 結果為 96（4 * 3 * sizeof(struct Point)）

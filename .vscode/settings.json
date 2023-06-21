@@ -4,6 +4,9 @@
         "stdlib.h": "c",
         "string.h": "c",
         "compare": "c",
-        "xutility": "c"
+        "xutility": "c",
+        "initializer_list": "c",
+        "type_traits": "c",
+        "xstring": "c"
     }
 }
