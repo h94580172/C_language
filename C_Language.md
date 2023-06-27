@@ -1105,23 +1105,71 @@ int result = 2 * MIN(6,10);
 
 ## ***42. Explain lvalue and rvalue***
 
+- ***lvalue：左值通常指的是運算式後還保留其狀態的一個物件，通常指的是所有的變數都是左值
+rvalue：右值通常指的是一個運算式過後其狀態就不會被保留了，也就是一個暫時存在的數值***
+
 ```c
-lvalue：指的是可以出現在等號左邊 (assignment expression 的左邊) 的運算式，lvalue 可以被當成是一個物件 (object)，它具有某個記憶體位址，可以對它進行讀取或寫入的操作。例如，變數、陣列元素、指向變數或陣列元素的指標、結構體成員等都是 lvalue。
-
-rvalue：指的是不能出現在等號左邊的運算式，也就是沒有記憶體位置 (address) 的運算式，只有值 (value) 的運算式。rvalue 可以是常數、運算式的結果、函數的回傳值等。在運算式中，rvalue 可以被當成一個數值、一個指標或一個結構體等值的表達式，但是無法對它進行寫入操作。
-
-以下是一例子： int a = 5;  // a 是 lvalue，5 是 rvalue
+int a = 5;  // a 是 lvalue,5 是 rvalue
 ```
 
 ## ***43. 印出菱形***
 
 ```c
-#include <stdio.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-#define MIN(a,b) (a < b ? a : b)
+void diamond()
+{
+    int i,input,star,space,mid;
+    printf("input:");
+    scanf("%d",&input);
+    mid = (input/2) + 1;
+    for(i=1; i<=mid; i++){
+        for(space=i; space<mid; space++)    printf(" ");
+        for(star=1; star<=(2*i)-1; star++)  printf("*");
+        printf("\n");
+    }
+    for(i=mid-1; i>0; i--){
+        for(space=i; space<mid; space++)    printf(" ");
+        for(star=1; star<=(2*i)-1; star++)  printf("*");
+        printf("\n");
+    }
+}
+
+void empty_diamond()
+{
+    int i, input, star, space, mid;
+    printf("input");
+    scanf("%d", &input);
+    mid = (input / 2) + 1;
+    for (i = 1; i <= mid; i++) {
+        for (space = i; space < mid; space++)   
+            printf(" ");
+        for (star = 1; star <= (2 * i) - 1; star++) {
+            if (star == 1 || star == (2 * i) - 1)
+                printf("*");
+            else
+                printf(" ");
+        }
+        printf("\n");
+    }
+    for (i = mid - 1; i > 0; i--) {
+        for (space = i; space < mid; space++)   
+            printf(" ");
+        for (star = 1; star <= (2 * i) - 1; star++){
+            if (star == 1 || star == (2 * i) - 1)
+                printf("*");
+            else
+                printf(" ");
+        }
+        printf("\n");
+    }
+}
 
 int main()
-{   
-    printf("min=%d\n",MIN(10,5));
+{
+    empty_diamond();
+    diamond();
+    return 0;
 }
 ```
