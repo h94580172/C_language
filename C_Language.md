@@ -949,14 +949,14 @@ int main() {
 
 ```
 
-## ***34. binary serach***
+## ***34. binary search***
 
 ```c
 #include <stdio.h>
 
 int binary_search(int arr[], int left, int right, int target){
     while(left <= right){
-        int mid = left + (right - left);
+        int mid = left + (right - left)/2;
         if(arr[mid] == target)
             return mid;
         else if(arr[mid] > target)
@@ -974,22 +974,36 @@ int main(){
     printf("res=%d\n",result);
     return 0;
 }
+// 考虑以下情况：
+
+// 如果直接使用 mid = (right - left) / 2，那么 mid 的范围将始终是从 0 到 (right - left) / 2。
+// 但实际上，我们希望 mid 的范围是从 left 到 right。
+// 因此，为了保持 mid 在正确的范围内，我们需要加上 left 的偏移量，即 mid = left + (right - left) / 2。
+
+// 这样，mid 的计算结果将是一个介于 left 和 right 之间的值，确保每次迭代时都在正确的搜索范围内进行比较，从而正确地找到目标元素。
 ```
 
 ## ***35. 給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0***
 
 ```c
-int isHexEqaul(unsigned short input) {     // input = 0xAAAA;
-    unsigned short hex[4]; // 0xFFFF ==> 0000 0000 0000 0000
-    int is_eqaul;
+int function(unsigned short num) {
+    unsigned short temp[4];
+    temp[0] = (num&0xF000) >> 12;
+    temp[1] = (num&0x0F00) >> 8;
+    temp[2] = (num&0x00F0) >> 4;
+    temp[3] = num&0x000F;
+    if((temp[0] ^ temp[1] ^ temp[2] ^ temp[3]) == 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
 
-    hex[0] = (input & 0xF000) >> 12;
-    hex[1] = (input & 0x0F00) >> 8;
-    hex[2] = (input & 0x00F0) >> 4;
-    hex[3] = input & 0x000F;
-
-    is_eqaul = (hex[0] ^ hex[1] ^ hex[2] ^ hex[3]);
-    return !(is_eqaul);
+int main() {
+    unsigned short num = 0xAAAA;
+    printf("ans:%d\n",function(num));
+    return 0;
 }
 ```
 
@@ -1029,30 +1043,6 @@ int main() {
 
     return 0;
 }
-```
-
-## ***38. (多選題)問哪邊會出現錯誤(以及錯在哪)，及要如何初始化?***
-
-```c
-union Var
-{ 
-    char ch;
-    int num1;
-    double num2;
-}; 
-int main()
-{
-
-    union Var var = {123}; 
-    printf("var.ch = %c\n",var.ch); 
-    printf("var.num1 = %d\n",var.num1); 
-    printf("var.num2 = %.3f\n",var.num2); 
-    
-    return 0;
-}
-
-// 初始化時給予的數值類型不符合 union 成員的類型。
-// %c是印出字元,%f是印出浮點數,而var是整數所以他們兩個錯。
 ```
 
 ## ***39. 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現。***

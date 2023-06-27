@@ -35,62 +35,32 @@
 //     printf("min:%d\n",MIN(88,6));
 //     return 0;
 // }
-#include<stdio.h>
-#include<stdlib.h>
 
-void diamond()
-{
-    int i,input,star,space,mid;
-    printf("input:");
-    scanf("%d",&input);
-    mid = (input/2) + 1;
-    for(i=1; i<=mid; i++){
-        for(space=i; space<mid; space++)    printf(" ");
-        for(star=1; star<=(2*i)-1; star++)  printf("*");
-        printf("\n");
+//給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0
+
+#include <stdio.h>
+
+int binarySearch(int arr[], int target, int right, int left){
+    while(left <= right){
+        int mid = left + (right - left)/2;
+        if(target == arr[mid]){
+            return mid;
+        }
+        else if(target > arr[mid]){
+            left = mid+1;
+        }
+        else{
+            right = mid-1;
+        }
     }
-    for(i=mid-1; i>0; i--){
-        for(space=i; space<mid; space++)    printf(" ");
-        for(star=1; star<=(2*i)-1; star++)  printf("*");
-        printf("\n");
-    }
+    return -1;
+    
 }
 
-void empty_diamond()
-{
-    int i, input, star, space, mid;
-    printf("input");
-    scanf("%d", &input);
-    mid = (input / 2) + 1;
-    for (i = 1; i <= mid; i++) {
-        for (space = i; space < mid; space++)
-            printf(" ");
-        for (star = 1; star <= (2 * i) - 1; star++) {
-            if (star == 1 || star == (2 * i) - 1) {
-                printf("*"); // 打印星號在第一個和最後一個位置
-            } else {
-                printf(" "); // 打印空格在其他位置
-            }
-        }
-        printf("\n");
-    }
-    for (i = mid - 1; i > 0; i--) {
-        for (space = i; space < mid; space++)
-            printf(" ");
-        for (star = 1; star <= (2 * i) - 1; star++) {
-            if (star == 1 || star == (2 * i) - 1) {
-                printf("*"); // 打印星號在第一個和最後一個位置
-            } else {
-                printf(" "); // 打印空格在其他位置
-            }
-        }
-        printf("\n");
-    }
-}
-
-int main()
-{
-    empty_diamond();
-    diamond();
+int main() {
+    int arr[] ={1,2,3,5,7,9,12,18,22};
+    int right = sizeof(arr)/sizeof(arr[0]);
+    int ans =  binarySearch(arr,22,right-1,0);
+    printf("ans:%d\n",ans);
     return 0;
 }
