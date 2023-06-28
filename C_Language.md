@@ -916,31 +916,24 @@ void function(int *a, int size, int b)
 
 #include <stdio.h>
 
-int main() 
-{
+int main() {
     for(int i=0; i<5; i++){
-        for(int j=0+i; j<5; j++)    printf(" ");
-        for(int j=5-i; j<=5; j++)   printf("*");
+        for(int j=i; j<4; j++){
+            printf(" ");
+        }
+        for(int k=0; k<=i; k++){
+            printf("*");
+        }
         printf("\n");
     }
+    return 0;
 }
-```
 
-## ***32. a是多少***
-
-```c
-unsigned int a,b;
-
-for(b = 2; b >= 0 ; b--)
-{
-   a++;
-}
-cout << a;
-
-Ans : 這題因為b是unsigned int 所以永遠不會小於0，你就回答爆掉或a = inf就好
 ```
 
 ## ***33. 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值***
+
+- ***一般解法***
 
 ```c
 #include <stdio.h>
@@ -963,16 +956,36 @@ int fibonacci(int n) {
 }
 
 int main() {
-    int n = 10;  // 要計算費式數列的項數
-    printf("費式數列的前 %d 項：\n", n);
-    for (int i = 0; i < n; i++) {
-        printf("%d ", fibonacci(i));
-    }
-    printf("\n");
-
+    int n;
+    printf("input:");
+    scanf("%d",&n);
+    printf("%d\n",function(n));
     return 0;
 }
+```
 
+- ***遞迴解法***
+
+
+```c
+int function(int n) {
+  if(n == 0){ 
+    return 0;
+  }
+  if(n == 1){ 
+    return 1;
+  }
+  
+  return function(n - 1) + function(n - 2); 
+}
+
+int main() {
+    int n;
+    printf("input:");
+    scanf("%d",&n);
+    printf("%d\n",function(n));
+    return 0;
+}
 ```
 
 ## ***34. binary search***
