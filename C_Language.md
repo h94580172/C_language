@@ -579,10 +579,9 @@ int main() {
 }
 ```
 
-
 ## ***15. bubbleSort***
 
-- ***bubbleSort範例 :***
+- ***bubbleSort版本1 :***
 
 ```c
 #include <stdio.h>
@@ -609,6 +608,35 @@ int main()
         printf("%d ", arr[i]);
     return 0;
 }
+```
+
+- ***bubbleSort版本2 :***
+
+```c
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int arr[] = {64, 7, 34, 25, 12, 22, 11, 90};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, n);
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    return 0;
+}
+
+
 ```
 
 ## ***16. quick sort***
@@ -783,7 +811,7 @@ int main() {
 
 ## ***26. declaration（宣告）和 definition（定義）的差異***
 
-- ***declaration（宣告） : 宣告是指告訴編譯器一個變數、函數、類型等識別符號的名稱和類型，但不分配存儲空間，也不執行初始化***
+- ***宣告 : 宣告是指告訴編譯器一個變數、函數、類型等識別符號的名稱和類型，但不分配存儲空間，也不執行初始化***
 
 ```c
 extern int x;       
@@ -791,8 +819,8 @@ void foo();
 struct MyStruct;     
 ```
 
-- ***definition（定義）: 定義是指為變數、函數、類型等識別符號分配存儲空間，並且可能進行初始化***
-
+- ***定義 : 定義是指為變數、函數、類型等識別符號分配存儲空間，並且可能進行初始化***
+  
 ```c
 int x;                 
 void foo() {             
@@ -803,7 +831,7 @@ struct MyStruct {
 };
 ```
 
-**在C語言中，每個變數和函數只能有一個定義，但可以有多個宣告**
+***(每個變數和函數只能有一個定義，但可以有多個宣告)***
 
 ## ***27. Reverse a string***
 
@@ -912,9 +940,7 @@ cout << a;
 Ans : 這題因為b是unsigned int 所以永遠不會小於0，你就回答爆掉或a = inf就好
 ```
 
-## ***33. 費式數列***
-
-0 1 1 2 3 5 8 13 21 34 55...n,寫一個函數,輸入值是位置的值"n",要找出相對應的值
+## ***33. 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值***
 
 ```c
 #include <stdio.h>
