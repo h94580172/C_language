@@ -730,15 +730,16 @@ int main(void)
 int main()
 {
     int i = 5;
-    int j = i++ // i++ : 表示先返回 i 的值，然後再將其加 1。
-    printf("i1 = %d\n",i);  // 6
-    printf("j1 = %d\n",j);  // 5
+    int j = i++;
+    printf("i1 = %d\n",i);  
+    printf("j1 = %d\n",j);  
 
     i = 5;
-    j = ++i; // ++i : 表示先將 i 的值加 1，然後再返回它。
-    printf("i2 = %d\n",i);  // 6
-    printf("j2 = %d\n",j);  // 6
+    j = ++i; 
+    printf("i2 = %d\n",i);
+    printf("j2 = %d\n",j);  
     return 0;
+    //ans : 6 5 6 6
 }
 ```
 
@@ -765,24 +766,21 @@ int func(int x){
 }
 ```
 
-## ***23. define vs typedef***
+## ***23. 以下define與typedef的用法誰較佳***
 
 ```c
 #define dPS struct s *
-typedef struct s * tPS;
-以上兩種情況的意圖都是要定義dPS 和 tPS 作為一個指向結構s指標。哪種方法更好呢 ? 為什麼 ?
-
----
-
-答案是︰typedef
-
-思考下面的例子︰
-#define dPS struct s *
-typedef struct s * tPS;
 dPS p1, p2;
+struct s * p1, p2;
+// p1為一個指向結構s的指標，p2為一個實際的結構s。
+
+typedef struct s * tPS;
 tPS p3, p4;
-dPS擴展為 struct s * p1, p2;
-上面的程式碼定義p1為一個指向結構的指標，p2為一個實際的結構。
+struct s * p3;
+struct s * p4;
+// p3/4為一個指向結構s的指標
+
+//Ans ︰ typedef
 ```
 
 ## ***24. What is the output of the following program***
@@ -794,9 +792,8 @@ int main() {
     (a + b > 6) ? puts(">6") : puts("<= 6");
 }
 
-// 當表達式中存在有符號類型和無符號類型（unsigned）
-// 時所有的操作數都自動轉換為無符號類型。
-// 因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大于6。
+// 當表達式同時存在有符號類型和無符號類型時皆都自動轉換為無符號類型。
+// 因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大於6。
 ```
 
 ## ***25. The faster way to an integer multiply by 7***
@@ -811,27 +808,25 @@ int main() {
 
 ## ***26. declaration（宣告）和 definition（定義）的差異***
 
-- ***宣告 : 宣告是指告訴編譯器一個變數、函數、類型等識別符號的名稱和類型，但不分配存儲空間，也不執行初始化***
+- ***差異 : 宣告是告訴編譯器一個變數的名稱和類型，但不分配存儲空間，而定義則會分配儲存空間***
 
 ```c
-extern int x;       
-void foo();       
-struct MyStruct;     
+int num; //宣告
+
+num = 10; //定義
 ```
 
-- ***定義 : 定義是指為變數、函數、類型等識別符號分配存儲空間，並且可能進行初始化***
-  
+- ***(每個變數和函數只能有一個定義，但可以有多個宣告)***
+
 ```c
-int x;                 
-void foo() {             
-    //content
-}
-struct MyStruct {            
-    //content
-};
+// 檔案1.c
+int globalVar; // 宣告外部變數
+
+// 檔案2.c
+extern int globalVar; // 外部變數的宣告
+globalVar = 100; // 定義外部變數的值為100
 ```
 
-***(每個變數和函數只能有一個定義，但可以有多個宣告)***
 
 ## ***27. Reverse a string***
 
