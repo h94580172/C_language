@@ -861,11 +861,35 @@ int main() {
 
 ## ***28. 判斷Big-Endian or Little-Endian***
 
-在現今主流的 CPU 中，最常見的位元組順序有兩種，分別是 Big-Endian 與 Little-Endian，Big-Endian 是指資料放進記憶體中的時候，最高位的位元組會放在最低的記憶體位址上，而 Little-Endian 則是剛好相反，它會把最高位的位元組放在最高的記憶體位址上。
+- ***Big / Little-Endian : 他們是CPU中兩種不同位元組排序
+Big-Endian : 最高位的位元組會放在最低的記憶體位址上
+Little-Endian : 最高位的位元組會放在最高的記憶體位址上***
 
 ![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*Tp4eqqbFuIsWnyXv.png)
 
 ![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*sSII9z24WkAGpm3k.png)
+
+```c
+#include <stdio.h>
+int main() {
+    typedef union {
+        unsigned int i;
+        unsigned char c[4];
+    } EndianTest;
+    EndianTest t;
+    t.i = 0x12345678;
+    if(t.c[0] == 0x12 && t.c[1] == 0x34 && t.c[2] == 0x56 && t.c[3] == 0x78){
+        printf("Big Endian!!");
+    }else if(t.c[0] == 0x78 && t.c[1] == 0x56 && t.c[2] == 0x34 && t.c[3] == 0x12){
+        printf("Little Endian!!");
+    }else{
+        printf("Other Endian!!");
+    }
+    
+    return 0;
+}
+// 需要用union的原因是因為他們共用同一個記憶體位置,而struct會因記憶體對齊可能導致錯誤
+```
 
 ## ***29. 給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素***
 
@@ -882,9 +906,16 @@ void function(int *a,int size)
         printf("%d\n",i);
     }
 }
+
+int main() {
+    int nums[20] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20};
+    int size = 500;
+    function(nums,size);
+    return 0;
+}
 ```
 
-## ***30. 分類0~500***
+## ***30. 給一個int a[20]已排序的陣列，請寫一個function(a, size, b) 能依照參數b(b = 0~4)別印出該區間的數字，且不包含a陣列內的元素，例如 b =0, 印出0~99 b = 1, 印出100~199***
 
 ```c
 void function(int *a, int size, int b)
@@ -903,6 +934,14 @@ void function(int *a, int size, int b)
             printf("%d\n", i);
     }
 }
+
+int main() {
+    int nums[20] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,20};
+    int n = 0;
+    function(nums,n);
+    return 0;
+}
+
 ```
 
 ## ***31. 印出下列圖形***
@@ -1086,31 +1125,62 @@ int main() {
 
 ## ***39. 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現。***
 
+- ***一般解法***
+
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_NUM 500
+#define NUM 501
 
-int random(int *arr) {
-    int count = 0; // 已經抽出的數字個數
-    while (count < MAX_NUM) {
-    int num = rand() % (MAX_NUM + 1); // 隨機產生一個數字
-        if (arr[num] == 0) { // 如果這個數字還沒被抽過
-            arr[num] = 1; // 標記為已經抽過
-            count++; // 已經抽出的數字個數加 1
-            printf("%d ", num); // 輸出這個數字
+void func(int *nums){
+    int count = 0;
+    while(count < NUM){
+        int temp = rand() % NUM;
+        if(nums[temp] == 0){
+            nums[temp] = 1;
+            count++;
+            printf("%d ",temp);
         }
     }
 }
 
-int main() {
-    int nums[MAX_NUM + 1]; // 儲存 0~500 的數字，初始化為 0
-    for (int i = 0; i <= MAX_NUM; i++) {
+int main(){
+    int nums[NUM];
+    for(int i=0; i<NUM; i++){
         nums[i] = 0;
     }
-    random(nums);
+    func(nums);
     return 0;
+}
+```
+
+- ***進階解法***
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int* a, int* b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int nums[501];
+    for(int i=0; i<501; i++){
+        nums[i] = i;
+    }
+    int final = 500;
+    int choose;
+    while(final >= 0){
+        choose = rand()%(final+1);
+        printf("%d ",nums[choose]);
+        swap(&nums[choose], &nums[final]);
+        final--;
+    }
 }
 ```
 
