@@ -1311,6 +1311,36 @@ int main()
 }
 ```
 
+
+## ***印出以下***
+
+```text
+999999999
+ 7777777
+  55555
+   333
+    1
+```
+
+```c
+#include <stdio.h>
+
+int main() {
+    int x=9;
+    for(int i=0; i<5; i++){
+        for(int s=0; s<i; s++){
+            printf(" ");
+        }
+        for(int n=9-2*i; n>0; n--){
+            printf("%d",x);
+        }
+        x-=2;
+        printf("\n");
+    }
+    return 0;
+}
+```
+
 ## ***Interrupt***
 
 - ***解釋 Interrupt 的處理流程***
@@ -1396,3 +1426,77 @@ Ans：
 7個 (1,2,4,8,16,32,64)
 ```
 
+- ***請依照以下題目填寫答案***
+
+```text
+假設32位元系統，Little-Endian
+
+uint32_t a =0x12345678;
+uint8_t *p;
+p =(uint8_t*)&a;
+*p = ?
+```
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+int main() {
+    uint32_t a =0x12345678;
+    uint8_t *p;
+    p =(uint8_t*)&a;    //8bit = 0x78(little endian)
+    
+    printf("%x",*p);
+    return 0;
+}
+```
+
+```text
+假設32位元系統，Little-Endian
+
+uint32_t a =0x12345678;
+uint32_t *p;
+a_address =0x5A6000;
+p = &a;
+問p+1 = ?
+```
+
+```c
+
+// uint32_t  = 4 bytes;
+// 又是little Endian 所以 位址+4bytes
+
+#include <stdio.h>
+#include <stdint.h>
+
+int main() {
+    uint32_t a =0x12345678;
+    uint32_t *p;
+    p = &a;
+    printf("%p\n",&a);   //0x5A6000;
+    printf("%p\n",p+1);  //0x5A6004;
+    return 0;
+}
+```
+
+- ***if(b() && a()) 這樣的寫法會有啥問題?***
+
+```text
+if( a && b ){
+    ......
+}
+
+if會先判斷a再判斷b。
+只有a成立才會繼續判斷b，否則馬上跳出。
+
+if( b && a ){
+    ......
+}
+
+if會先判斷b在判斷a。
+這樣會有什麼問題呢? (不是就跟上面一樣嗎?)
+假若a是(ptr_1 != 0)，b是(ptr_1->data == ptr_2->data)。
+不先判斷a是否成立而先判斷 ptr_1 和 ptr_2 內容資料是否相等，
+若(ptr_1 != 0)不成立則會發生記憶體讀取錯誤。
+
+```
