@@ -161,6 +161,154 @@ int main() {
 }
 ```
 
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    char i[ ] = "Hello";
+    char *p = 1;
+    int n = 10;
+    printf("%d %d %d", sizeof(i), sizeof(p), sizeof(n));
+
+    return 0;
+}
+// 6,8,4
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int arr[] = {10,20,30,40,50};
+    int *ptr1 = arr;
+    int *ptr2 = arr + 5;
+    printf("%d", (ptr2-ptr1));
+    printf("%d", (char*)ptr2 - (char*)ptr1);
+}
+// 5,20(5*4)
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int arr1[] = {10,20};
+    int arr2[] = {10,20};
+    int arr3[] = {10,20};
+    int *p = arr1;
+    int *q = arr2;
+    int *r = arr3;
+    ++*p;
+    *q++;
+    *++r;
+    printf("%d %d %d\n", arr1[0], arr1[1], *p);
+    printf("%d %d %d\n", arr2[0], arr2[1], *q);
+    printf("%d %d %d\n", arr3[0], arr3[1], *r);
+    // 11 20 11
+    // 10 20 20
+    // 10 20 20
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+void f1(int *p, int *q){
+    p = q;
+    *p = 2;
+}
+
+void f2(int *p, int *q){
+    *p = *q;
+    *p = 2;
+}
+
+int main(){
+    int i=0, j=1;
+    f1(&i, &j);
+    printf("%d %d\n", i, j);
+
+    i=0, j=1;
+    f2(&i, &j);
+    printf("%d %d\n", i, j);
+    return 0;
+
+    // 0 2
+    // 2 1
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int ref[]={8,4,0,2};
+    int *ptr;
+    int index;
+    for(index=0, ptr=ref; index<2; index++,ptr++)
+        printf("%d %d\n", ref[index], *ptr);
+    (*ptr++);
+    printf("%d %d\n", ref[index], *ptr);
+/*
+ * 8 8
+ * 4 4 
+ * 0 2
+ */    
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    char *str[ ][2] =
+        { "professor", "Justin" ,
+        "teacher", "Momor" ,
+        "student", "Caterpillar"};
+
+    char *str2[ ][3] =
+        { "professor", "Justin" ,
+        "teacher", "Momor" ,
+        "student", "Caterpillar"};
+
+    char str3[3][10] = {"professor", "Justin", "etc"};
+    printf("%s\n",str[1][1]); 
+    printf("%s\n",str2[1][1]);
+    printf("%c\n",str3[1][1]); 
+    // Momor
+    // student
+    // u
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    int cnt = 10;
+    const char *pc = "welcome";
+    while(*pc++)
+        cnt++;
+    printf("cnt:%d\n",cnt);
+    // 17
+}
+```
+
 - ***different between pointer and array (memory)***
 
 ```c
@@ -414,12 +562,73 @@ printf("\n %d", SQUARE(3+2)); // 但如果是以下，卻會得到 11 (3+2 * 3+2
 #endif
 ```
 
-## ***different between interrupt and polling***
+- ***#define swap***
 
-- ***interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理的任務，轉而去執行中斷相關程序，等到處理完畢時才會回到原本的任務上***
+```c
+#include <stdio.h>
 
-- ***polling : 它是一種定時檢查的方式，當檢查到有事件發生時才會去執行它***
+#define swap(a, b) {int temp = a; a = b; b = temp;}
+int main() {
+    int a=5,b=6;
+    swap(a,b);
+    printf("%d %d\n", a,b);
 
+    return 0;
+}
+```
+
+- ***以下define與typedef的用法誰較佳***
+
+```c
+#define dPS struct s *
+dPS p1, p2;
+struct s * p1, p2;
+// p1為一個指向結構s的指標，p2為一個實際的結構s。
+
+typedef struct s * tPS;
+tPS p3, p4;
+struct s * p3;
+struct s * p4;
+// p3/4為一個指向結構s的指標
+
+//Ans ︰ typedef
+```
+
+## ***Interrupt***
+
+- ***解釋 Interrupt 的處理流程***
+
+```text
+1. 儲存目前CPU的執行狀態
+
+2. 經由 Interrupt vector 查詢對應的 ISR （Interrupt Service Routine）起始位址並跳至該處
+
+3. 執行 ISR 裡的內容
+
+4. ISR 執行完成後繼續執行被中斷打斷的原始程序
+```
+
+- ***Interrupt 有哪些***
+
+```text
+1. 外部中斷（External Interrupt）：這種中斷是由於外部事件或設備引發的。MCU可以設定外部中斷接腳，當接腳狀態發生變化時（如電位上升或下降），觸發相應的中斷。例如，按下按鈕、感應器檢測到特定事件或外部設備發送的訊號等。
+
+2. 定時器中斷（Timer Interrupt）：MCU通常具有內部的計時器/計數器模組，可以用於定時和計數操作。這種中斷是在特定時間間隔或計數達到特定值時觸發的。定時器中斷常用於進行定時任務、計時操作或產生精確的時間延遲。
+
+3. 串列通訊中斷（Serial Communication Interrupt）：MCU通常支援不同的串列通訊協議，如UART（Universal Asynchronous Receiver-Transmitter）或SPI（Serial Peripheral Interface）。這種中斷是在接收到完整的串列數據、發送數據完成或發生通訊錯誤時觸發的。
+
+4. ADC中斷（Analog-to-Digital Converter Interrupt）：MCU通常具有ADC模組，用於將類比信號轉換為數位值。這種中斷是在ADC完成轉換並提供新的數位值時觸發的。它可以用於即時監測類比信號的變化，例如溫度、光照等。
+
+5. 內部中斷（Internal Interrupt）：這種中斷是由MCU內部事件觸發的。例如，存儲器錯誤、數學錯誤或其他不正常狀態等。內部中斷可以用於處理系統錯誤或異常情況。
+```
+
+- ***different between interrupt and polling***
+
+```text
+interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理的任務，轉而去執行中斷相關程序，等到處理完畢時才會回到原本的任務上
+
+polling : 它是一種定時檢查的方式，當檢查到有事件發生時才會去執行它
+```
 ## ***struct***
 
 - ***struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起***
@@ -522,6 +731,30 @@ int main() {
 }
 ```
 
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+union AA{
+    char a[2];
+    int s;
+};
+
+int main()
+{
+    union AA aa = {0};
+    aa.a[0] = 12;
+    aa.a[1] = 1;
+    printf("%x\n", aa.s);
+    printf("%zu\n", sizeof(aa));
+    return 0;
+    // 10C = 0x01 0C
+    // 4
+}
+
+```
+
 ## ***enum***
 
 - ***enum : 是一種常數定義方式，可以提升可讀性，enum 裡的識別字會以 int 的型態，從指定的值開始遞增排列 (預設為 0)***
@@ -584,6 +817,22 @@ int main()
 }
 ```
 
+- ***各sizeof大小***
+
+```c
+#include <stdio.h>
+
+int main() {
+    char *s = "hello"; 
+    char s1[]={'h','e','l','l','o'}; 
+    int s2[]={'h','e','l','l','o'}; 
+    printf("%d\n", sizeof(s));  //ponit 32位元為4byte / 64位元為8byte
+    printf("%d\n", sizeof(s1)); //1*5 = 5
+    printf("%d\n", sizeof(s2)); //4*5 = 20
+    return 0;
+}
+```
+
 ## ***bit operation***
 
 - ***setting a bit***
@@ -627,6 +876,74 @@ int main() {
     ans += b << 0;
     ans += (b >> 2) + 0x22;
     printf("a=%x\n",ans);   // 12346BA2
+}
+```
+
+- ***0x12345678 轉換為 0x87654321***
+
+```c
+#include <stdio.h>
+
+unsigned int swapEndian(unsigned int value) {
+    unsigned int result = 0;
+    result |= (value & 0x000000FF) << 24;  
+    result |= (value & 0x0000FF00) << 8;   
+    result |= (value & 0x00FF0000) >> 8;   
+    result |= (value & 0xFF000000) >> 24;  
+    return result;
+}
+
+int main() {
+    unsigned int data = 0x12345678;
+    printf("轉換前: 0x%08X\n", data);
+
+    unsigned int swapped = swapEndian(data);
+    printf("轉換後: 0x%08X\n", swapped);
+
+    return 0;
+}
+```
+
+## ***給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0***
+
+```c
+int function(unsigned short num) {
+    unsigned short temp[4];
+    temp[0] = (num&0xF000) >> 12;
+    temp[1] = (num&0x0F00) >> 8;
+    temp[2] = (num&0x00F0) >> 4;
+    temp[3] = num&0x000F;
+    if((temp[0] ^ temp[1] ^ temp[2] ^ temp[3]) == 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+int main() {
+    unsigned short num = 0xAAAA;
+    printf("ans:%d\n",function(num));
+    return 0;
+}
+```
+
+- ***odd & even change***
+
+```c
+#include <stdio.h>
+
+int odd_even_change( int a){
+    
+    return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
+}
+
+int main() {
+    int a = 0x1234;
+    int b = odd_even_change(a);
+    printf("%x\n",b);
+
+    return 0;
 }
 ```
 
@@ -821,23 +1138,6 @@ int func(int x){
 }
 ```
 
-## ***以下define與typedef的用法誰較佳***
-
-```c
-#define dPS struct s *
-dPS p1, p2;
-struct s * p1, p2;
-// p1為一個指向結構s的指標，p2為一個實際的結構s。
-
-typedef struct s * tPS;
-tPS p3, p4;
-struct s * p3;
-struct s * p4;
-// p3/4為一個指向結構s的指標
-
-//Ans ︰ typedef
-```
-
 ## ***What is the output of the following program***
 
 ```c
@@ -910,9 +1210,11 @@ int main() {
 
 ## ***判斷Big-Endian or Little-Endian***
 
-- ***Big / Little-Endian : 他們是CPU中兩種不同位元組排序
+```text
+Big / Little-Endian : 他們是CPU中兩種不同位元組排序
 Big-Endian : 最高位的位元組會放在最低的記憶體位址上
-Little-Endian : 最高位的位元組會放在最高的記憶體位址上***
+Little-Endian : 最高位的位元組會放在最高的記憶體位址上
+```
 
 ![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*Tp4eqqbFuIsWnyXv.png)
 
@@ -938,6 +1240,57 @@ int main() {
     return 0;
 }
 // 需要用union的原因是因為他們共用同一個記憶體位置,而struct會因記憶體對齊可能導致錯誤
+```
+
+- ***請依照以下題目填寫答案***
+
+```text
+假設32位元系統，Little-Endian
+
+uint32_t a =0x12345678;
+uint8_t *p;
+p =(uint8_t*)&a;
+*p = ?
+```
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+int main() {
+    uint32_t a =0x12345678;
+    uint8_t *p;
+    p =(uint8_t*)&a;    //8bit = 0x78(little endian)
+    
+    printf("%x",*p);
+    return 0;
+}
+```
+
+```text
+假設32位元系統，Little-Endian
+
+uint32_t a =0x12345678;
+uint32_t *p;
+a_address =0x5A6000;
+p = &a;
+問p+1 = ?
+```
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+int main() {
+    uint32_t a =0x12345678;
+    uint32_t *p;
+    p = &a;
+    printf("%p\n",&a);   //0x5A6000;
+    printf("%p\n",p+1);  //0x5A6004;
+    return 0;
+}
+// uint32_t  = 4 bytes;
+// 又是little Endian 所以 位址+4bytes
 ```
 
 ## ***給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素***
@@ -988,32 +1341,6 @@ int main() {
     int nums[20] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,20};
     int n = 0;
     function(nums,n);
-    return 0;
-}
-
-```
-
-## ***印出下列圖形***
-
-```c
-    *
-   **
-  ***
- ****
-*****
-
-#include <stdio.h>
-
-int main() {
-    for(int i=0 ;i<5; i++){
-        for(int space=0; space<4-i; space++){
-            printf(" ");
-        }
-        for(int star=0; star<=i; star++){
-            printf("*");
-        }
-        printf("\n");
-    }
     return 0;
 }
 
@@ -1107,30 +1434,6 @@ int main(){
 // 因此，为了保持 mid 在正确的范围内，我们需要加上 left 的偏移量，即 mid = left + (right - left) / 2。
 
 // 这样，mid 的计算结果将是一个介于 left 和 right 之间的值，确保每次迭代时都在正确的搜索范围内进行比较，从而正确地找到目标元素。
-```
-
-## ***給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0***
-
-```c
-int function(unsigned short num) {
-    unsigned short temp[4];
-    temp[0] = (num&0xF000) >> 12;
-    temp[1] = (num&0x0F00) >> 8;
-    temp[2] = (num&0x00F0) >> 4;
-    temp[3] = num&0x000F;
-    if((temp[0] ^ temp[1] ^ temp[2] ^ temp[3]) == 0){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
-
-int main() {
-    unsigned short num = 0xAAAA;
-    printf("ans:%d\n",function(num));
-    return 0;
-}
 ```
 
 ## ***求一個數的最高位1在第幾位***
@@ -1262,7 +1565,9 @@ rvalue：右值通常指的是一個運算式過後其狀態就不會被保留�
 int a = 5;  // a 是 lvalue,5 是 rvalue
 ```
 
-## ***印出菱形***
+## ***印出圖形***
+
+- ***印出菱形***
 
 ```c
 #include<stdio.h>
@@ -1324,17 +1629,15 @@ int main()
 }
 ```
 
-## ***印出以下***
+- ***印出倒三角形***
 
-```text
+```c
 999999999
  7777777
   55555
    333
     1
-```
 
-```c
 #include <stdio.h>
 
 int main() {
@@ -1353,32 +1656,29 @@ int main() {
 }
 ```
 
-## ***Interrupt***
+- ***印出三角形***
 
-- ***解釋 Interrupt 的處理流程***
+```c
+    *
+   **
+  ***
+ ****
+*****
 
-```text
-1. 儲存目前CPU的執行狀態
+#include <stdio.h>
 
-2. 經由 Interrupt vector 查詢對應的 ISR （Interrupt Service Routine）起始位址並跳至該處
-
-3. 執行 ISR 裡的內容
-
-4. ISR 執行完成後繼續執行被中斷打斷的原始程序
-```
-
-- ***Interrupt 有哪些***
-
-```text
-1. 外部中斷（External Interrupt）：這種中斷是由於外部事件或設備引發的。MCU可以設定外部中斷接腳，當接腳狀態發生變化時（如電位上升或下降），觸發相應的中斷。例如，按下按鈕、感應器檢測到特定事件或外部設備發送的訊號等。
-
-2. 定時器中斷（Timer Interrupt）：MCU通常具有內部的計時器/計數器模組，可以用於定時和計數操作。這種中斷是在特定時間間隔或計數達到特定值時觸發的。定時器中斷常用於進行定時任務、計時操作或產生精確的時間延遲。
-
-3. 串列通訊中斷（Serial Communication Interrupt）：MCU通常支援不同的串列通訊協議，如UART（Universal Asynchronous Receiver-Transmitter）或SPI（Serial Peripheral Interface）。這種中斷是在接收到完整的串列數據、發送數據完成或發生通訊錯誤時觸發的。
-
-4. ADC中斷（Analog-to-Digital Converter Interrupt）：MCU通常具有ADC模組，用於將類比信號轉換為數位值。這種中斷是在ADC完成轉換並提供新的數位值時觸發的。它可以用於即時監測類比信號的變化，例如溫度、光照等。
-
-5. 內部中斷（Internal Interrupt）：這種中斷是由MCU內部事件觸發的。例如，存儲器錯誤、數學錯誤或其他不正常狀態等。內部中斷可以用於處理系統錯誤或異常情況。
+int main() {
+    for(int i=0 ;i<5; i++){
+        for(int space=0; space<4-i; space++){
+            printf(" ");
+        }
+        for(int star=0; star<=i; star++){
+            printf("*");
+        }
+        printf("\n");
+    }
+    return 0;
+}
 ```
 
 ## ***機智問答***
@@ -1438,66 +1738,6 @@ Ans：
 7個 (1,2,4,8,16,32,64)
 ```
 
-- ***請依照以下題目填寫答案***
-
-```text
-假設32位元系統，Little-Endian
-
-uint32_t a =0x12345678;
-uint8_t *p;
-p =(uint8_t*)&a;
-*p = ?
-```
-
-```c
-#include <stdio.h>
-#include <stdint.h>
-
-int main() {
-    uint32_t a =0x12345678;
-    uint8_t *p;
-    p =(uint8_t*)&a;    //8bit = 0x78(little endian)
-    
-    printf("%x",*p);
-    return 0;
-}
-```
-
-```text
-假設32位元系統，Little-Endian
-
-uint32_t a =0x12345678;
-uint32_t *p;
-a_address =0x5A6000;
-p = &a;
-問p+1 = ?
-```
-
-```c
-
-// uint32_t  = 4 bytes;
-// 又是little Endian 所以 位址+4bytes
-
-#include <stdio.h>
-#include <stdint.h>
-
-int main() {
-    uint32_t a =0x12345678;
-    uint32_t *p;
-    p = &a;
-    printf("%p\n",&a);   //0x5A6000;
-    printf("%p\n",p+1);  //0x5A6004;
-    return 0;
-}
-```
-
-- ***if(b() && a()) 這樣的寫法會有啥問題?***
-
-```text
-如果 A() 的 function 會影響到 b() 的結果可能就會影響最後程式的結果，
-所以需要注意程式邏輯跟條件的順序
-```
-
 - ***有1支手電筒和5個人，這5個人要過橋，過橋單趟每個人分別需要花費1、3、5、11、13分鐘。橋一次最多只能有兩個人在上面，而且每次過橋都一定要拿著手電筒過去，請問最少花費幾分鐘所有人可以過完橋?***
 
 ```text
@@ -1508,7 +1748,14 @@ int main() {
 總共花費29分鐘
 ```
 
-- ***strcpy***
+## ***if(b() && a()) 這樣的寫法會有啥問題?***
+
+```text
+如果 A() 的 function 會影響到 b() 的結果可能就會影響最後程式的結果，
+所以需要注意程式邏輯跟條件的順序
+```
+
+## ***實作strcpy***
 
 ```c
 #include <stdio.h>
@@ -1532,106 +1779,7 @@ int main()
 }
 ```
 
-- ***判斷閏年***
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
-{
-    int year;
-    printf("請輸入西元年 : ");
-    scanf("%d",&year);
-    if((year%4) == 0 && (year%100) != 0 || (year%400) == 0)
-    {
-        printf("%d是閏年\n",year);
-    }
-    else
-    {
-        printf("%d是平年\n",year);
-    } 
-    return 0;
-}
-```
-
-- ***sizeof大小***
-
-```c
-#include <stdio.h>
-
-int main() {
-    char *s = "hello"; 
-    char s1[]={'h','e','l','l','o'}; 
-    int s2[]={'h','e','l','l','o'}; 
-    printf("%d\n", sizeof(s));  //ponit 32位元為4byte / 64位元為8byte
-    printf("%d\n", sizeof(s1)); //1*5 = 5
-    printf("%d\n", sizeof(s2)); //4*5 = 20
-    return 0;
-}
-```
-
-- ***0x12345678 轉換為 0x87654321***
-
-```c
-#include <stdio.h>
-
-unsigned int swapEndian(unsigned int value) {
-    unsigned int result = 0;
-    result |= (value & 0x000000FF) << 24;  
-    result |= (value & 0x0000FF00) << 8;   
-    result |= (value & 0x00FF0000) >> 8;   
-    result |= (value & 0xFF000000) >> 24;  
-    return result;
-}
-
-int main() {
-    unsigned int data = 0x12345678;
-    printf("轉換前: 0x%08X\n", data);
-
-    unsigned int swapped = swapEndian(data);
-    printf("轉換後: 0x%08X\n", swapped);
-
-    return 0;
-}
-```
-
-- ***#define swap***
-
-```c
-#include <stdio.h>
-
-#define swap(a, b) {int temp = a; a = b; b = temp;}
-int main() {
-    int a=5,b=6;
-    swap(a,b);
-    printf("%d %d\n", a,b);
-
-    return 0;
-}
-```
-
-- ***odd & even change***
-
-```c
-#include <stdio.h>
-
-int odd_even_change( int a){
-    
-    return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
-}
-
-int main() {
-    int a = 0x1234;
-    int b = odd_even_change(a);
-    printf("%x\n",b);
-
-    return 0;
-}
-
-```
-
-- ***寫一個string compare的function。相同return 0，不同return 1***
+## ***寫一個string compare的function。相同return 0，不同return 1***
 
 ```c
 #include <stdio.h>
@@ -1661,179 +1809,30 @@ int main() {
 }
 ```
 
-- ***請問輸出為何***
+## ***判斷閏年***
 
 ```c
 #include <stdio.h>
-
-int main() {
-    
-    char i[ ] = "Hello";
-    char *p = 1;
-    int n = 10;
-    printf("%d %d %d", sizeof(i), sizeof(p), sizeof(n));
-
-    return 0;
-}
-// 6,8,4
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-int main(){
-    int arr[] = {10,20,30,40,50};
-    int *ptr1 = arr;
-    int *ptr2 = arr + 5;
-    printf("%d", (ptr2-ptr1));
-    printf("%d", (char*)ptr2 - (char*)ptr1);
-}
-// 5,20(5*4)
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-int main(){
-    int arr1[] = {10,20};
-    int arr2[] = {10,20};
-    int arr3[] = {10,20};
-    int *p = arr1;
-    int *q = arr2;
-    int *r = arr3;
-    ++*p;
-    *q++;
-    *++r;
-    printf("%d %d %d\n", arr1[0], arr1[1], *p);
-    printf("%d %d %d\n", arr2[0], arr2[1], *q);
-    printf("%d %d %d\n", arr3[0], arr3[1], *r);
-    // 11 20 11
-    // 10 20 20
-    // 10 20 20
-}
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-void f1(int *p, int *q){
-    p = q;
-    *p = 2;
-}
-
-void f2(int *p, int *q){
-    *p = *q;
-    *p = 2;
-}
-
-int main(){
-    int i=0, j=1;
-    f1(&i, &j);
-    printf("%d %d\n", i, j);
-
-    i=0, j=1;
-    f2(&i, &j);
-    printf("%d %d\n", i, j);
-    return 0;
-
-    // 0 2
-    // 2 1
-}
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-int main(){
-    int ref[]={8,4,0,2};
-    int *ptr;
-    int index;
-    for(index=0, ptr=ref; index<2; index++,ptr++)
-        printf("%d %d\n", ref[index], *ptr);
-    (*ptr++);
-    printf("%d %d\n", ref[index], *ptr);
-/*
- * 8 8
- * 4 4 
- * 0 2
- */    
-}
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-int main() {
-    char *str[ ][2] =
-        { "professor", "Justin" ,
-        "teacher", "Momor" ,
-        "student", "Caterpillar"};
-
-    char *str2[ ][3] =
-        { "professor", "Justin" ,
-        "teacher", "Momor" ,
-        "student", "Caterpillar"};
-
-    char str3[3][10] = {"professor", "Justin", "etc"};
-    printf("%s\n",str[1][1]); 
-    printf("%s\n",str2[1][1]);
-    printf("%c\n",str3[1][1]); 
-    // Momor
-    // student
-    // u
-}
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-int main() {
-    int cnt = 10;
-    const char *pc = "welcome";
-    while(*pc++)
-        cnt++;
-    printf("cnt:%d\n",cnt);
-    // 17
-}
-```
-
-- ***請問輸出為何***
-
-```c
-#include <stdio.h>
-
-union AA{
-    char a[2];
-    int s;
-};
+#include <stdlib.h>
 
 int main()
 {
-    union AA aa = {0};
-    aa.a[0] = 12;
-    aa.a[1] = 1;
-    printf("%x\n", aa.s);
-    printf("%zu\n", sizeof(aa));
+    int year;
+    printf("請輸入西元年 : ");
+    scanf("%d",&year);
+    if((year%4) == 0 && (year%100) != 0 || (year%400) == 0)
+    {
+        printf("%d是閏年\n",year);
+    }
+    else
+    {
+        printf("%d是平年\n",year);
+    } 
     return 0;
-    // 10C = 0x01 0C
-    // 4
 }
-
 ```
 
-- ***輸入一unsigned int n，當輸入0則輸出0，輸入1-32為輸出32，33-64輸出64，65-96輸出96 (32進位)***
+## ***輸入一unsigned int n，當輸入0則輸出0，輸入1-32為輸出32，33-64輸出64，65-96輸出96 (32進位)***
 
 ```c
 #include <stdio.h>
@@ -1852,7 +1851,7 @@ int main()
 }
 ```
 
-- ***寫出質數function***
+## ***寫出質數function***
 
 - ***一般解法***
 
