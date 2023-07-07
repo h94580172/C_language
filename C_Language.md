@@ -1858,6 +1858,42 @@ int main()
 
 - ***寫出質數function***
 
+- ***一般解法***
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+int isPrime(int num){
+    if(num == 1){
+        return 0;
+    }else{
+        for(int i = 2; i < num; i++){
+            if(num%i == 0){
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int n;
+    printf("輸入整数：");
+    scanf("%d", &n);
+
+    if (isPrime(n)) {
+        printf("%d 質數\n", n);
+    } else {
+        printf("%d 不是質數\n", n);
+    }
+
+    return 0;
+}
+```
+
+- ***進階解法***
+
 ```c
 #include <stdio.h>
 #include <stdbool.h>
@@ -1878,16 +1914,38 @@ bool isPrime(int num) {
 
 int main() {
     int n;
-    printf("请输入一个整数：");
+    printf("輸入整数：");
     scanf("%d", &n);
 
     if (isPrime(n)) {
-        printf("%d 質樹\n", n);
+        printf("%d 質數\n", n);
     } else {
         printf("%d 不是質數\n", n);
     }
 
     return 0;
 }
+// 判斷質數的方法，就是要找因數，對吧><
 
+但是第一個做法是找出所有的因數
+
+而我們不需要找所有的因數，只需要找一半的因數就行了
+
+例如: 16的因數:1, 2, 4, 8, 16
+
+i=4的時候，i*i=4*4<=16，迴圈就結束了
+
+那8耶~~~~XD
+
+因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
+
+所以....
+
+也就說...
+
+跟剛才講的一樣
+
+就是...
+
+只需要找一半的因數就行了
 ```

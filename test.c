@@ -1,27 +1,27 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-bool isPrime(int num) {
-    if (num <= 1) {
-        return false;
-    }
-
-    for (int i = 2; i * i <= num; i++) {
-        if (num % i == 0) {
-            return false;
+int isPrime(int num){
+    int i;
+    if(num==1){
+        return 0;
+    }else{
+        for(i=2;i<num;i++){
+            if(num%i==0){
+                return 0;
+            }
         }
     }
-
-    return true;
+    return 1;
 }
 
 int main() {
     int n;
-    printf("请输入一个整数：");
+    printf("輸入整数：");
     scanf("%d", &n);
 
     if (isPrime(n)) {
-        printf("%d 質樹\n", n);
+        printf("%d 質數\n", n);
     } else {
         printf("%d 不是質數\n", n);
     }
