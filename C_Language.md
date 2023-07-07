@@ -145,6 +145,22 @@ int main() {
 // a[4] = 10
 ```
 
+- ***回答以下問題的答案***
+
+```c
+#include <stdio.h>
+
+int main() {
+    int a[5] = {1, 2, 3, 4, 5};
+    int *p = (int*)(&a+1);
+    printf("%d\n", *(a+1));
+    printf("%d\n", *(p-1));
+    return 0;
+
+    // Ans : 2,5 
+}
+```
+
 - ***different between pointer and array (memory)***
 
 ```c
@@ -1482,21 +1498,396 @@ int main() {
 - ***if(b() && a()) 這樣的寫法會有啥問題?***
 
 ```text
-if( a && b ){
-    ......
+如果 A() 的 function 會影響到 b() 的結果可能就會影響最後程式的結果，
+所以需要注意程式邏輯跟條件的順序
+```
+
+- ***有1支手電筒和5個人，這5個人要過橋，過橋單趟每個人分別需要花費1、3、5、11、13分鐘。橋一次最多只能有兩個人在上面，而且每次過橋都一定要拿著手電筒過去，請問最少花費幾分鐘所有人可以過完橋?***
+
+```text
+1、3 過去，1回來 ( 3 + 1 = 4 min.)
+11、13過去，3回來 ( 13 + 3 = 16 min.)
+1、3過去，1回來 or 1、5過去，1回來 ( 3 + 1 = 4 min. or 5 + 1 = 6 min.)
+1、5過去 or 1、3過去 (5 min. or 3 min.)
+總共花費29分鐘
+```
+
+- ***strcpy***
+
+```c
+#include <stdio.h>
+
+void mystrcpy (char *s, char *t)
+{
+    while(*t != '\0')
+    {
+        *s = *t;
+        s++;
+        t++;
+    }
 }
 
-if會先判斷a再判斷b。
-只有a成立才會繼續判斷b，否則馬上跳出。
+int main()
+{
+   char src[40];
+   mystrcpy(src, "This is runoob.com");
+   printf("src = %s\n", src); // src = This is runoob.com
+   return 0;
+}
+```
 
-if( b && a ){
-    ......
+- ***判斷閏年***
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int year;
+    printf("請輸入西元年 : ");
+    scanf("%d",&year);
+    if((year%4) == 0 && (year%100) != 0 || (year%400) == 0)
+    {
+        printf("%d是閏年\n",year);
+    }
+    else
+    {
+        printf("%d是平年\n",year);
+    } 
+    return 0;
+}
+```
+
+- ***sizeof大小***
+
+```c
+#include <stdio.h>
+
+int main() {
+    char *s = "hello"; 
+    char s1[]={'h','e','l','l','o'}; 
+    int s2[]={'h','e','l','l','o'}; 
+    printf("%d\n", sizeof(s));  //ponit 32位元為4byte / 64位元為8byte
+    printf("%d\n", sizeof(s1)); //1*5 = 5
+    printf("%d\n", sizeof(s2)); //4*5 = 20
+    return 0;
+}
+```
+
+- ***0x12345678 轉換為 0x87654321***
+
+```c
+#include <stdio.h>
+
+unsigned int swapEndian(unsigned int value) {
+    unsigned int result = 0;
+    result |= (value & 0x000000FF) << 24;  
+    result |= (value & 0x0000FF00) << 8;   
+    result |= (value & 0x00FF0000) >> 8;   
+    result |= (value & 0xFF000000) >> 24;  
+    return result;
 }
 
-if會先判斷b在判斷a。
-這樣會有什麼問題呢? (不是就跟上面一樣嗎?)
-假若a是(ptr_1 != 0)，b是(ptr_1->data == ptr_2->data)。
-不先判斷a是否成立而先判斷 ptr_1 和 ptr_2 內容資料是否相等，
-若(ptr_1 != 0)不成立則會發生記憶體讀取錯誤。
+int main() {
+    unsigned int data = 0x12345678;
+    printf("轉換前: 0x%08X\n", data);
+
+    unsigned int swapped = swapEndian(data);
+    printf("轉換後: 0x%08X\n", swapped);
+
+    return 0;
+}
+```
+
+- ***#define swap***
+
+```c
+#include <stdio.h>
+
+#define swap(a, b) {int temp = a; a = b; b = temp;}
+int main() {
+    int a=5,b=6;
+    swap(a,b);
+    printf("%d %d\n", a,b);
+
+    return 0;
+}
+```
+
+- ***odd & even change***
+
+```c
+#include <stdio.h>
+
+int odd_even_change( int a){
+	
+	return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
+}
+
+int main() {
+    int a = 0x1234;
+    int b = odd_even_change(a);
+    printf("%x\n",b);
+
+    return 0;
+}
+
+```
+
+- ***寫一個string compare的function。相同return 0，不同return 1***
+
+```c
+#include <stdio.h>
+
+int string_compare(char *a, char *b){
+
+    while(*a != '\0' && *b != '\0'){
+        if(*a != *b){
+            return 0;
+        }
+        else{
+            a++;
+            b++;
+        }
+    }
+    if(*a != *b)
+        return 0;
+    else
+        return 1;
+}
+
+int main() {
+    
+    printf("%x\n",string_compare("asd","asd4"));
+
+    return 0;
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    
+    char i[ ] = "Hello";
+    char *p = 1;
+    int n = 10;
+    printf("%d %d %d", sizeof(i), sizeof(p), sizeof(n));
+
+    return 0;
+}
+// 6,8,4
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int arr[] = {10,20,30,40,50};
+    int *ptr1 = arr;
+    int *ptr2 = arr + 5;
+    printf("%d", (ptr2-ptr1));
+    printf("%d", (char*)ptr2 - (char*)ptr1);
+}
+// 5,20(5*4)
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int arr1[] = {10,20};
+    int arr2[] = {10,20};
+    int arr3[] = {10,20};
+    int *p = arr1;
+    int *q = arr2;
+    int *r = arr3;
+    ++*p;
+    *q++;
+    *++r;
+    printf("%d %d %d\n", arr1[0], arr1[1], *p);
+    printf("%d %d %d\n", arr2[0], arr2[1], *q);
+    printf("%d %d %d\n", arr3[0], arr3[1], *r);
+    // 11 20 11
+    // 10 20 20
+    // 10 20 20
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+void f1(int *p, int *q){
+    p = q;
+    *p = 2;
+}
+
+void f2(int *p, int *q){
+    *p = *q;
+    *p = 2;
+}
+
+int main(){
+    int i=0, j=1;
+    f1(&i, &j);
+    printf("%d %d\n", i, j);
+
+    i=0, j=1;
+    f2(&i, &j);
+    printf("%d %d\n", i, j);
+    return 0;
+
+    // 0 2
+    // 2 1
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main(){
+    int ref[]={8,4,0,2};
+    int *ptr;
+    int index;
+    for(index=0, ptr=ref; index<2; index++,ptr++)
+        printf("%d %d\n", ref[index], *ptr);
+    (*ptr++);
+    printf("%d %d\n", ref[index], *ptr);
+/*
+ * 8 8
+ * 4 4 
+ * 0 2
+ */    
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    char *str[ ][2] =
+        { "professor", "Justin" ,
+        "teacher", "Momor" ,
+        "student", "Caterpillar"};
+
+    char *str2[ ][3] =
+        { "professor", "Justin" ,
+        "teacher", "Momor" ,
+        "student", "Caterpillar"};
+
+    char str3[3][10] = {"professor", "Justin", "etc"};
+    printf("%s\n",str[1][1]); 
+    printf("%s\n",str2[1][1]);
+    printf("%c\n",str3[1][1]); 
+    // Momor
+    // student
+    // u
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+int main() {
+    int cnt = 10;
+    const char *pc = "welcome";
+    while(*pc++)
+        cnt++;
+    printf("cnt:%d\n",cnt);
+    // 17
+}
+```
+
+- ***請問輸出為何***
+
+```c
+#include <stdio.h>
+
+union AA{
+    char a[2];
+    int s;
+};
+
+int main()
+{
+    union AA aa = {0};
+    aa.a[0] = 12;
+    aa.a[1] = 1;
+    printf("%x\n", aa.s);
+    printf("%zu\n", sizeof(aa));
+    return 0;
+    // 10C = 0x01 0C
+    // 4
+}
+
+```
+
+- ***輸入一unsigned int n，當輸入0則輸出0，輸入1-32為輸出32，33-64輸出64，65-96輸出96 (32進位)***
+
+```c
+#include <stdio.h>
+
+
+int mul_32(unsigned int x){
+    x = x + 31;
+    x = x & ~31; 
+    return x;
+}
+
+int main()
+{
+    printf("%d\n",mul_32(5));
+    return 0;
+}
+```
+
+- ***寫出質數function***
+
+```c
+#include <stdio.h>
+#include <stdbool.h>
+
+bool isPrime(int num) {
+    if (num <= 1) {
+        return false;
+    }
+
+    for (int i = 2; i * i <= num; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int n;
+    printf("请输入一个整数：");
+    scanf("%d", &n);
+
+    if (isPrime(n)) {
+        printf("%d 質樹\n", n);
+    } else {
+        printf("%d 不是質數\n", n);
+    }
+
+    return 0;
+}
 
 ```
