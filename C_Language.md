@@ -367,7 +367,6 @@ int main(void)
 3. 設備的硬體暫存器(如狀態暫存器)
 ```
 
-
 ```c
 extern const volatile unsigned int rt_clock;
 // 這是在 RTOS kernel 常見的一種宣告：rt_clock通常是指系統時鐘，它經常被時鐘中斷進行更新。所以它是volatile。
@@ -883,7 +882,6 @@ extern int globalVar; // 外部變數的宣告
 globalVar = 100; // 定義外部變數的值為100
 ```
 
-
 ## ***Reverse a string***
 
 ```c
@@ -1055,7 +1053,6 @@ int main() {
 ```
 
 - ***遞迴解法***
-
 
 ```c
 int function(int n) {
@@ -1326,7 +1323,6 @@ int main()
     return 0;
 }
 ```
-
 
 ## ***印出以下***
 
@@ -1621,8 +1617,8 @@ int main() {
 #include <stdio.h>
 
 int odd_even_change( int a){
-	
-	return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
+    
+    return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
 }
 
 int main() {
@@ -1929,5 +1925,5 @@ int main() {
 // 而我們不需要找所有的因數，只需要找一半的因數就行了
 // 例如: 16的因數:1, 2, 4, 8, 16
 // i=4的時候，i*i=4*4<=16，迴圈就結束了
-//而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
+// 而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
 ```
