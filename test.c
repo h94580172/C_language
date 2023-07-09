@@ -1,30 +1,23 @@
 #include <stdio.h>
-#include <stdbool.h>
 
-int isPrime(int num){
-    int i;
-    if(num==1){
-        return 0;
-    }else{
-        for(i=2;i<num;i++){
-            if(num%i==0){
-                return 0;
-            }
-        }
+int main()
+{
+    int a;
+    printf("input:");
+    scanf("%d",&a);
+    switch(a){
+        case 0:
+            printf("0\n");
+            break;
+        case 1:
+            printf("1\n");
+            break;
+        case 2:
+            printf("2\n");
+            break;
+        default:
+            printf("x\n");
+            break;
     }
-    return 1;
-}
-
-int main() {
-    int n;
-    printf("輸入整数：");
-    scanf("%d", &n);
-
-    if (isPrime(n)) {
-        printf("%d 質數\n", n);
-    } else {
-        printf("%d 不是質數\n", n);
-    }
-
     return 0;
 }

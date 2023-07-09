@@ -1,52 +1,34 @@
-#include <stdio.h>
-
-void quick_sort(int arr[], int left, int right)
-{
-  if (left > right)
-    return 0;
-  
-  int pivotIndex, temp;
-
-    // 以第一個元素作為基準
-    pivotIndex = left;
-
-    // 以遞增方式排序
-    while (left < right)
-    {
-      while (arr[left] <= arr[pivotIndex] && left < right)
-      {
-        left++;
-      }
-      while (arr[right] > arr[pivotIndex])
-      {
-        right--;
-      }
-
-      if (left < right)
-      {
-        // 交換元素
-        temp = arr[left];
-        arr[left] = arr[right];
-        arr[right] = temp;
-      }
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){
+    if(list1 == NULL && list2 == NULL){
+        return NULL;
     }
-
-    // 交換基準元素與 right 元素
-    temp = arr[pivotIndex];
-    arr[pivotIndex] = arr[right];
-    arr[right] = temp;
-
-    // 遞迴呼叫快速排序法函數
-    quick_sort(arr, left, right - 1);
-    quick_sort(arr, right + 1, right);
-}
-
-int main()
-{
-  int arr[] = {64, 34, 25, 12, 22, 11, 90};
-  int n = sizeof(arr) / sizeof(arr[0]);
-  quick_sort(arr, 0, n - 1);
-  for (int i = 0; i < n; i++)
-    printf("%d ", arr[i]);
-  return 0;
+    struct ListNode* l1 = list1;
+    struct ListNode* l2 = list2;
+    struct ListNode* head = malloc(sizeof(struct ListNode));
+    struct ListNode* temp = head;
+    while(l1 != NULL && l2 != NULL){
+        if(l1->val >= l2->val){
+            temp->next = l2;
+            l2 = l2->next;
+        }
+        else{
+            temp->next = l1;
+            l1 = l1->next;
+        }
+        temp = temp->next;
+    }
+    if(l1){
+        temp->next = l1;
+    }
+    if(l2){
+        temp->next = l2;
+    }
+    return head->next;
 }

@@ -37,7 +37,7 @@ void func2(){
 }
 
 int main() {
-    void (*fp[5]) ();
+    void (*fp[2]) ();
     fp[0] = func1;
     fp[1] = func2;
 
@@ -156,9 +156,8 @@ int main() {
     printf("%d\n", *(a+1));
     printf("%d\n", *(p-1));
     return 0;
-
-    // Ans : 2,5 
 }
+// Ans : 2,5 
 ```
 
 - ***請問輸出為何***
@@ -167,12 +166,11 @@ int main() {
 #include <stdio.h>
 
 int main() {
-    
     char i[ ] = "Hello";
-    char *p = 1;
+    char a = 1;
+    char *p = a;
     int n = 10;
-    printf("%d %d %d", sizeof(i), sizeof(p), sizeof(n));
-
+    printf("%d %d %d\n", sizeof(i), sizeof(p), sizeof(n));
     return 0;
 }
 // 6,8,4
@@ -211,10 +209,10 @@ int main(){
     printf("%d %d %d\n", arr1[0], arr1[1], *p);
     printf("%d %d %d\n", arr2[0], arr2[1], *q);
     printf("%d %d %d\n", arr3[0], arr3[1], *r);
-    // 11 20 11
-    // 10 20 20
-    // 10 20 20
 }
+// 11 20 11
+// 10 20 20
+// 10 20 20
 ```
 
 - ***請問輸出為何***
@@ -241,10 +239,9 @@ int main(){
     f2(&i, &j);
     printf("%d %d\n", i, j);
     return 0;
-
-    // 0 2
-    // 2 1
 }
+// 0 2
+// 2 1
 ```
 
 - ***請問輸出為何***
@@ -260,12 +257,12 @@ int main(){
         printf("%d %d\n", ref[index], *ptr);
     (*ptr++);
     printf("%d %d\n", ref[index], *ptr);
+}
 /*
  * 8 8
  * 4 4 
  * 0 2
  */    
-}
 ```
 
 - ***請問輸出為何***
@@ -288,10 +285,10 @@ int main() {
     printf("%s\n",str[1][1]); 
     printf("%s\n",str2[1][1]);
     printf("%c\n",str3[1][1]); 
-    // Momor
-    // student
-    // u
 }
+// Momor
+// student
+// u
 ```
 
 - ***請問輸出為何***
@@ -305,8 +302,8 @@ int main() {
     while(*pc++)
         cnt++;
     printf("cnt:%d\n",cnt);
-    // 17
 }
+// 17
 ```
 
 - ***different between pointer and array (memory)***
@@ -317,7 +314,7 @@ int main() {
 
 ## ***call by value, call by reference, call by address***
 
-- ***call by value : 當將一個變數作為參數傳遞給一個函式時，函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)***
+- ***call by value : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)***
 
 ```c
 
@@ -341,7 +338,7 @@ int main(void)
 // 數值沒交換是因為在 C 語言中，默認的參數傳遞是call by value，函數內部改變的參數並不能影響到函數外的變數。
 ```
 
-- ***call by reference : 當將一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址(c++才有)***
+- ***call by reference : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址(c++才有)***
 
 ```c
 #include <cstdio>
@@ -363,7 +360,7 @@ int main()
 // 在 C 語言中沒有Call by reference,故編譯時會有錯誤
 ```
 
-- ***call by address : 當將一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址***
+- ***call by address : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址***
 
 ```c
 #include <stdio.h>
@@ -629,6 +626,7 @@ interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理�
 
 polling : 它是一種定時檢查的方式，當檢查到有事件發生時才會去執行它
 ```
+
 ## ***struct***
 
 - ***struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起***
@@ -652,18 +650,19 @@ int main(void) {
 - ***struct佔幾個byte***
 
 ```c
-typedef struct MyStruct
+#include <stdio.h>
+
+typedef struct MyStruct1
 {
     char a[2];
-    int  b;
+    int b;
     double c;
     int *Pint;
     char d;
-    char*Pchar;
-};
-//ans = 1+3(對齊int)+4+8+4+1+3+4(由於(4+1+3+4)不是8的倍數故需要補4)+4=32byte
+    char* Pchar;
+} MyStruct1;
 
-typedef struct MyStruct
+typedef struct MyStruct2
 {
     char a;
     char b;
@@ -671,39 +670,48 @@ typedef struct MyStruct
     {
         int d;
     } c;
-};
-//ans = 1+1+4+2(對齊int)=8byte
+}MyStruct2;
 
-typedef struct MyStruct
+typedef struct MyStruct3
 {
     char a;
     int b;
     char c;
     char* d;
     double* e;
-    struct str2
+    struct str3
     {
         int f;
         char g;
-        struct str3
+        struct str33
         {
             char* p;
         }n;
     } m;
-};
-//ans = 1+3+4+1+3+4+4+4+1+3+4=32byte
+}MyStruct3;
 
-typedef struct MyStruct
+typedef struct MyStruct4
 {
     char a;
     char b;
-    struct str2
+    struct str4
     {
         char c;
         char d;
     };
-};
-//ans = 1+1=2byte  *並沒有申明這個結構體的變數所以str2不用計算
+}MyStruct4;
+
+int main() {
+    printf("1. %zu\n", sizeof(MyStruct1));
+    printf("2. %zu\n", sizeof(MyStruct2));
+    printf("3. %zu\n", sizeof(MyStruct3));
+    printf("4. %zu\n", sizeof(MyStruct4));
+    return 0;
+}
+//ans = 4(2+2)+4+8+8+8(1+7)+8 = 40Byte
+//ans = 4(1+1+2)+4 = 8byte
+//ans = 4(1+3)+4+8(1+7)+8+8+4+4(1+3)+8 = 48byte
+//ans = 1+1 = 2byte  *並沒有申明這個結構體的變數所以str2不用計算
 ```
 
 ## ***union***
@@ -749,9 +757,9 @@ int main()
     printf("%x\n", aa.s);
     printf("%zu\n", sizeof(aa));
     return 0;
-    // 10C = 0x01 0C
-    // 4
 }
+// 10C = 0x01 0C
+// 4
 
 ```
 
@@ -783,16 +791,15 @@ enum color2 {
 
 |Type       |64-bit |32-bit |
 |-----------|-------|-------|
-|string     |8      |4      |
 |char       |1      |1      |
-|point      |8      |4      |
 |short      |2      |2      |
 |int        |4      |4      |
 |long       |8      |4      |
 |long long  |8      |8      |
-|size_t     |8      |4      |
 |double     |8      |8      |
 |long double|16     |12     |
+|point      |8      |4      |
+|size_t     |8      |4      |
 
 - ***二維陣列大小***
 
@@ -805,7 +812,7 @@ int main()
     char str[2][10];
     printf("2:%d\n", sizeof(str));  // 結果為 20（2 * 10 * 1(char)）
     int* ptr[5][3];
-    printf("3:%d\n", sizeof(ptr));  // 結果為 60（5 * 3 * 4(int*)）
+    printf("3:%d\n", sizeof(ptr));  // 結果為 120（5 * 3 * 8(int*)）
     struct Point 
     {
         int x;
@@ -884,21 +891,28 @@ int main() {
 ```c
 #include <stdio.h>
 
-unsigned int swapEndian(unsigned int value) {
-    unsigned int result = 0;
-    result |= (value & 0x000000FF) << 24;  
-    result |= (value & 0x0000FF00) << 8;   
-    result |= (value & 0x00FF0000) >> 8;   
-    result |= (value & 0xFF000000) >> 24;  
-    return result;
+unsigned int func(int x) {
+    unsigned int n[8],sum = 0;
+    n[0] = ((x & 0x0000000F) <<28);
+    n[1] = ((x & 0x000000F0) <<20);
+    n[2] = ((x & 0x00000F00) <<12);
+    n[3] = ((x & 0x0000F000) <<4);
+    n[4] = ((x & 0x000F0000) >>4);
+    n[5] = ((x & 0x00F00000) >>12);
+    n[6] = ((x & 0x0F000000) >>20);
+    n[7] = ((x & 0xF0000000) >>28);
+    for(int i=0; i<8; i++){
+        sum += n[i];
+    }
+    return sum;
 }
 
 int main() {
     unsigned int data = 0x12345678;
-    printf("轉換前: 0x%08X\n", data);
+    printf("轉換前: 0x%x\n", data);
 
-    unsigned int swapped = swapEndian(data);
-    printf("轉換後: 0x%08X\n", swapped);
+    unsigned int swapped = func(data);
+    printf("轉換後: 0x%x\n", swapped);
 
     return 0;
 }
@@ -933,16 +947,19 @@ int main() {
 ```c
 #include <stdio.h>
 
-int odd_even_change( int a){
-    
-    return ((a & 0xAAAAAAAA) >> 1) | ((a & 0x55555555) << 1);
+int func(int x) {
+    int n[2],sum = 0;
+    n[0] = ((x & 0xAAAA) >> 1);
+    n[1] = ((x & 0x5555) << 1);
+    for(int i=0; i<2; i++){
+        sum += n[i];
+    }
+    return sum;
 }
 
 int main() {
-    int a = 0x1234;
-    int b = odd_even_change(a);
-    printf("%x\n",b);
-
+    int num = 0x1234;
+    printf("ans:%x\n",func(num));
     return 0;
 }
 ```
@@ -1006,7 +1023,7 @@ int main() {
 
 ```
 
-## ***quick sort***
+## ***quick sort(還不熟)***
 
 ```c
 #include <stdio.h>
@@ -1111,8 +1128,8 @@ int main()
     printf("i2 = %d\n",i);
     printf("j2 = %d\n",j);  
     return 0;
-    //ans : 6 5 6 6
 }
+//ans : 6 5 6 6
 ```
 
 ## ***寫個function判斷基數偶數***
@@ -1509,7 +1526,7 @@ int main(){
 }
 ```
 
-- ***進階解法***
+- ***進階解法(還不熟)***
 
 ```c
 #include <stdio.h>
@@ -1548,7 +1565,9 @@ int result = 2 * MIN(6,10);
 
 ## ***#error***
 
-- ***#error : 指令會讓預處理器產生一個錯誤消息，並停止編譯。它通常被用來在預處理時檢測錯誤或者不符合要求的條件，比如檢測程序是否被正確地編譯、是否使用了正確的編譯選項、是否定義了需要的marco等等***
+```text
+在C語言中，#error是一個預處理器指令，用於在編譯時生成錯誤訊息。當編譯器遇到#error指令時，它會立即停止編譯，並將指定的錯誤訊息輸出到編譯器的錯誤信息中。
+```
 
 ```c
 #ifndef DEBUG
@@ -1565,7 +1584,7 @@ rvalue：右值通常指的是一個運算式過後其狀態就不會被保留�
 int a = 5;  // a 是 lvalue,5 是 rvalue
 ```
 
-## ***印出圖形***
+## ***印出圖形(還不熟)***
 
 - ***印出菱形***
 
@@ -1717,18 +1736,13 @@ Ans：
 自己要喊  4
 
 因此只要先喊到4，則先喊的人必獲勝，往後原則就是喊100-8n
-
-例如 A喊4
-         B喊1次到5
-         A喊(8-1=7次)到12
-         直到A喊到92時，B不管怎樣都不會贏
 ```
 
 - ***有個商品賣30元 成本25元 客人用100元紙鈔跟商人買了商品 商人沒錢找所以拿了這張紙鈔去跟隔壁攤販換零錢找給客人後來隔壁攤販跑來說那是假鈔 所以商人又賠了100元給隔壁攤販 試問商人總共虧多少錢?***
 
 ```text
 Ans：
-70+25 = 95
+-100+5 = -95
 ```
 
 - ***用若干個砝碼組合出1～100公克，請問砝碼最少數量為幾個?***
@@ -1755,61 +1769,33 @@ Ans：
 所以需要注意程式邏輯跟條件的順序
 ```
 
-## ***實作strcpy***
+## ***寫一個string compare的function。相同return 1，不同return 0***
 
 ```c
 #include <stdio.h>
 
-void mystrcpy (char *s, char *t)
-{
-    while(*t != '\0')
-    {
-        *s = *t;
-        s++;
-        t++;
+int string_compare(char *s1, char *s2){
+    while(*s1 != '\0' && *s2 != '\0'){
+        if(*s1 != *s2){
+            return 0;
+        }
+        s1++;
+        s2++;
     }
+    return 1;
 }
 
 int main()
 {
-   char src[40];
-   mystrcpy(src, "This is runoob.com");
-   printf("src = %s\n", src); // src = This is runoob.com
-   return 0;
-}
-```
-
-## ***寫一個string compare的function。相同return 0，不同return 1***
-
-```c
-#include <stdio.h>
-
-int string_compare(char *a, char *b){
-
-    while(*a != '\0' && *b != '\0'){
-        if(*a != *b){
-            return 0;
-        }
-        else{
-            a++;
-            b++;
-        }
-    }
-    if(*a != *b)
-        return 0;
-    else
-        return 1;
-}
-
-int main() {
-    
-    printf("%x\n",string_compare("asd","asd4"));
-
+    char s1[4] = "asf";
+    char s2[4] = "asd";
+    printf("%d\n",string_compare(s1,s2));
     return 0;
 }
+
 ```
 
-## ***判斷閏年***
+## ***判斷閏年(能被4整除但不能被100整除,或是能被400整除)***
 
 ```c
 #include <stdio.h>
@@ -1837,7 +1823,6 @@ int main()
 ```c
 #include <stdio.h>
 
-
 int mul_32(unsigned int x){
     x = x + 31;
     x = x & ~31; 
@@ -1857,32 +1842,31 @@ int main()
 
 ```c
 #include <stdio.h>
-#include <stdbool.h>
 
-int isPrime(int num){
-    if(num == 1){
+int func(int num){
+    if(num == 0){
         return 0;
-    }else{
-        for(int i = 2; i < num; i++){
-            if(num%i == 0){
-                return 0;
-            }
+    }
+    for(int i=2; i<num; i++){
+        if(num%i == 0){
+            return 0;
         }
     }
     return 1;
 }
 
-int main() {
-    int n;
-    printf("輸入整数：");
-    scanf("%d", &n);
+int main()
+{
+    int input;
+    printf("input:");
+    scanf("%d",&input);
 
-    if (isPrime(n)) {
-        printf("%d 質數\n", n);
-    } else {
-        printf("%d 不是質數\n", n);
+    if(func(input)){
+        printf("yes\n");
     }
-
+    else{
+        printf("no\n");
+    }
     return 0;
 }
 ```
@@ -1891,38 +1875,136 @@ int main() {
 
 ```c
 #include <stdio.h>
-#include <stdbool.h>
 
-bool isPrime(int num) {
-    if (num <= 1) {
-        return false;
+int func(int num){
+    if(num == 0){
+        return 0;
     }
-
-    for (int i = 2; i * i <= num; i++) {
-        if (num % i == 0) {
-            return false;
+    for(int i=2; i*i<num; i++){
+        if(num%i == 0){
+            return 0;
         }
     }
-
-    return true;
+    return 1;
 }
 
-int main() {
-    int n;
-    printf("輸入整数：");
-    scanf("%d", &n);
+int main()
+{
+    int input;
+    printf("input:");
+    scanf("%d",&input);
 
-    if (isPrime(n)) {
-        printf("%d 質數\n", n);
-    } else {
-        printf("%d 不是質數\n", n);
+    if(func(input)){
+        printf("yes\n");
     }
-
+    else{
+        printf("no\n");
+    }
     return 0;
 }
 // 判斷質數的方法，就是要找因數，第一個做法是找出所有的因數
 // 而我們不需要找所有的因數，只需要找一半的因數就行了
 // 例如: 16的因數:1, 2, 4, 8, 16
-// i=4的時候，i*i=4*4<=16，迴圈就結束了
+// i=4的時候，i*i=4*4<=16，執行完迴圈就結束了
 // 而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
+```
+
+## ***buffer overflow***
+
+```text
+buffer overflow : 是一種常見的程式錯誤，指的是當程式嘗試將超過已分配緩衝區大小的數據寫入到該緩衝區時，導致數據超出緩衝區的邊界，並可能覆蓋到相鄰的內存區域。這可能導致程式行為不正確，甚至可能被利用為攻擊手段。
+
+解法 : 
+1. 使用strlen函數來獲取輸入數據的長度。strlen函數返回字串的長度（不包括結束的空字符'\0'）。
+
+2. 在複製數據到緩衝區之前，比較輸入數據的長度與緩衝區的大小。確保輸入數據的長度不超過緩衝區的大小。
+
+3. 使用安全的字串操作函數，如strncpy而不是strcpy。strncpy函數可以指定要複製的最大長度，從而避免溢出。
+```
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char buffer[10]; // 緩衝區大小為10
+    char username[10];
+
+    printf("請輸入使用者名稱：");
+    scanf("%s", username);
+
+    if (strlen(username) < sizeof(buffer)) { // 檢查輸入數據的長度
+        strncpy(buffer, username, sizeof(buffer)); // 使用strncpy複製數據
+        buffer[sizeof(buffer) - 1] = '\0'; // 確保緩衝區結尾有結束的空字符
+        printf("歡迎，%s！\n", buffer);
+    } else {
+        printf("使用者名稱太長，請重新輸入！\n");
+    }
+
+    return 0;
+}
+```
+
+- ***strcpy()、strncpy()的差異***
+
+```c
+strncpy，他比 strcpy 多了一個參數：count，用來控制最多複製幾個字元
+
+char *strcpy( char *dest, const char *src );
+char *strncpy( char *dest, const char *src, size_t count );
+```
+
+- ***實作strcpy***
+
+```c
+#include <stdio.h>
+
+char* mystrcpy(char *dest, const char *str){
+    if(dest == NULL || str == NULL){
+        return NULL;
+    }
+    while(*str != '\0'){
+        *dest = *str;
+        dest++;
+        str++;
+    }
+    *dest = '\0';
+    return dest;
+}
+
+int main()
+{
+    char dest[10];
+    mystrcpy(dest,"asdf");
+    printf("%s\n",dest);
+    return 0;
+}
+```
+
+- ***實作strncpy***
+
+```c
+#include <stdio.h>
+
+char* mystrncpy(char *dest, const char *str, int size){
+    if(dest == NULL || str == NULL){
+        return NULL;
+    }
+    while(size > 0){
+        *dest = *str;
+        dest++;
+        str++;
+        size--;
+    }
+    *dest = '\0';
+    return dest;
+}
+
+int main()
+{
+    char dest[5];
+    mystrncpy(dest,"asdfdd",sizeof(dest)-1);
+    printf("%s\n",dest);
+    return 0;
+}
 ```
