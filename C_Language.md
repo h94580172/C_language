@@ -1127,9 +1127,17 @@ int main()
     j = ++i; 
     printf("i2 = %d\n",i);
     printf("j2 = %d\n",j);  
+
+    int A=2 , AA=0;
+    int B=2 , BB=0;
+
+    AA = (A++) + (A++);
+    BB = (++B) + (B++);
+    printf("A=%d   B=%d\n",AA,BB);
+
     return 0;
 }
-//ans : 6 5 6 6
+//ans : 6 5 6 6 5 7
 ```
 
 ## ***寫個function判斷基數偶數***
