@@ -2014,3 +2014,38 @@ int main()
     return 0;
 }
 ```
+
+I2C 使用兩條雙向 open-drain Line：
+
+SDA : Serial Data Line, holds Data or address signal
+
+SCL : Serial Clock Line, holds Clock signal
+
+導通時是低電位，不導通時float，所以利用電阻(pullup resistor)將電位拉高。常用電壓為 +5 V or +3.3 V。
+
+IO 必須是 open drain (or open collector in TTL)
+
+bus 為 wired-AND configuration
+
+SDA must be stable when SCL is high, excluding Start/Stop condition
+
+![img](image.png)
+
+4.基本時序：
+I²C bus 上的邏輯訊號有幾個重要原則要記得(核心原理)：
+
+當I²C bus 上沒有任何活動時，SCL 和 SDA 都維持在 high
+SCL 為 high 時， SDA 上的資料為有效，此時 SDA 的狀態不能改變，以確保接收方可以取樣到正確的 SDA 狀態(綠色部分)
+SCL 為 low 時，SDA 的狀態可以改變(藍色部分)
+當 SCL 為 high 時，如果 SDA 變動，有兩種特殊狀況：(下圖黃色部分)
+SCL high、SDA 下降—START (開始信號)
+SCL high、SDA 上升—STOP (停止信號)
+
+
+每一個 8-bit 的資料傳輸結束後，會跟著一個 acknowledge bit。這個 acknowledge bit 固定由接收方產生，有兩種用法：
+1.當 master 是傳送方、slave 是接收方，也就是說這個傳輸是 master 寫入資料到 slave 時，這個acknowledge bit 是用來讓 slave 告訴 master「收到！了解！正確！」
+2.當 master 是接收方、slave 是傳送方，也就是說這個傳輸是 master 從 slave 讀取資料時，這個 acknowledge bit 是用來讓 master 告訴 slave「我還要接著讀，請繼續準備下一筆資料」或者是「夠了，我讀完了」。
+Acknowledge bit 的狀態定義是：
+low -0 是「好、OK、收到、請繼續」
+high -1 是「出錯了、沒有人在家、不要繼續」
+![img](image-1.png)
