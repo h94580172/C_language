@@ -2048,11 +2048,39 @@ int main()
 - 當 master 是接收方、slave 是傳送方，ack 由 master 回應
 
 1. ack 定義：
-0(low)  - OK
-1(high) - FAIL
+0(ack)  - OK
+1(nack) - FAIL
 ```
 
 ![img](image-1.png)
+
+- ***I2C寫入範例***
+
+```text
+1. 紫色(SDA)、藍色(SCL)
+2. 當 SDA 由 H->L 且 SCL 為 H，開始資料傳輸
+3. Master 寫入設備地址(0b0101010)後再寫入wirte byte(0)
+4. Slave 回應 0(ack)
+5. Master 寫入資料(0b00110000)
+6. Slave 回應 0(ack)，寫入完成
+7. SDA 由 L->H 且 SCL 為 H，結束資料傳輸
+```
+
+![img](image-6.png)
+
+- ***I2C讀取範例***
+
+```text
+1. 紫色(SDA)、藍色(SCL)
+2. 當 SDA 由 H->L 且 SCL 為 H，開始資料傳輸
+3. Master 寫入設備地址(0b0101010)後再寫入read byte(1)
+4. Slave 回應 0(ack)
+5. Slave 丟出資料(0b00110000)
+6. Master 回應 1(nack)，停止讀取data
+7. SDA 由 L->H 且 SCL 為 H，結束資料傳輸
+```
+
+![img](image-7.png)
 
 ## ***SPI Protocol***
 
