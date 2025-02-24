@@ -546,6 +546,16 @@ printf("\n %d", SQUARE(3+2)); // 但如果是以下，卻會得到 11 (3+2 * 3+2
 #define PI 3.1415926
 #define A(x) x 
 #define MIN(A,B)  ((A) <= (B) ? (A) : (B))
+
+
+// Example : 
+#include <stdio.h>
+
+#define MUX(a,b) a*b
+int main() {
+    printf("%d\n", MUX(10+5,10-5));
+    return 0;
+}
 ```
 
 - ***引入防護和條件編譯 : 防範 #include 指令重複引入的問題***
@@ -881,6 +891,25 @@ int main() {
     ans += b << 0;
     ans += (b >> 2) + 0x22;
     printf("a=%x\n",ans);   // 12346BA2
+}
+```
+
+- ***回答ans的數值2***
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("ans=%d\n",fun(456)+fun(123)+fun(789));
+}
+
+int fun(int x){
+   int count = 0 ;
+   while(x){
+      count++ ;
+      x = x & (x-1) ;
+   }
+   return count ;
 }
 ```
 
