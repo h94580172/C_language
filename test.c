@@ -1,14 +1,17 @@
 #include <stdio.h>
 
-int main() {
-    printf("ans=%d\n",fun(456)+fun(123)+fun(789));
+int c;
+
+int fib(int n){
+    c++;
+    if ((n==1)|| (n==2))
+        return 1;
+    return (fib(n-1)+fib(n-2));
 }
 
-int fun(int x){
-   int count = 0 ;
-   while(x){
-      count++ ;
-      x = x & (x-1) ;
-   }
-   return count ;
+int main(){
+    c = 0;
+    fib(5);
+    printf("%d", c);
+    return 0;
 }

@@ -1454,6 +1454,43 @@ int main() {
 }
 ```
 
+- ***費式數列變化題***
+
+```c
+#include <stdio.h>
+
+int c;
+
+int fib(int n){
+    c++;
+    if ((n==1)|| (n==2))
+        return 1;
+    return (fib(n-1)+fib(n-2));
+}
+
+int main(){
+    c = 0;
+    fib(5);
+    printf("%d", c);        //9
+    return 0;
+}
+
+
+逐步計算 fib(5)
+斐波那契數列是這樣的：  
+fib(1) = 1
+fib(2) = 1
+fib(3) = fib(2) + fib(1) = 1 + 1 = 2
+fib(4) = fib(3) + fib(2) = 2 + 1 = 3
+fib(5) = fib(4) + fib(3) = 3 + 2 = 5
+但我們的目標不是計算斐波那契數的值，而是計算 fib 函數被呼叫的次數
+（因為每次呼叫都會讓 c 增加 1）。讓我們模擬整個遞迴過程：
+fib(5)"1" -> 
+fib(4)"1" + fib(3)"1" -> 
+fib(3)"1" + fib(2)"1" + fib(2)"1" + fib(1)"1" ->
+fib(2)"1" + fib(1)"1"
+```
+
 ## ***binary search***
 
 ```c
@@ -1911,32 +1948,21 @@ int main()
 ```c
 #include <stdio.h>
 
-int func(int num){
-    if(num == 0){
-        return 0;
-    }
-    for(int i=2; i*i<num; i++){
-        if(num%i == 0){
-            return 0;
-        }
-    }
-    return 1;
+int gcd(int a, int b){
+    return a%b==0 ? b : gcd(b, a%b);
 }
 
-int main()
-{
-    int input;
-    printf("input:");
-    scanf("%d",&input);
-
-    if(func(input)){
-        printf("yes\n");
-    }
-    else{
-        printf("no\n");
+int main(){
+    int a,b;
+    while(scanf("%d%d", &a, &b)){
+        if(gcd(a,b) == 1)
+            printf("互質\n");
+        else
+            printf("不互質\n");
     }
     return 0;
 }
+
 // 判斷質數的方法，就是要找因數，第一個做法是找出所有的因數
 // 而我們不需要找所有的因數，只需要找一半的因數就行了
 // 例如: 16的因數:1, 2, 4, 8, 16
