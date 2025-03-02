@@ -182,7 +182,7 @@ int main() {
 int main() {
     char i[ ] = "Hello";
     char a = 1;
-    char *p = a;
+    char *p = &a;
     int n = 10;
     printf("%d %d %d\n", sizeof(i), sizeof(p), sizeof(n));
     return 0;
@@ -190,7 +190,7 @@ int main() {
 // 6,8,4
 ```
 
-## 請問輸出為何
+## 10. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -205,7 +205,9 @@ int main(){
 // 5,20(5*4)
 ```
 
-## 請問輸出為何
+![alt text](image-36.png)
+
+## 11. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -229,7 +231,12 @@ int main(){
 // 10 20 20
 ```
 
-## 請問輸出為何
+![alt text](image-37.png)
+![alt text](image-38.png)
+![alt text](image-39.png)
+![alt text](image-40.png)
+
+## 12. 請問輸出為何
 
 ```c
 #include <stdio.h>
