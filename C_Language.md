@@ -65,7 +65,10 @@ int (*a[10])(int);
 // 一個指向有10個整數型陣列的指標
 // 一個指向函數的指標，該函數有一個整數型參數並返回一個整數
 // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數
+
 ```
+![alt text](image-21.png)
+![alt text](image-22.png)
 
 - ***寫一個function讓變數a跟b能夠交換，不透過暫存變數***
 
@@ -403,26 +406,13 @@ int main(void)
 } 
 ```
 
-- ***static : 生命周期跟程式執行期間一樣長，而範圍 (scope) 則維持不變，即在宣告的函式之外仍無法存取此變數***
-
-```c
-#include <stdio.h>
-
-void count() 
-{ 
-    static int c = 1; 
-    printf("%d\n", c); // c = 1 c = 2...
-    c++; 
-}
-
-int main(void)
-{ 
-    for(int i = 0; i < 10; i++)
-        count(); 
-    return 0; 
-} 
-```
-
+- ***static***
+![alt text](image-26.png)
+![alt text](image-23.png)
+![alt text](image-24.png)
+![alt text](image-25.png)
+![alt text](image-27.png)
+![alt text](image-28.png)
 - ***global : 所有區域皆可使用此變數***
 
 ```c
