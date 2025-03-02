@@ -1,17 +1,15 @@
 #include <stdio.h>
 
-int c;
-
-int fib(int n){
-    c++;
-    if ((n==1)|| (n==2))
-        return 1;
-    return (fib(n-1)+fib(n-2));
+void swap(int *a, int *b){
+    *a = *a ^ *b;
+    *b = *b ^ *a;
+    *a = *a ^ *b;
 }
 
 int main(){
-    c = 0;
-    fib(5);
-    printf("%d", c);
-    return 0;
+    int a = 5;
+    int b = 10;
+    printf("a = %d,b = %d\n",a, b);
+    swap(&a,&b);
+    printf("a = %d,b = %d\n",a, b);
 }

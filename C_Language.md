@@ -2,9 +2,12 @@
 
 ---
 
-## *point*
+## 1. point解釋 : 記錄某個變數、陣列或函式的記憶體位址
 
-- ***point : 一種變數或物件，它裡面存的不是一般的數值，而是記憶體位置***
+![alt text](image-29.png)
+![alt text](image-30.png)
+
+## 2. example
 
 ```c
 #include <stdio.h>
@@ -16,22 +19,24 @@ void func(int *ptr){
 int main(){
     int num = 5;
     func(&num);
-    printf("num:%d\n",num);
+    printf("num:%d\n",num);     //ans : 6, ptr++ : num = 5
     return 0;
 }
 // ptr++：它將指標 ptr 的值增加，使其指向下一個記憶體位置。
 // (*ptr)++：使用 *ptr 解引用指標，取得指標所指向的值，然後對該值進行遞增操作 ++。
+```
 
-//-------------------------------------------------------------------------
+## 3. example
 
+```c
 #include <stdio.h>
 
 void func1(){
-    printf("a");
+    printf("a\n");
 }
 
 void func2(){
-    printf("b");
+    printf("b\n");
 }
 
 int main() {
@@ -45,7 +50,7 @@ int main() {
 }
 ```
 
-- ***解釋以下指標意義***
+## 4. 解釋以下指標意義
 
 ```c
 int a;             
@@ -67,10 +72,11 @@ int (*a[10])(int);
 // 一個有10個指標的陣列，該指標指向一個函數，該函數有一個整數型參數並返回一個整數
 
 ```
+
 ![alt text](image-21.png)
 ![alt text](image-22.png)
 
-- ***寫一個function讓變數a跟b能夠交換，不透過暫存變數***
+## 5. 寫一個function讓變數a跟b能夠交換，不透過暫存變數
 
 ```c
 #include <stdio.h>
@@ -91,7 +97,7 @@ int main() {
 }
 ```
 
-- ***回答printf的答案***
+## 6. 回答printf的答案
 
 ```c
 #include <stdio.h>
@@ -125,7 +131,10 @@ int main(void) {
 // 6. 5
 ```
 
-- ***回答陣列的答案***
+![alt text](image-32.png)
+![alt text](image-31.png)
+
+## 7. 回答陣列的答案
 
 ```c
 #include <stdio.h>
@@ -146,7 +155,7 @@ int main() {
 // a[4] = 10
 ```
 
-- ***回答以下問題的答案***
+## 8. 回答以下問題的答案
 
 ```c
 #include <stdio.h>
@@ -161,7 +170,11 @@ int main() {
 // Ans : 2,5 
 ```
 
-- ***請問輸出為何***
+![alt text](image-33.png)
+![alt text](image-34.png)
+![alt text](image-35.png)
+
+## 9. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -177,7 +190,7 @@ int main() {
 // 6,8,4
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -192,7 +205,7 @@ int main(){
 // 5,20(5*4)
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -216,7 +229,7 @@ int main(){
 // 10 20 20
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -245,7 +258,7 @@ int main(){
 // 2 1
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -266,7 +279,7 @@ int main(){
  */    
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -292,7 +305,7 @@ int main() {
 // u
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -307,15 +320,15 @@ int main() {
 // 17
 ```
 
-- ***different between pointer and array (memory)***
+## different between pointer and array (memory)
 
 ```c
 就記憶體方向來看，指標所用的記憶體位置不為連續，而陣列所配置的空間為連續。
 ```
 
-## ***call by value, call by reference, call by address***
+## call by value, call by reference, call by address
 
-- ***call by value : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)***
+## call by value : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)
 
 ```c
 
@@ -339,7 +352,7 @@ int main(void)
 // 數值沒交換是因為在 C 語言中，默認的參數傳遞是call by value，函數內部改變的參數並不能影響到函數外的變數。
 ```
 
-- ***call by reference : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址(c++才有)***
+## call by reference : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址(c++才有)
 
 ```c
 #include <cstdio>
@@ -361,7 +374,7 @@ int main()
 // 在 C 語言中沒有Call by reference,故編譯時會有錯誤
 ```
 
-- ***call by address : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址***
+## call by address : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址
 
 ```c
 #include <stdio.h>
@@ -384,9 +397,9 @@ int main(void)
 // 透過指標去傳遞位址(Call by address)，可將函數內的變數作為指向該變數的指標傳遞給函數，從而讓函數內的變數直接更改函數外的變數。
 ```
 
-## ***variable scope and lifetime***
+## variable scope and lifetime
 
-- ***local : 僅活在該函式內，存放位置在 stack 或 heap 記憶體中***
+## local : 僅活在該函式內，存放位置在 stack 或 heap 記憶體中
 
 ```c
 #include <stdio.h>
@@ -406,14 +419,16 @@ int main(void)
 } 
 ```
 
-- ***static***
+## static
+
 ![alt text](image-26.png)
 ![alt text](image-23.png)
 ![alt text](image-24.png)
 ![alt text](image-25.png)
 ![alt text](image-27.png)
 ![alt text](image-28.png)
-- ***global : 所有區域皆可使用此變數***
+
+## global : 所有區域皆可使用此變數
 
 ```c
 #include <stdio.h>
@@ -434,7 +449,7 @@ int main(void)
 } 
 ```
 
-- ***記憶體的配置***
+## 記憶體的配置
 
 ```text
 Stack : 存放函數的參數、區域變數等，由空間配置系統自行產生與回收，會稱作 stack 是由於其配置遵守 LIFO (Last-In-First-Out)
@@ -446,9 +461,9 @@ Global : 包含 BSS (未初始化的靜態變數)、data section (全域變數�
 
 ![img](https://3.bp.blogspot.com/-cwf7UwVo2_Y/WYiVjLqxBDI/AAAAAAABU6Y/INc4LASyJEsicGNfCWzdgM_xhZOBXMTUACLcBGAs/s1600/program_in_memory2.png)
 
-## ***extern***
+## extern
 
-- ***extern : 用於聲明外部變數，如果變數需要在多個文件中共享，就需要使用 extern 聲明該變數；如果變數只在當前文件中使用，可以不使用 extern 關鍵字聲明***
+## extern : 用於聲明外部變數，如果變數需要在多個文件中共享，就需要使用 extern 聲明該變數；如果變數只在當前文件中使用，可以不使用 extern 關鍵字聲明
 
 ```c
 // var.c
@@ -467,9 +482,9 @@ int main() {
 }
 ```
 
-## ***const***
+## const
 
-- ***const : 通常表示只可讀取不可寫入的變數，常用來宣告常數，特性如下***
+## const : 通常表示只可讀取不可寫入的變數，常用來宣告常數，特性如下
 
 ```c
 #include <stdio.h>
@@ -488,9 +503,9 @@ int main(void)
 }
 ```
 
-## ***volatile***
+## volatile
 
-- ***volatile : 編譯器不對 volatile 修飾的變數進行最佳化處理,而是每次都去讀取變數實際上最新的數值，應用如下***
+## volatile : 編譯器不對 volatile 修飾的變數進行最佳化處理,而是每次都去讀取變數實際上最新的數值，應用如下
 
 ```text
 1. 修飾中斷處理程式中(ISR)中可能被修改的全域變數
@@ -505,16 +520,16 @@ extern const volatile unsigned int rt_clock;
 // 這是在 RTOS kernel 常見的一種宣告：rt_clock通常是指系統時鐘，它經常被時鐘中斷進行更新。所以它是volatile。
 ```
 
-## ***inline***
+## inline
 
-- ***inline寫法 :***
+## inline寫法
 
 ```c
 inline int square(int x) 
   return x * x;
 ```
 
-- ***Macro寫法 :***
+## Macro寫法
 
 ```c
 # define SQUARE(x) ((x) * (x))
@@ -522,15 +537,16 @@ printf("\n %d", SQUARE(5)); // 若在主程式中，下述能得到 25，看起�
 printf("\n %d", SQUARE(3+2)); // 但如果是以下，卻會得到 11 (3+2 * 3+2)
 ```
 
-- ***差異 :***
+## 差異
+
   *- macro : 在前置處理器(preprocessor)階段時,直接進行文字替換*
   *- inline : 在編譯(compile)階段時,直接取代function*
 
 ![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*wCR1txNEbCz5xKyU.png)
 
-## ***#define***
+## #define
 
-- ***#define : 是巨集的一種，在前置處理器(preprocessor)執行時處理，將要替換的程式碼展開做文字替換。define 語法範例如下：***
+## #define : 是巨集的一種，在前置處理器(preprocessor)執行時處理，將要替換的程式碼展開做文字替換。define 語法範例如下
 
 ```c
 #define PI 3.1415926
@@ -548,7 +564,7 @@ int main() {
 }
 ```
 
-- ***引入防護和條件編譯 : 防範 #include 指令重複引入的問題***
+## 引入防護和條件編譯 : 防範 #include 指令重複引入的問題
 
 ```c
 #ifndef MYHEADER // 避免重複引入
@@ -557,7 +573,7 @@ int main() {
 #endif
 ```
 
-- ***#define swap***
+## #define swap
 
 ```c
 #include <stdio.h>
@@ -572,7 +588,7 @@ int main() {
 }
 ```
 
-- ***以下define與typedef的用法誰較佳***
+## 以下define與typedef的用法誰較佳
 
 ```c
 #define dPS struct s *
@@ -589,9 +605,9 @@ struct s * p4;
 //Ans ︰ typedef
 ```
 
-## ***Interrupt***
+## Interrupt
 
-- ***解釋 Interrupt 的處理流程***
+## 解釋 Interrupt 的處理流程
 
 ```text
 1. 儲存目前CPU的執行狀態
@@ -603,7 +619,7 @@ struct s * p4;
 4. ISR 執行完成後繼續執行被中斷打斷的原始程序
 ```
 
-- ***Interrupt 有哪些***
+## Interrupt 有哪些
 
 ```text
 1. 外部中斷（External Interrupt）：這種中斷是由於外部事件或設備引發的。MCU可以設定外部中斷接腳，當接腳狀態發生變化時（如電位上升或下降），觸發相應的中斷。例如，按下按鈕、感應器檢測到特定事件或外部設備發送的訊號等。
@@ -617,7 +633,7 @@ struct s * p4;
 5. 內部中斷（Internal Interrupt）：這種中斷是由MCU內部事件觸發的。例如，存儲器錯誤、數學錯誤或其他不正常狀態等。內部中斷可以用於處理系統錯誤或異常情況。
 ```
 
-- ***different between interrupt and polling***
+## different between interrupt and polling
 
 ```text
 interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理的任務，轉而去執行中斷相關程序，等到處理完畢時才會回到原本的任務上
@@ -625,9 +641,9 @@ interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理�
 polling : 它是一種定時檢查的方式，當檢查到有事件發生時才會去執行它
 ```
 
-## ***struct***
+## struct
 
-- ***struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起***
+## struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起
 
 ```c
 #include <stdio.h>
@@ -645,7 +661,7 @@ int main(void) {
 }
 ```
 
-- ***struct佔幾個byte***
+## struct佔幾個byte
 
 ```c
 #include <stdio.h>
@@ -712,9 +728,9 @@ int main() {
 //ans = 1+1 = 2byte  *並沒有申明這個結構體的變數所以str2不用計算
 ```
 
-## ***union***
+## union
 
-- ***union : 在語法結構上，union與 struct 類似，都是使用者自定義的資料結構，最大差異在於 union 結構中的各變數是共用記憶體位置，並且在任何時候，只有一個變數的值是有效的，這取決於最後一次賦值的變數***
+## union : 在語法結構上，union與 struct 類似，都是使用者自定義的資料結構，最大差異在於 union 結構中的各變數是共用記憶體位置，並且在任何時候，只有一個變數的值是有效的，這取決於最後一次賦值的變數
 
 ```c
 union myUnion {
@@ -737,7 +753,7 @@ int main() {
 }
 ```
 
-- ***請問輸出為何***
+## 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -761,9 +777,9 @@ int main()
 
 ```
 
-## ***enum***
+## enum
 
-- ***enum : 是一種常數定義方式，可以提升可讀性，enum 裡的識別字會以 int 的型態，從指定的值開始遞增排列 (預設為 0)***
+## enum : 是一種常數定義方式，可以提升可讀性，enum 裡的識別字會以 int 的型態，從指定的值開始遞增排列 (預設為 0)
 
 ```c
 enum color1 {
@@ -783,9 +799,9 @@ enum color2 {
 //red = 10, green = 11, blue = 20, yellow = 21
 ```
 
-## ***sizeof***
+## sizeof
 
-- ***sizeof : 各型別大小***
+## sizeof : 各型別大小
 
 |Type       |64-bit |32-bit |
 |-----------|-------|-------|
@@ -799,7 +815,7 @@ enum color2 {
 |point      |8      |4      |
 |size_t     |8      |4      |
 
-- ***二維陣列大小***
+## 二維陣列大小
 
 ```c
 #include <stdio.h>
@@ -822,7 +838,7 @@ int main()
 }
 ```
 
-- ***各sizeof大小***
+## 各sizeof大小
 
 ```c
 #include <stdio.h>
@@ -838,37 +854,37 @@ int main() {
 }
 ```
 
-## ***bit operation***
+## bit operation
 
-- ***setting a bit***
+## setting a bit
 
 ```c
 int set_bit(int x, int n)
     return x | (1 << n);
 ```
 
-- ***clearing a bit***
+## clearing a bit
 
 ```c
 int clear_bit(int x, int n)
     return x & ~(1 << n);
 ```
 
-- ***fliping a bit***
+## fliping a bit
 
 ```c
 int flip_bit(int x, int n)
     return x ^ (1 << n);
 ```
 
-- ***checking a bit***
+## checking a bit
 
 ```c
 int check_bit(int x, int n)
     return (x >> n) & 1;
 ```
 
-- ***回答ans的數值***
+## 回答ans的數值
 
 ```c
 #include <stdio.h>
@@ -884,7 +900,7 @@ int main() {
 }
 ```
 
-- ***回答ans的數值2***
+## 回答ans的數值2
 
 ```c
 #include <stdio.h>
@@ -903,7 +919,7 @@ int fun(int x){
 }
 ```
 
-- ***0x12345678 轉換為 0x87654321***
+## 0x12345678 轉換為 0x87654321
 
 ```c
 #include <stdio.h>
@@ -935,7 +951,7 @@ int main() {
 }
 ```
 
-## ***給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0***
+## 給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0
 
 ```c
 int function(unsigned short num) {
@@ -959,7 +975,7 @@ int main() {
 }
 ```
 
-- ***odd & even change***
+## odd & even change
 
 ```c
 #include <stdio.h>
@@ -981,9 +997,9 @@ int main() {
 }
 ```
 
-## ***bubbleSort***
+## bubbleSort
 
-- ***bubbleSort版本1 :***
+## bubbleSort版本1
 
 ```c
 #include <stdio.h>
@@ -1011,7 +1027,7 @@ int main()
 }
 ```
 
-- ***bubbleSort版本2 :***
+## bubbleSort版本2
 
 ```c
 #include <stdio.h>
@@ -1040,7 +1056,7 @@ int main() {
 
 ```
 
-## ***quick sort(還不熟)***
+## quick sort(還不熟)
 
 ```c
 #include <stdio.h>
@@ -1087,7 +1103,7 @@ int main()
 }
 ```
 
-## ***設定一個絕對位址為0x67a9的整數型變數的值為0xaa55***
+## 設定一個絕對位址為0x67a9的整數型變數的值為0xaa55
 
 ```c
 #include <stdio.h>
@@ -1101,7 +1117,7 @@ int main(void)
 }
 ```
 
-## ***Ｎ是否為判斷2的次方***
+## Ｎ是否為判斷2的次方
 
 ```c
 int isPowerof2(int n) {
@@ -1109,7 +1125,7 @@ int isPowerof2(int n) {
 }
 ```
 
-## ***連續呼叫 func 10 次，印出的值為何？***
+## 連續呼叫 func 10 次，印出的值為何？
 
 ```c
 #include <stdio.h>
@@ -1128,7 +1144,7 @@ int main(void)
 }
 ```
 
-## ***i++ & ++i***
+## i++ & ++i
 
 ```c
 #include <stdio.h>
@@ -1157,7 +1173,7 @@ int main()
 //ans : 6 5 6 6 5 7
 ```
 
-## ***寫個function判斷基數偶數***
+## 寫個function判斷基數偶數
 
 ```c
 if (num % 2 == 0) {
@@ -1167,7 +1183,7 @@ if (num % 2 == 0) {
 }
 ```
 
-## ***寫個function計算有幾個位元是 1***
+## 寫個function計算有幾個位元是 1
 
 ```c
 int func(int x){
@@ -1180,7 +1196,7 @@ int func(int x){
 }
 ```
 
-## ***What is the output of the following program***
+## What is the output of the following program
 
 ```c
 int main() {
@@ -1193,7 +1209,7 @@ int main() {
 // 因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大於6。
 ```
 
-## ***The faster way to an integer multiply by 7***
+## The faster way to an integer multiply by 7
 
 ```c
 int main() {
@@ -1203,9 +1219,9 @@ int main() {
 }
 ```
 
-## ***declaration（宣告）和 definition（定義）的差異***
+## declaration（宣告）和 definition（定義）的差異
 
-- ***差異 : 宣告是告訴編譯器一個變數的名稱和類型，但不分配存儲空間，而定義則會分配儲存空間***
+## 差異 : 宣告是告訴編譯器一個變數的名稱和類型，但不分配存儲空間，而定義則會分配儲存空間
 
 ```c
 int num; //宣告
@@ -1213,7 +1229,7 @@ int num; //宣告
 num = 10; //定義
 ```
 
-- ***(每個變數和函數只能有一個定義，但可以有多個宣告)***
+## (每個變數和函數只能有一個定義，但可以有多個宣告)
 
 ```c
 // 檔案1.c
@@ -1224,7 +1240,7 @@ extern int globalVar; // 外部變數的宣告
 globalVar = 100; // 定義外部變數的值為100
 ```
 
-## ***Reverse a string***
+## Reverse a string
 
 ```c
 #include <stdio.h>
@@ -1250,7 +1266,7 @@ int main() {
 }
 ```
 
-## ***判斷Big-Endian or Little-Endian***
+## 判斷Big-Endian or Little-Endian
 
 ```text
 Big / Little-Endian : 他們是CPU中兩種不同位元組排序
@@ -1284,7 +1300,7 @@ int main() {
 // 需要用union的原因是因為他們共用同一個記憶體位置,而struct會因記憶體對齊可能導致錯誤
 ```
 
-- ***請依照以下題目填寫答案***
+## 請依照以下題目填寫答案
 
 ```text
 假設32位元系統，Little-Endian
@@ -1335,7 +1351,7 @@ int main() {
 // 又是little Endian 所以 位址+4bytes
 ```
 
-## ***給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素***
+## 給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素
 
 ```c
 #include <stdio.h>
@@ -1359,7 +1375,7 @@ int main() {
 }
 ```
 
-## ***給一個int a[20]已排序的陣列，請寫一個function(a, size, b) 能依照參數b(b = 0~4)別印出該區間的數字，且不包含a陣列內的元素，例如 b =0, 印出0~99 b = 1, 印出100~199***
+## 給一個int a[20]已排序的陣列，請寫一個function(a, size, b) 能依照參數b(b = 0~4)別印出該區間的數字，且不包含a陣列內的元素，例如 b =0, 印出0~99 b = 1, 印出100~199
 
 ```c
 void function(int *a, int size, int b)
@@ -1388,9 +1404,9 @@ int main() {
 
 ```
 
-## ***費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值***
+## 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值
 
-- ***一般解法***
+## 一般解法
 
 ```c
 #include <stdio.h>
@@ -1421,7 +1437,7 @@ int main() {
 }
 ```
 
-- ***遞迴解法***
+## 遞迴解法
 
 ```c
 int function(int n) {
@@ -1444,7 +1460,7 @@ int main() {
 }
 ```
 
-- ***費式數列變化題***
+## 費式數列變化題
 
 ```c
 #include <stdio.h>
@@ -1481,7 +1497,7 @@ fib(3)"1" + fib(2)"1" + fib(2)"1" + fib(1)"1" ->
 fib(2)"1" + fib(1)"1"
 ```
 
-## ***binary search***
+## binary search
 
 ```c
 #include <stdio.h>
@@ -1515,7 +1531,7 @@ int main(){
 // 这样，mid 的计算结果将是一个介于 left 和 right 之间的值，确保每次迭代时都在正确的搜索范围内进行比较，从而正确地找到目标元素。
 ```
 
-## ***求一個數的最高位1在第幾位***
+## 求一個數的最高位1在第幾位
 
 ```c
 #include <stdio.h>
@@ -1538,7 +1554,7 @@ int main() {
 }
 ```
 
-## ***最大公因數 遞迴寫法***
+## 最大公因數 遞迴寫法
 
 ```c
 #include <stdio.h>
@@ -1556,9 +1572,9 @@ int main() {
 }
 ```
 
-## ***0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現。***
+## 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現
 
-- ***一般解法***
+## 一般解法
 
 ```c
 #include <stdio.h>
@@ -1588,7 +1604,7 @@ int main(){
 }
 ```
 
-- ***進階解法(還不熟)***
+## 進階解法(還不熟)
 
 ```c
 #include <stdio.h>
@@ -1617,7 +1633,7 @@ int main()
 }
 ```
 
-## ***請問以下MIN()的結果為何?***
+## 請問以下MIN()的結果為何?
 
 ```c
 #define MIN(a,b) (a < b ? a : b)
@@ -1625,7 +1641,7 @@ int result = 2 * MIN(6,10);
 // return 10
 ```
 
-## ***#error***
+## #error
 
 ```text
 在C語言中，#error是一個預處理器指令，用於在編譯時生成錯誤訊息。當編譯器遇到#error指令時，它會立即停止編譯，並將指定的錯誤訊息輸出到編譯器的錯誤信息中。
@@ -1637,18 +1653,19 @@ int result = 2 * MIN(6,10);
 #endif
 ```
 
-## ***Explain lvalue and rvalue***
+## Explain lvalue and rvalue
 
-- ***lvalue：左值通常指的是運算式後還保留其狀態的一個物件，通常指的是所有的變數都是左值
-rvalue：右值通常指的是一個運算式過後其狀態就不會被保留了，也就是一個暫時存在的數值***
+## lvalue：左值通常指的是運算式後還保留其狀態的一個物件，通常指的是所有的變數都是左值
+
+rvalue：右值通常指的是一個運算式過後其狀態就不會被保留了，也就是一個暫時存在的數值
 
 ```c
 int a = 5;  // a 是 lvalue,5 是 rvalue
 ```
 
-## ***印出圖形(還不熟)***
+## 印出圖形(還不熟)
 
-- ***印出菱形***
+## 印出菱形
 
 ```c
 #include<stdio.h>
@@ -1710,7 +1727,7 @@ int main()
 }
 ```
 
-- ***印出倒三角形***
+## 印出倒三角形
 
 ```c
 999999999
@@ -1737,14 +1754,14 @@ int main() {
 }
 ```
 
-- ***印出三角形***
+## 印出三角形
 
 ```c
     *
    **
-  ***
- ****
-*****
+  
+ *
+**
 
 #include <stdio.h>
 
@@ -1762,9 +1779,9 @@ int main() {
 }
 ```
 
-## ***機智問答***
+## 機智問答
 
-- ***有九顆看起來一模一樣的球 但是有一顆不一樣重 也不知道它是比較輕還比較重 用一個天秤最少要量幾次可以"確保"找出這顆球?***
+## 有九顆看起來一模一樣的球 但是有一顆不一樣重 也不知道它是比較輕還比較重 用一個天秤最少要量幾次可以"確保"找出這顆球?
 
 ```text
 Ans : 3次
@@ -1787,7 +1804,7 @@ A.ooo    B.ooo   C.ooo
 如果平衡了，那麼要找的就是剩下的第3顆較輕的球
 ```
 
-- ***從1數到100 喊到100的人獲勝 每一次最少喊一個數 最多喊七個數 先攻的人喊到幾時便保證必勝?***
+## 從1數到100 喊到100的人獲勝 每一次最少喊一個數 最多喊七個數 先攻的人喊到幾時便保證必勝?
 
 ```text
 Ans：
@@ -1800,21 +1817,21 @@ Ans：
 因此只要先喊到4，則先喊的人必獲勝，往後原則就是喊100-8n
 ```
 
-- ***有個商品賣30元 成本25元 客人用100元紙鈔跟商人買了商品 商人沒錢找所以拿了這張紙鈔去跟隔壁攤販換零錢找給客人後來隔壁攤販跑來說那是假鈔 所以商人又賠了100元給隔壁攤販 試問商人總共虧多少錢?***
+## 有個商品賣30元 成本25元 客人用100元紙鈔跟商人買了商品 商人沒錢找所以拿了這張紙鈔去跟隔壁攤販換零錢找給客人後來隔壁攤販跑來說那是假鈔 所以商人又賠了100元給隔壁攤販 試問商人總共虧多少錢?
 
 ```text
 Ans：
 -100+5 = -95
 ```
 
-- ***用若干個砝碼組合出1～100公克，請問砝碼最少數量為幾個?***
+## 用若干個砝碼組合出1～100公克，請問砝碼最少數量為幾個?
 
 ```text
 Ans：
 7個 (1,2,4,8,16,32,64)
 ```
 
-- ***有1支手電筒和5個人，這5個人要過橋，過橋單趟每個人分別需要花費1、3、5、11、13分鐘。橋一次最多只能有兩個人在上面，而且每次過橋都一定要拿著手電筒過去，請問最少花費幾分鐘所有人可以過完橋?***
+## 有1支手電筒和5個人，這5個人要過橋，過橋單趟每個人分別需要花費1、3、5、11、13分鐘。橋一次最多只能有兩個人在上面，而且每次過橋都一定要拿著手電筒過去，請問最少花費幾分鐘所有人可以過完橋?
 
 ```text
 1、3 過去，1回來 ( 3 + 1 = 4 min.)
@@ -1824,14 +1841,14 @@ Ans：
 總共花費29分鐘
 ```
 
-## ***if(b() && a()) 這樣的寫法會有啥問題?***
+## if(b() && a()) 這樣的寫法會有啥問題?
 
 ```text
 如果 A() 的 function 會影響到 b() 的結果可能就會影響最後程式的結果，
 所以需要注意程式邏輯跟條件的順序
 ```
 
-## ***寫一個string compare的function。相同return 1，不同return 0***
+## 寫一個string compare的function。相同return 1，不同return 0
 
 ```c
 #include <stdio.h>
@@ -1857,7 +1874,7 @@ int main()
 
 ```
 
-## ***判斷閏年(能被4整除但不能被100整除,或是能被400整除)***
+## 判斷閏年(能被4整除但不能被100整除,或是能被400整除)
 
 ```c
 #include <stdio.h>
@@ -1880,7 +1897,7 @@ int main()
 }
 ```
 
-## ***輸入一unsigned int n，當輸入0則輸出0，輸入1-32為輸出32，33-64輸出64，65-96輸出96 (32進位)***
+## 輸入一unsigned int n，當輸入0則輸出0，輸入1-32為輸出32，33-64輸出64，65-96輸出96 (32進位)
 
 ```c
 #include <stdio.h>
@@ -1898,9 +1915,9 @@ int main()
 }
 ```
 
-## ***寫出質數function***
+## 寫出質數function
 
-- ***一般解法***
+## 一般解法
 
 ```c
 #include <stdio.h>
@@ -1933,7 +1950,7 @@ int main()
 }
 ```
 
-- ***進階解法***
+## 進階解法
 
 ```c
 #include <stdio.h>
@@ -1960,7 +1977,7 @@ int main(){
 // 而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
 ```
 
-## ***buffer overflow***
+## buffer overflow
 
 ```text
 buffer overflow : 是一種常見的程式錯誤，指的是當程式嘗試將超過已分配緩衝區大小的數據寫入到該緩衝區時，導致數據超出緩衝區的邊界，並可能覆蓋到相鄰的內存區域。這可能導致程式行為不正確，甚至可能被利用為攻擊手段。
@@ -1996,7 +2013,7 @@ int main() {
 }
 ```
 
-## ***strcpy()、strncpy()的差異***
+## strcpy()、strncpy()的差異
 
 ```c
 strncpy，他比 strcpy 多了一個參數：count，用來控制最多複製幾個字元
@@ -2005,7 +2022,7 @@ char *strcpy( char *dest, const char *src );
 char *strncpy( char *dest, const char *src, size_t count );
 ```
 
-- ***實作strcpy***
+## 實作strcpy
 
 ```c
 #include <stdio.h>
@@ -2032,7 +2049,7 @@ int main()
 }
 ```
 
-- ***實作strncpy***
+## 實作strncpy
 
 ```c
 #include <stdio.h>
@@ -2060,9 +2077,9 @@ int main()
 }
 ```
 
-## ***I2C Protocol***
+## I2C Protocol
 
-- ***介紹***
+## 介紹
 
 ```text
 1. SDA : Serial Data Line, holds Data or address signal
@@ -2072,7 +2089,7 @@ int main()
 3. IO 必須是 open drain (導通時是低電位，不導通時float，所以利用上拉電阻將電位拉高)
 ```
 
-- ***時序***
+## 時序
 
 ```text
 1. I²C bus 上無任何活動時，SCL 和 SDA 都維持在 high
@@ -2085,7 +2102,7 @@ int main()
 
 ![img](image.png)
 
-- ***ack***
+## ack
 
 ```text
 1. 每一個 Byte 的資料傳輸結束後，會跟著一個 ack bit。這個 ack bit 固定由接收方產生，有以下兩種：
@@ -2099,7 +2116,7 @@ int main()
 
 ![img](image-1.png)
 
-- ***I2C寫入範例***
+## I2C寫入範例
 
 ```text
 1. 紫色(SDA)、藍色(SCL)
@@ -2113,7 +2130,7 @@ int main()
 
 ![img](image-6.png)
 
-- ***I2C讀取範例***
+## I2C讀取範例
 
 ```text
 1. 紫色(SDA)、藍色(SCL)
@@ -2127,9 +2144,9 @@ int main()
 
 ![img](image-7.png)
 
-## ***SPI Protocol***
+## SPI Protocol
 
-- ***介紹***
+## 介紹
 
 ```text
 SPI 的通訊協定有兩個重要的參數 CPOL/CPHA，說明如下。
@@ -2143,18 +2160,18 @@ SPI 的通訊協定有兩個重要的參數 CPOL/CPHA，說明如下。
 - CPHA=1，時脈相位為 1 代表數據會在“第二個 SCK 改變凖位”時被採樣
 ```
 
-- ***CPOL = 0 / CPHA = 0***
+## CPOL = 0 / CPHA = 0
 
 ![Alt text](image-2.png)
 
-- ***CPOL = 0 / CPHA = 1***
+## CPOL = 0 / CPHA = 1
 
 ![Alt text](image-3.png)
 
-- ***CPOL = 1 / CPHA = 0***
+## CPOL = 1 / CPHA = 0
 
 ![Alt text](image-4.png)
 
-- ***CPOL = 1 / CPHA = 1***
+## CPOL = 1 / CPHA = 1
 
 ![Alt text](image-5.png)
