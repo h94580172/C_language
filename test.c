@@ -1,10 +1,16 @@
 #include <stdio.h>
 
-int main() {
-    char i[ ] = "Hello";
-    char a = 1;
-    char *p = &a;
-    int n = 10;
-    printf("%d %d %d\n", sizeof(i), sizeof(p), sizeof(n));
-    return 0;
+int swap(int *a, int *b)
+{
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main(void)
+{
+    int a = 5;
+    int b = 10;
+    swap(&a, &b);
+    printf(" a = %d b = %d", a, b);// a = 10, b = 5
 }

@@ -73,7 +73,6 @@ int (*a[10])(int);
 
 ```
 
-![alt text](image-21.png)
 ![alt text](image-22.png)
 
 ## 5. 寫一個function讓變數a跟b能夠交換，不透過暫存變數
@@ -236,7 +235,7 @@ int main(){
 ![alt text](image-39.png)
 ![alt text](image-40.png)
 
-## 12. 請問輸出為何
+## 12. 請問輸出為何?
 
 ```c
 #include <stdio.h>
@@ -265,7 +264,7 @@ int main(){
 // 2 1
 ```
 
-## 請問輸出為何
+## 13. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -286,7 +285,7 @@ int main(){
  */    
 ```
 
-## 請問輸出為何
+## 14. 請問輸出為何?
 
 ```c
 #include <stdio.h>
@@ -312,7 +311,7 @@ int main() {
 // u
 ```
 
-## 請問輸出為何
+## 15. 請問輸出為何?
 
 ```c
 #include <stdio.h>
@@ -327,17 +326,19 @@ int main() {
 // 17
 ```
 
-## different between pointer and array (memory)
+## 16. different between pointer and array (memory)
 
 ```c
 就記憶體方向來看，指標所用的記憶體位置不為連續，而陣列所配置的空間為連續。
 ```
 
-## call by value, call by reference, call by address
+## 17. call by value, call by reference, call by address解釋?
+為何call by address可以 解釋
 
-## call by value : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)
 
 ```c
+call by value : 當一個變數作為參數傳遞給一個函式時，
+函式接收的是該變數的副本，而不是原始變數本身(C 只有 call by value)
 
 #include <stdio.h>
 
@@ -359,9 +360,10 @@ int main(void)
 // 數值沒交換是因為在 C 語言中，默認的參數傳遞是call by value，函數內部改變的參數並不能影響到函數外的變數。
 ```
 
-## call by reference : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址(c++才有)
-
 ```c
+call by reference : 當一個變數作為參數傳遞給一個函式時，
+函式接收的是該變數的記憶體位址(c++才有)
+
 #include <cstdio>
 
 void swap(int &c, int &d)
@@ -381,9 +383,10 @@ int main()
 // 在 C 語言中沒有Call by reference,故編譯時會有錯誤
 ```
 
-## call by address : 當一個變數作為參數傳遞給一個函式時，函式接收的是該變數的記憶體位址
-
 ```c
+## call by address : 當一個變數作為參數傳遞給一個函式時，
+函式接收的是該變數的記憶體位址
+
 #include <stdio.h>
 
 int swap(int *a, int *b)
@@ -404,11 +407,10 @@ int main(void)
 // 透過指標去傳遞位址(Call by address)，可將函數內的變數作為指向該變數的指標傳遞給函數，從而讓函數內的變數直接更改函數外的變數。
 ```
 
-## variable scope and lifetime
-
-## local : 僅活在該函式內，存放位置在 stack 或 heap 記憶體中
+## 18. local variable : 僅活在該函式內，存放位置在 stack 或 heap 記憶體中
 
 ```c
+這範例太爛
 #include <stdio.h>
 
 void count() 
@@ -426,7 +428,7 @@ int main(void)
 } 
 ```
 
-## static
+## 19. static variable : ?
 
 ![alt text](image-26.png)
 ![alt text](image-23.png)
@@ -435,7 +437,7 @@ int main(void)
 ![alt text](image-27.png)
 ![alt text](image-28.png)
 
-## global : 所有區域皆可使用此變數
+## 20. global variable : 所有區域皆可使用此變數
 
 ```c
 #include <stdio.h>
@@ -456,7 +458,7 @@ int main(void)
 } 
 ```
 
-## 記憶體的配置
+## 21. 記憶體的配置
 
 ```text
 Stack : 存放函數的參數、區域變數等，由空間配置系統自行產生與回收，會稱作 stack 是由於其配置遵守 LIFO (Last-In-First-Out)
