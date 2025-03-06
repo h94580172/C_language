@@ -1,16 +1,13 @@
 #include <stdio.h>
 
-int swap(int *a, int *b)
-{
-    int temp = a;
-    a = b;
-    b = temp;
-}
+#define swap(a,b) {int temp = a; a = b; b = temp;}
 
-int main(void)
-{
-    int a = 5;
-    int b = 10;
-    swap(&a, &b);
-    printf(" a = %d b = %d", a, b);// a = 10, b = 5
+int main(){
+    int c = 5;
+    int d = 10;
+    printf("before c=%d,d=%d\n",c,d);
+    swap(c,d);
+    printf("after c=%d,d=%d\n",c,d);
+
+    return 0;
 }
