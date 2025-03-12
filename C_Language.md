@@ -582,38 +582,24 @@ int main(){
 }
 ```
 
-## 30. 以下define與typedef的用法誰較佳
-
-```c
-#define dPS struct s *
-dPS p1, p2;
-struct s * p1, p2;
-// p1為一個指向結構s的指標，p2為一個實際的結構s。
-
-typedef struct s * tPS;
-tPS p3, p4;
-struct s * p3;
-struct s * p4;
-// p3/4為一個指向結構s的指標
-
-//Ans ︰ typedef
-```
-
-## Interrupt
-
-## 解釋 Interrupt 的處理流程
+## 30. 解釋 Interrupt 的處理流程
 
 ```text
-1. 儲存目前CPU的執行狀態
+1. 儲存目前 CPU 的執行狀態
 
-2. 經由 Interrupt vector 查詢對應的 ISR （Interrupt Service Routine）起始位址並跳至該處
+2. CPU 查詢中斷向量表，並跳轉到對應之 ISR
 
 3. 執行 ISR 裡的內容
 
 4. ISR 執行完成後繼續執行被中斷打斷的原始程序
+
+*什麼是中斷向量表？
+中斷向量表是一個儲存在記憶體中的表格，表格的每一項（稱為「向量」）對應一個特定中斷或異常類型，
+並記錄了該中斷對應的處理程序（ISR）的記憶體地址。當 CPU 接收到中斷時，
+它會參考這個表格，找到並跳轉到正確的處理程式。
 ```
 
-## Interrupt 有哪些
+## 31. Interrupt 有哪些
 
 ```text
 1. 外部中斷（External Interrupt）：這種中斷是由於外部事件或設備引發的。MCU可以設定外部中斷接腳，當接腳狀態發生變化時（如電位上升或下降），觸發相應的中斷。例如，按下按鈕、感應器檢測到特定事件或外部設備發送的訊號等。
@@ -627,7 +613,7 @@ struct s * p4;
 5. 內部中斷（Internal Interrupt）：這種中斷是由MCU內部事件觸發的。例如，存儲器錯誤、數學錯誤或其他不正常狀態等。內部中斷可以用於處理系統錯誤或異常情況。
 ```
 
-## different between interrupt and polling
+## 32. different between interrupt and polling
 
 ```text
 interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理的任務，轉而去執行中斷相關程序，等到處理完畢時才會回到原本的任務上
@@ -635,9 +621,7 @@ interrupt : 具即時性，當中斷觸發時，處理器會暫停目前處理�
 polling : 它是一種定時檢查的方式，當檢查到有事件發生時才會去執行它
 ```
 
-## struct
-
-## struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起
+## 33. struct : 結構是一種使用者自定的型態，它可將不同的資料型態串在一起
 
 ```c
 #include <stdio.h>
