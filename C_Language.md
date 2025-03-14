@@ -651,7 +651,21 @@ int main(void) {
 }
 ```
 
-## struct佔幾個byte
+## 34. 不同類型的Byte大小
+
+```c
+char(__int8) :      1
+short(__int16) :    2
+int(__int32) :      4
+unsigned int :      4
+long :              4
+long long :         8
+double :            8
+long double	:       8
+ponit :             8
+```
+
+## 35. struct佔幾個byte
 
 ```c
 #include <stdio.h>
