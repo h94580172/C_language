@@ -653,17 +653,17 @@ int main(void) {
 
 ## 34. 不同類型的Byte大小
 
-```c
-char(__int8) :      1
-short(__int16) :    2
-int(__int32) :      4
-unsigned int :      4
-long :              4
-long long :         8
-double :            8
-long double	:       8
-ponit :             8
-```
+|Type       |64-bit |32-bit |
+|-----------|-------|-------|
+|char       |1      |1      |
+|short      |2      |2      |
+|int        |4      |4      |
+|long       |8      |4      |
+|long long  |8      |8      |
+|double     |8      |8      |
+|long double|16     |12     |
+|point      |8      |4      |
+|size_t     |8      |4      |
 
 ## 35. struct佔幾個byte
 
@@ -726,15 +726,13 @@ int main() {
     printf("4. %zu\n", sizeof(MyStruct4));
     return 0;
 }
-//ans = 4(2+2)+4+8+8+8(1+7)+8 = 40Byte
+//ans = 4(2+2對齊)+4+8+8+8(1+7對齊)+8 = 40Byte
 //ans = 4(1+1+2)+4 = 8byte
-//ans = 4(1+3)+4+8(1+7)+8+8+4+4(1+3)+8 = 48byte
+//ans = 4(1+3)+4+8(1+7後面接8所以要+7才能是8的倍數)+8+8+4+4(1+3因為+3後就是40了為8的倍數)+8 = 48byte
 //ans = 1+1 = 2byte  *並沒有申明這個結構體的變數所以str2不用計算
 ```
 
-## union
-
-## union : 在語法結構上，union與 struct 類似，都是使用者自定義的資料結構，最大差異在於 union 結構中的各變數是共用記憶體位置，並且在任何時候，只有一個變數的值是有效的，這取決於最後一次賦值的變數
+## 36. union : 在語法結構上，union與 struct 類似，都是使用者自定義的資料結構，最大差異在於 union 結構中的各變數是共用記憶體位置，並且在任何時候，只有一個變數的值是有效的，這取決於最後一次賦值的變數
 
 ```c
 union myUnion {
@@ -757,7 +755,7 @@ int main() {
 }
 ```
 
-## 請問輸出為何
+## 37. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -781,9 +779,11 @@ int main()
 
 ```
 
-## enum
+![alt text](image-42.png)
+![alt text](image-43.png)
+![alt text](image-41.png)
 
-## enum : 是一種常數定義方式，可以提升可讀性，enum 裡的識別字會以 int 的型態，從指定的值開始遞增排列 (預設為 0)
+## 38. enum : 是一種常數定義方式，可以提升可讀性，enum 裡的識別字會以 int 的型態，從指定的值開始遞增排列 (預設為 0)
 
 ```c
 enum color1 {
@@ -803,23 +803,7 @@ enum color2 {
 //red = 10, green = 11, blue = 20, yellow = 21
 ```
 
-## sizeof
-
-## sizeof : 各型別大小
-
-|Type       |64-bit |32-bit |
-|-----------|-------|-------|
-|char       |1      |1      |
-|short      |2      |2      |
-|int        |4      |4      |
-|long       |8      |4      |
-|long long  |8      |8      |
-|double     |8      |8      |
-|long double|16     |12     |
-|point      |8      |4      |
-|size_t     |8      |4      |
-
-## 二維陣列大小
+## 39. 二維陣列大小
 
 ```c
 #include <stdio.h>
@@ -842,7 +826,7 @@ int main()
 }
 ```
 
-## 各sizeof大小
+## 40. 各sizeof大小
 
 ```c
 #include <stdio.h>
@@ -858,37 +842,39 @@ int main() {
 }
 ```
 
-## bit operation
-
-## setting a bit
+## 41. setting a bit
 
 ```c
-int set_bit(int x, int n)
+int set_bit(int x, int n){
     return x | (1 << n);
+}
 ```
 
-## clearing a bit
+## 42. clearing a bit
 
 ```c
-int clear_bit(int x, int n)
+int clear_bit(int x, int n){
     return x & ~(1 << n);
+}
 ```
 
-## fliping a bit
+## 43. fliping a bit
 
 ```c
-int flip_bit(int x, int n)
+int flip_bit(int x, int n){
     return x ^ (1 << n);
+}
 ```
 
-## checking a bit
+## 44. checking a bit
 
 ```c
-int check_bit(int x, int n)
+int check_bit(int x, int n){
     return (x >> n) & 1;
+}
 ```
 
-## 回答ans的數值
+## 45. 回答ans的數值
 
 ```c
 #include <stdio.h>
@@ -904,7 +890,7 @@ int main() {
 }
 ```
 
-## 回答ans的數值2
+## 46. 回答ans的數值2
 
 ```c
 #include <stdio.h>
