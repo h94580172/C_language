@@ -653,6 +653,7 @@ int main(void) {
 
 ## 34. 不同類型的Byte大小
 
+以下都為16位元
 |Type       |64-bit |32-bit |
 |-----------|-------|-------|
 |char       |1      |1      |
@@ -909,7 +910,7 @@ int fun(int x){
 }
 ```
 
-## 0x12345678 轉換為 0x87654321
+## 47. 0x12345678 轉換為 0x87654321
 
 ```c
 #include <stdio.h>
@@ -941,7 +942,7 @@ int main() {
 }
 ```
 
-## 給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0
+## 48. 給一個unsigned short, 問換算成16進制後,四個值是否相同? 若是回傳1,否則回傳0
 
 ```c
 int function(unsigned short num) {
