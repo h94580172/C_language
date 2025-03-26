@@ -966,31 +966,7 @@ int main() {
 }
 ```
 
-## odd & even change
-
-```c
-#include <stdio.h>
-
-int func(int x) {
-    int n[2],sum = 0;
-    n[0] = ((x & 0xAAAA) >> 1);
-    n[1] = ((x & 0x5555) << 1);
-    for(int i=0; i<2; i++){
-        sum += n[i];
-    }
-    return sum;
-}
-
-int main() {
-    int num = 0x1234;
-    printf("ans:%x\n",func(num));
-    return 0;
-}
-```
-
-## bubbleSort
-
-## bubbleSort版本1
+## 49. bubbleSort版本1
 
 ```c
 #include <stdio.h>
