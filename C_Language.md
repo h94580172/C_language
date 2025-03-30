@@ -235,7 +235,7 @@ int main(){
 ![alt text](image-39.png)
 ![alt text](image-40.png)
 
-## 12. 請問輸出為何?
+## 12. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -264,6 +264,9 @@ int main(){
 // 2 1
 ```
 
+![alt text](image-45.png)
+![alt text](image-46.png)
+
 ## 13. 請問輸出為何
 
 ```c
@@ -285,7 +288,7 @@ int main(){
  */    
 ```
 
-## 14. 請問輸出為何?
+## 14. 請問輸出為何
 
 ```c
 #include <stdio.h>
@@ -310,6 +313,9 @@ int main() {
 // student
 // u
 ```
+![alt text](image-47.png)
+![alt text](image-50.png)
+![alt text](image-51.png)
 
 ## 15. 請問輸出為何?
 
