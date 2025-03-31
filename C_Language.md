@@ -1029,64 +1029,14 @@ int main() {
 
 ```
 
-## quick sort(還不熟)
-
-```c
-#include <stdio.h>
-
-void quick_sort(int data[], int left, int right) 
-{
-    if (left >= right) {
-        return 0;
-    }
-
-    int l = left;
-    int r = right;
-    int key = data[left];
-
-    while (l != r) {
-        while (data[r] > key && l < r) {
-            r--;
-        }
-        while (data[l] <= key && l < r) {
-            l++;
-        }
-        if (l < r) {
-            int temp = data[l];
-            data[l] = data[r];
-            data[r] = temp;
-        }
-    }
-
-    data[left] = data[l];
-    data[l] = key;
-
-    quick_sort(data, left, l - 1);
-    quick_sort(data, l + 1, right);
-}
-
-int main()
-{
-    int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    quick_sort(arr, 0, n-1);
-    for (int i=0; i < n; i++)
-        printf("%d ", arr[i]);
-    return 0;
-}
-```
-
 ## 設定一個絕對位址為0x67a9的整數型變數的值為0xaa55
 
 ```c
 #include <stdio.h>
 
-int main(void)
-{
+int main(){
     int *ptr = (int *)0x67a9;
-    printf("p1=%x\n", ptr); // p1=67a9
-    ptr = (int *)0xaa55;
-    printf("p2=%x\n", ptr); // p2=aa55
+    *ptr = 0xaa55;
 }
 ```
 
