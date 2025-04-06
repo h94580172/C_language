@@ -339,8 +339,6 @@ int main() {
 ```
 
 ## 17. call by value, call by reference, call by address解釋?
-為何call by address可以 解釋
-
 
 ```c
 call by value : 當一個變數作為參數傳遞給一個函式時，
@@ -1055,7 +1053,7 @@ int isPowerof2(int n) {
 
 void func(void)
 {
-    static int i = 0 ;  //若沒static，i會一直歸零
+    static int i = 0 ; 
     i++ ;
     printf("%d" , i ) ;
 }
@@ -1063,8 +1061,10 @@ void func(void)
 int main(void)
 {
     for(int i=0; i<10; i++)
-        func(); // 12345678910
+        func(); 
 }
+ //若沒static，i會一直歸零
+ // 12345678910
 ```
 
 ## i++ & ++i
