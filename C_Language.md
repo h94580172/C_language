@@ -1127,7 +1127,7 @@ int main() {
 // 因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大於6。
 ```
 
-## The faster way to an integer multiply by 7
+## The faster way to an integer multiply by 7(乘以7)
 
 ```c
 int main() {
@@ -1139,24 +1139,8 @@ int main() {
 
 ## declaration（宣告）和 definition（定義）的差異
 
-## 差異 : 宣告是告訴編譯器一個變數的名稱和類型，但不分配存儲空間，而定義則會分配儲存空間
-
-```c
-int num; //宣告
-
-num = 10; //定義
-```
-
-## (每個變數和函數只能有一個定義，但可以有多個宣告)
-
-```c
-// 檔案1.c
-int globalVar; // 宣告外部變數
-
-// 檔案2.c
-extern int globalVar; // 外部變數的宣告
-globalVar = 100; // 定義外部變數的值為100
-```
+![alt text](image-54.png)
+![alt text](image-55.png)
 
 ## Reverse a string
 
