@@ -1142,175 +1142,14 @@ int main() {
 ![alt text](image-54.png)
 ![alt text](image-55.png)
 
-## Reverse a string
+## Big / Little-Endian : 他們是CPU中兩種不同位元組排序
 
-```c
-#include <stdio.h>
-#include <string.h>
-
-void reverseString(char *str) {
-    int left = 0;
-    int right = strlen(str) - 1;
-    while (left < right) {
-        char temp = str[left];
-        str[left] = str[right];
-        str[right] = temp;
-        left++;
-        right--;
-    }
-}
-
-int main() {
-    char str[] = "ABCDE";
-    reverseString(str);
-    printf("反轉後字串: %s\n", str);
-    return 0;
-}
-```
-
-## 判斷Big-Endian or Little-Endian
-
-```text
-Big / Little-Endian : 他們是CPU中兩種不同位元組排序
-Big-Endian : 最高位的位元組會放在最低的記憶體位址上
-Little-Endian : 最高位的位元組會放在最高的記憶體位址上
-```
-
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*Tp4eqqbFuIsWnyXv.png)
-
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/0*sSII9z24WkAGpm3k.png)
-
-```c
-#include <stdio.h>
-int main() {
-    typedef union {
-        unsigned int i;
-        unsigned char c[4];
-    } EndianTest;
-    EndianTest t;
-    t.i = 0x12345678;
-    if(t.c[0] == 0x12 && t.c[1] == 0x34 && t.c[2] == 0x56 && t.c[3] == 0x78){
-        printf("Big Endian!!");
-    }else if(t.c[0] == 0x78 && t.c[1] == 0x56 && t.c[2] == 0x34 && t.c[3] == 0x12){
-        printf("Little Endian!!");
-    }else{
-        printf("Other Endian!!");
-    }
-    
-    return 0;
-}
-// 需要用union的原因是因為他們共用同一個記憶體位置,而struct會因記憶體對齊可能導致錯誤
-```
-
-## 請依照以下題目填寫答案
-
-```text
-假設32位元系統，Little-Endian
-
-uint32_t a =0x12345678;
-uint8_t *p;
-p =(uint8_t*)&a;
-*p = ?
-```
-
-```c
-#include <stdio.h>
-#include <stdint.h>
-
-int main() {
-    uint32_t a =0x12345678;
-    uint8_t *p;
-    p =(uint8_t*)&a;    //8bit = 0x78(little endian)
-    
-    printf("%x",*p);
-    return 0;
-}
-```
-
-```text
-假設32位元系統，Little-Endian
-
-uint32_t a =0x12345678;
-uint32_t *p;
-a_address =0x5A6000;
-p = &a;
-問p+1 = ?
-```
-
-```c
-#include <stdio.h>
-#include <stdint.h>
-
-int main() {
-    uint32_t a =0x12345678;
-    uint32_t *p;
-    p = &a;
-    printf("%p\n",&a);   //0x5A6000;
-    printf("%p\n",p+1);  //0x5A6004;
-    return 0;
-}
-// uint32_t  = 4 bytes;
-// 又是little Endian 所以 位址+4bytes
-```
-
-## 給一個int a[20]已排序的陣列，請寫一個function(a, size)能印出0~500的數字，且不包含a陣列內的元素
-
-```c
-#include <stdio.h>
-
-void function(int *a,int size)
-{
- for(int i=0; i<=500; i++)
- {
-    if(i == *a)
-        a++;
-    else
-        printf("%d\n",i);
-    }
-}
-
-int main() {
-    int nums[20] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,20};
-    int size = 500;
-    function(nums,size);
-    return 0;
-}
-```
-
-## 給一個int a[20]已排序的陣列，請寫一個function(a, size, b) 能依照參數b(b = 0~4)別印出該區間的數字，且不包含a陣列內的元素，例如 b =0, 印出0~99 b = 1, 印出100~199
-
-```c
-void function(int *a, int size, int b)
-{
-    int *ptr = a;
-    int i;
-
-    while (*ptr < b * 100) {
-        ptr++;
-    }
-
-    for (i = b*100; i<(b+1)*100; i++) {
-        if (*ptr == i)
-             ptr++;
-        else
-            printf("%d\n", i);
-    }
-}
-
-int main() {
-    int nums[20] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,19,20};
-    int n = 0;
-    function(nums,n);
-    return 0;
-}
-
-```
+![alt text](image-56.png)
 
 ## 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值
 
-## 一般解法
-
 ```c
+//一般解法
 #include <stdio.h>
 
 int fibonacci(int n) {
@@ -1339,9 +1178,9 @@ int main() {
 }
 ```
 
-## 遞迴解法
-
 ```c
+//遞迴解法
+
 int function(int n) {
   if(n == 0){ 
     return 0;
@@ -1565,122 +1404,6 @@ rvalue：右值通常指的是一個運算式過後其狀態就不會被保留�
 int a = 5;  // a 是 lvalue,5 是 rvalue
 ```
 
-## 印出圖形(還不熟)
-
-## 印出菱形
-
-```c
-#include<stdio.h>
-#include<stdlib.h>
-
-void diamond()
-{
-    int i,input,star,space,mid;
-    printf("input:");
-    scanf("%d",&input);
-    mid = (input/2) + 1;
-    for(i=1; i<=mid; i++){
-        for(space=i; space<mid; space++)    printf(" ");
-        for(star=1; star<=(2*i)-1; star++)  printf("*");
-        printf("\n");
-    }
-    for(i=mid-1; i>0; i--){
-        for(space=i; space<mid; space++)    printf(" ");
-        for(star=1; star<=(2*i)-1; star++)  printf("*");
-        printf("\n");
-    }
-}
-
-void empty_diamond()
-{
-    int i, input, star, space, mid;
-    printf("input");
-    scanf("%d", &input);
-    mid = (input / 2) + 1;
-    for (i = 1; i <= mid; i++) {
-        for (space = i; space < mid; space++)   
-            printf(" ");
-        for (star = 1; star <= (2 * i) - 1; star++) {
-            if (star == 1 || star == (2 * i) - 1)
-                printf("*");
-            else
-                printf(" ");
-        }
-        printf("\n");
-    }
-    for (i = mid - 1; i > 0; i--) {
-        for (space = i; space < mid; space++)   
-            printf(" ");
-        for (star = 1; star <= (2 * i) - 1; star++){
-            if (star == 1 || star == (2 * i) - 1)
-                printf("*");
-            else
-                printf(" ");
-        }
-        printf("\n");
-    }
-}
-
-int main()
-{
-    empty_diamond();
-    diamond();
-    return 0;
-}
-```
-
-## 印出倒三角形
-
-```c
-999999999
- 7777777
-  55555
-   333
-    1
-
-#include <stdio.h>
-
-int main() {
-    int x=9;
-    for(int i=0; i<5; i++){
-        for(int s=0; s<i; s++){
-            printf(" ");
-        }
-        for(int n=9-2*i; n>0; n--){
-            printf("%d",x);
-        }
-        x-=2;
-        printf("\n");
-    }
-    return 0;
-}
-```
-
-## 印出三角形
-
-```c
-    *
-   **
-  
- *
-**
-
-#include <stdio.h>
-
-int main() {
-    for(int i=0 ;i<5; i++){
-        for(int space=0; space<4-i; space++){
-            printf(" ");
-        }
-        for(int star=0; star<=i; star++){
-            printf("*");
-        }
-        printf("\n");
-    }
-    return 0;
-}
-```
-
 ## 機智問答
 
 ## 有九顆看起來一模一樣的球 但是有一顆不一樣重 也不知道它是比較輕還比較重 用一個天秤最少要量幾次可以"確保"找出這顆球?
@@ -1748,32 +1471,6 @@ Ans：
 ```text
 如果 A() 的 function 會影響到 b() 的結果可能就會影響最後程式的結果，
 所以需要注意程式邏輯跟條件的順序
-```
-
-## 寫一個string compare的function。相同return 1，不同return 0
-
-```c
-#include <stdio.h>
-
-int string_compare(char *s1, char *s2){
-    while(*s1 != '\0' && *s2 != '\0'){
-        if(*s1 != *s2){
-            return 0;
-        }
-        s1++;
-        s2++;
-    }
-    return 1;
-}
-
-int main()
-{
-    char s1[4] = "asf";
-    char s2[4] = "asd";
-    printf("%d\n",string_compare(s1,s2));
-    return 0;
-}
-
 ```
 
 ## 判斷閏年(能被4整除但不能被100整除,或是能被400整除)
@@ -1877,106 +1574,6 @@ int main(){
 // 例如: 16的因數:1, 2, 4, 8, 16
 // i=4的時候，i*i=4*4<=16，執行完迴圈就結束了
 // 而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
-```
-
-## buffer overflow
-
-```text
-buffer overflow : 是一種常見的程式錯誤，指的是當程式嘗試將超過已分配緩衝區大小的數據寫入到該緩衝區時，導致數據超出緩衝區的邊界，並可能覆蓋到相鄰的內存區域。這可能導致程式行為不正確，甚至可能被利用為攻擊手段。
-
-解法 : 
-1. 使用strlen函數來獲取輸入數據的長度。strlen函數返回字串的長度（不包括結束的空字符'\0'）。
-
-2. 在複製數據到緩衝區之前，比較輸入數據的長度與緩衝區的大小。確保輸入數據的長度不超過緩衝區的大小。
-
-3. 使用安全的字串操作函數，如strncpy而不是strcpy。strncpy函數可以指定要複製的最大長度，從而避免溢出。
-```
-
-```c
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char buffer[10]; // 緩衝區大小為10
-    char username[10];
-
-    printf("請輸入使用者名稱：");
-    scanf("%s", username);
-
-    if (strlen(username) < sizeof(buffer)) { // 檢查輸入數據的長度
-        strncpy(buffer, username, sizeof(buffer)); // 使用strncpy複製數據
-        buffer[sizeof(buffer) - 1] = '\0'; // 確保緩衝區結尾有結束的空字符
-        printf("歡迎，%s！\n", buffer);
-    } else {
-        printf("使用者名稱太長，請重新輸入！\n");
-    }
-
-    return 0;
-}
-```
-
-## strcpy()、strncpy()的差異
-
-```c
-strncpy，他比 strcpy 多了一個參數：count，用來控制最多複製幾個字元
-
-char *strcpy( char *dest, const char *src );
-char *strncpy( char *dest, const char *src, size_t count );
-```
-
-## 實作strcpy
-
-```c
-#include <stdio.h>
-
-char* mystrcpy(char *dest, const char *str){
-    if(dest == NULL || str == NULL){
-        return NULL;
-    }
-    while(*str != '\0'){
-        *dest = *str;
-        dest++;
-        str++;
-    }
-    *dest = '\0';
-    return dest;
-}
-
-int main()
-{
-    char dest[10];
-    mystrcpy(dest,"asdf");
-    printf("%s\n",dest);
-    return 0;
-}
-```
-
-## 實作strncpy
-
-```c
-#include <stdio.h>
-
-char* mystrncpy(char *dest, const char *str, int size){
-    if(dest == NULL || str == NULL){
-        return NULL;
-    }
-    while(size > 0){
-        *dest = *str;
-        dest++;
-        str++;
-        size--;
-    }
-    *dest = '\0';
-    return dest;
-}
-
-int main()
-{
-    char dest[5];
-    mystrncpy(dest,"asdfdd",sizeof(dest)-1);
-    printf("%s\n",dest);
-    return 0;
-}
 ```
 
 ## I2C Protocol
