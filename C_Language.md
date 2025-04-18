@@ -1173,7 +1173,7 @@ int main() {
     int n;
     printf("input:");
     scanf("%d",&n);
-    printf("%d\n",function(n));
+    printf("%d\n",fibonacci(n));
     return 0;
 }
 ```
