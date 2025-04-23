@@ -998,7 +998,7 @@ int main()
 }
 ```
 
-## bubbleSort版本2
+## 50. bubbleSort版本2
 
 ```c
 #include <stdio.h>
@@ -1027,7 +1027,7 @@ int main() {
 
 ```
 
-## 設定一個絕對位址為0x67a9的整數型變數的值為0xaa55
+## 51. 設定一個絕對位址為0x67a9的整數型變數的值為0xaa55
 
 ```c
 #include <stdio.h>
@@ -1038,7 +1038,7 @@ int main(){
 }
 ```
 
-## Ｎ是否為判斷2的次方
+## 52. Ｎ是否為判斷2的次方
 
 ```c
 int isPowerof2(int n) {
@@ -1046,7 +1046,7 @@ int isPowerof2(int n) {
 }
 ```
 
-## 連續呼叫 func 10 次，印出的值為何？
+## 53. 連續呼叫 func 10 次，印出的值為何？
 
 ```c
 #include <stdio.h>
@@ -1067,7 +1067,7 @@ int main(void)
  // 12345678910
 ```
 
-## i++ & ++i
+## 54. i++ & ++i
 
 ```c
 #include <stdio.h>
@@ -1091,7 +1091,7 @@ int main()
 ![alt text](image-52.png)
 ![alt text](image-53.png)
 
-## 寫個function判斷基數偶數
+## 55. 寫個function判斷基數偶數
 
 ```c
 if (num % 2 == 0) {
@@ -1101,7 +1101,7 @@ if (num % 2 == 0) {
 }
 ```
 
-## 寫個function計算有幾個位元是 1
+## 56. 寫個function計算有幾個位元是 1
 
 ```c
 int func(int x){
@@ -1114,7 +1114,7 @@ int func(int x){
 }
 ```
 
-## What is the output of the following program
+## 57. What is the output of the following program
 
 ```c
 int main() {
@@ -1127,7 +1127,7 @@ int main() {
 // 因此-20變成了一個非常大的正整數，所以該表達式計算出的結果大於6。
 ```
 
-## The faster way to an integer multiply by 7(乘以7)
+## 58. The faster way to an integer multiply by 7(乘以7)
 
 ```c
 int main() {
@@ -1137,16 +1137,16 @@ int main() {
 }
 ```
 
-## declaration（宣告）和 definition（定義）的差異
+## 59. declaration（宣告）和 definition（定義）的差異
 
 ![alt text](image-54.png)
 ![alt text](image-55.png)
 
-## Big / Little-Endian : 他們是CPU中兩種不同位元組排序
+## 60. Big / Little-Endian : 他們是CPU中兩種不同位元組排序
 
 ![alt text](image-56.png)
 
-## 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值
+## 61. 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值
 
 ```c
 //一般解法
