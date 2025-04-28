@@ -1182,12 +1182,8 @@ int main() {
 //遞迴解法
 
 int function(int n) {
-  if(n == 0){ 
-    return 0;
-  }
-  if(n == 1){ 
-    return 1;
-  }
+  if (n <= 1)
+        return n;
   
   return function(n - 1) + function(n - 2); 
 }
@@ -1201,44 +1197,7 @@ int main() {
 }
 ```
 
-## 費式數列變化題
-
-```c
-#include <stdio.h>
-
-int c;
-
-int fib(int n){
-    c++;
-    if ((n==1)|| (n==2))
-        return 1;
-    return (fib(n-1)+fib(n-2));
-}
-
-int main(){
-    c = 0;
-    fib(5);
-    printf("%d", c);        //9
-    return 0;
-}
-
-
-逐步計算 fib(5)
-斐波那契數列是這樣的：  
-fib(1) = 1
-fib(2) = 1
-fib(3) = fib(2) + fib(1) = 1 + 1 = 2
-fib(4) = fib(3) + fib(2) = 2 + 1 = 3
-fib(5) = fib(4) + fib(3) = 3 + 2 = 5
-但我們的目標不是計算斐波那契數的值，而是計算 fib 函數被呼叫的次數
-（因為每次呼叫都會讓 c 增加 1）。讓我們模擬整個遞迴過程：
-fib(5)"1" -> 
-fib(4)"1" + fib(3)"1" -> 
-fib(3)"1" + fib(2)"1" + fib(2)"1" + fib(1)"1" ->
-fib(2)"1" + fib(1)"1"
-```
-
-## binary search
+## 62. binary search
 
 ```c
 #include <stdio.h>
