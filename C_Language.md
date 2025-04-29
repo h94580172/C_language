@@ -1222,39 +1222,34 @@ int main(){
     printf("res=%d\n",result);
     return 0;
 }
-// 考虑以下情况：
-
-// 如果直接使用 mid = (right - left) / 2，那么 mid 的范围将始终是从 0 到 (right - left) / 2。
-// 但实际上，我们希望 mid 的范围是从 left 到 right。
-// 因此，为了保持 mid 在正确的范围内，我们需要加上 left 的偏移量，即 mid = left + (right - left) / 2。
-
-// 这样，mid 的计算结果将是一个介于 left 和 right 之间的值，确保每次迭代时都在正确的搜索范围内进行比较，从而正确地找到目标元素。
 ```
 
-## 求一個數的最高位1在第幾位
+## 63. 求一個數的最高位1在第幾位
 
 ```c
 #include <stdio.h>
 
 int function(int num){
+    if (num == 0) {
+        return -1; // 特殊情況：num = 0，沒有 1
+    }
+    
     int cnt = 0;
     while(num){
-        if(num&1 == 1){
-            cnt++;
-        }
+        cnt++;
         num >>= 1;
     }
     return cnt-1;
 }
 
 int main() {
-    int num = 15;
+    int num = 16;
     printf("ans:%d\n",function(num));
     return 0;
 }
 ```
 
-## 最大公因數 遞迴寫法
+## 64. 最大公因數 遞迴寫法
 
 ```c
 #include <stdio.h>
@@ -1266,74 +1261,13 @@ int gcd(int a, int b) {
 }
 
 int main() {
-    printf("GCD: %d\n", gcd(15,5));
+    printf("GCD: %d\n", gcd(25,10));
 
     return 0;
 }
 ```
 
-## 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現
-
-## 一般解法
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-#define NUM 501
-
-void func(int *nums){
-    int count = 0;
-    while(count < NUM){
-        int temp = rand() % NUM;
-        if(nums[temp] == 0){
-            nums[temp] = 1;
-            count++;
-            printf("%d ",temp);
-        }
-    }
-}
-
-int main(){
-    int nums[NUM];
-    for(int i=0; i<NUM; i++){
-        nums[i] = 0;
-    }
-    func(nums);
-    return 0;
-}
-```
-
-## 進階解法(還不熟)
-
-```c
-#include <stdio.h>
-#include <stdlib.h>
-
-void swap(int* a, int* b){
-    int temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-int main()
-{
-    int nums[501];
-    for(int i=0; i<501; i++){
-        nums[i] = i;
-    }
-    int final = 500;
-    int choose;
-    while(final >= 0){
-        choose = rand()%(final+1);
-        printf("%d ",nums[choose]);
-        swap(&nums[choose], &nums[final]);
-        final--;
-    }
-}
-```
-
-## 請問以下MIN()的結果為何?
+## 65. 請問以下MIN()的結果為何?
 
 ```c
 #define MIN(a,b) (a < b ? a : b)
@@ -1341,7 +1275,7 @@ int result = 2 * MIN(6,10);
 // return 10
 ```
 
-## #error
+## 66. #error
 
 ```text
 在C語言中，#error是一個預處理器指令，用於在編譯時生成錯誤訊息。當編譯器遇到#error指令時，它會立即停止編譯，並將指定的錯誤訊息輸出到編譯器的錯誤信息中。
@@ -1633,3 +1567,65 @@ SPI 的通訊協定有兩個重要的參數 CPOL/CPHA，說明如下。
 ## CPOL = 1 / CPHA = 1
 
 ![Alt text](image-5.png)
+
+
+## 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現
+
+## 一般解法
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+#define NUM 501
+
+void func(int *nums){
+    int count = 0;
+    while(count < NUM){
+        int temp = rand() % NUM;
+        if(nums[temp] == 0){
+            nums[temp] = 1;
+            count++;
+            printf("%d ",temp);
+        }
+    }
+}
+
+int main(){
+    int nums[NUM];
+    for(int i=0; i<NUM; i++){
+        nums[i] = 0;
+    }
+    func(nums);
+    return 0;
+}
+```
+
+## 進階解法(還不熟)
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int* a, int* b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main()
+{
+    int nums[501];
+    for(int i=0; i<501; i++){
+        nums[i] = i;
+    }
+    int final = 500;
+    int choose;
+    while(final >= 0){
+        choose = rand()%(final+1);
+        printf("%d ",nums[choose]);
+        swap(&nums[choose], &nums[final]);
+        final--;
+    }
+}
+```
