@@ -1,21 +1,13 @@
 #include <stdio.h>
 
-#define DEBUG
-
-#ifndef DEBUG
-#error "You must define the DEBUG macro"
-#endif
-
-#include <stdio.h>
-
-int gcd(int a, int b) {
-    if(b == 0)
-        return a;
-    return gcd(b,a%b);
+int mul_32(unsigned int x){
+    x = x + 31;
+    x = x & ~31; 
+    return x;
 }
 
-int main() {
-    printf("GCD: %d\n", gcd(25,10));
-
+int main()
+{
+    printf("%d\n",mul_32(95));
     return 0;
 }
