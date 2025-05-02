@@ -1404,7 +1404,7 @@ int main()
 }
 ```
 
-## 寫出質數function
+## 76. 寫出質數function
 
 ## 一般解法
 
@@ -1412,7 +1412,7 @@ int main()
 #include <stdio.h>
 
 int func(int num){
-    if(num == 0){
+    if(num <= 1){
         return 0;
     }
     for(int i=2; i<num; i++){
@@ -1434,27 +1434,6 @@ int main()
     }
     else{
         printf("no\n");
-    }
-    return 0;
-}
-```
-
-## 進階解法
-
-```c
-#include <stdio.h>
-
-int gcd(int a, int b){
-    return a%b==0 ? b : gcd(b, a%b);
-}
-
-int main(){
-    int a,b;
-    while(scanf("%d%d", &a, &b)){
-        if(gcd(a,b) == 1)
-            printf("互質\n");
-        else
-            printf("不互質\n");
     }
     return 0;
 }

@@ -1,13 +1,28 @@
 #include <stdio.h>
 
-int mul_32(unsigned int x){
-    x = x + 31;
-    x = x & ~31; 
-    return x;
+int func(int num){
+    if(num <= 1){
+        return 0;
+    }
+    for(int i=2; i<num; i++){
+        if(num%i == 0){
+            return 0;
+        }
+    }
+    return 1;
 }
 
 int main()
 {
-    printf("%d\n",mul_32(95));
+    int input;
+    printf("input:");
+    scanf("%d",&input);
+
+    if(func(input)){
+        printf("yes\n");
+    }
+    else{
+        printf("no\n");
+    }
     return 0;
 }
