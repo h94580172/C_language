@@ -1437,12 +1437,6 @@ int main()
     }
     return 0;
 }
-
-// 判斷質數的方法，就是要找因數，第一個做法是找出所有的因數
-// 而我們不需要找所有的因數，只需要找一半的因數就行了
-// 例如: 16的因數:1, 2, 4, 8, 16
-// i=4的時候，i*i=4*4<=16，執行完迴圈就結束了
-// 而8呢? 因為判斷質數，如果16能被2整除，那表示也能被8整除，因為2*8=16
 ```
 
 ## I2C Protocol
@@ -1454,7 +1448,6 @@ int main()
 
 2. SCL : Serial Clock Line, holds Clock signal
 
-3. IO 必須是 open drain (導通時是低電位，不導通時float，所以利用上拉電阻將電位拉高)
 ```
 
 ## 時序
@@ -1477,7 +1470,7 @@ int main()
 - 當 master 是傳送方、slave 是接收方，ack 由 slave 回應
 - 當 master 是接收方、slave 是傳送方，ack 由 master 回應
 
-1. ack 定義：
+2. ack 定義：
 0(ack)  - OK
 1(nack) - FAIL
 ```
@@ -1544,6 +1537,7 @@ SPI 的通訊協定有兩個重要的參數 CPOL/CPHA，說明如下。
 
 ![Alt text](image-5.png)
 
+![alt text](image-57.png)
 <!-- 
 ## 0~500個數字每次隨機 取一個數字出來，但下次在抽出時不可以出現已經抽過的數字，問你如何時實現
 
