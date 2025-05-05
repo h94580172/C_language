@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Eden/Desktop/C_language",
-      "program": "c:/Users/Eden/Desktop/C_language/build/Debug/outDebug",
+      "cwd": "c:/Users/eden.lai/Desktop/eden/C_language",
+      "program": "c:/Users/eden.lai/Desktop/eden/C_language/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
