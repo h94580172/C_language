@@ -26,30 +26,6 @@ int main(){
 // (*ptr)++：使用 *ptr 解引用指標，取得指標所指向的值，然後對該值進行遞增操作 ++。
 ```
 
-## 3. example
-
-```c
-#include <stdio.h>
-
-void func1(){
-    printf("a\n");
-}
-
-void func2(){
-    printf("b\n");
-}
-
-int main() {
-    void (*fp[2]) ();
-    fp[0] = func1;
-    fp[1] = func2;
-
-    fp[0]();
-    fp[1]();
-    return 0;
-}
-```
-
 ## 4. 解釋以下指標意義
 
 ```c

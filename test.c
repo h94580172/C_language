@@ -1,28 +1,16 @@
 #include <stdio.h>
 
-int func(int num){
-    if(num <= 1){
-        return 0;
-    }
-    for(int i=2; i<num; i++){
-        if(num%i == 0){
-            return 0;
-        }
-    }
-    return 1;
-}
-
-int main()
-{
-    int input;
-    printf("input:");
-    scanf("%d",&input);
-
-    if(func(input)){
-        printf("yes\n");
-    }
-    else{
-        printf("no\n");
-    }
-    return 0;
+int main(){
+    int arr1[] = {10,20};
+    int arr2[] = {10,20};
+    int arr3[] = {10,20};
+    int *p = arr1;
+    int *q = arr2;
+    int *r = arr3;
+    ++*p;
+    *q++;
+    *++r;
+    printf("%d %d %d\n", arr1[0], arr1[1], *p);11 20 11
+    printf("%d %d %d\n", arr2[0], arr2[1], *q);10 20 20
+    printf("%d %d %d\n", arr3[0], arr3[1], *r);11 20 11
 }
