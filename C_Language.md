@@ -390,13 +390,12 @@ int main(void)
 ## 18. local variable : 僅活在該函式內，存放位置在 stack 或 heap 記憶體中
 
 ```c
-這範例太爛
 #include <stdio.h>
 
 void count() 
 { 
     int c = 1; 
-    printf("%d\n", c); // c = 1 c = 1...
+    printf("%d\n", c); // c = 1 c = 1...，若要解決可以改成 static int
     c++; 
 }
 
