@@ -12,6 +12,7 @@
 ![alt text](image-11.png)
 ![alt text](image-9.png)
 ![alt text](image-10.png)
+Source 參考線材可支援的條件，送出 Source Capabilities 給 Sink 表示當下狀態的供電能力，Sink 會依需求從中選擇且回 Request 向 Source 要求當下需要的電壓電流，Source 收到後確認可以此條件供電就會回覆Accept，並且在狀態準備好之後再發 PS RDY。至此步驟 Explicit PD Contract 完成，在這之後雙方可再視狀況，重新協議新的 PD contract。
 ![alt text](image-12.png)
 
 ## *Power Role Swap 介紹*
@@ -42,14 +43,13 @@ DR Swap的整個流程（圖五）相對於PR Swap來說簡單的多，要留意
 當Dock偵測到電壓下降，會隨即發出一個Fast Role Swap signal，Host 接收到訊號後，便會傳送FR_Swap的訊息用以完成Source 和Sink 角色的交換，後面的溝通流程大致與PR Swap相同。除了在Role Swap訊息溝通前會有一個Fast Role Swap Signal外，FR Swap與PR Swap 最大的不同， 可以說是VBus的切換時間， 若原先Dock與Host之間的VBus電壓 >5V，那麼當Sink 發現VBus <VSafe5V時，Sink隨時都會供給VBus電源，即便此時的Sink 尚未完成FR Swap的 PD 溝通成為Source，Sink（Host）在此時為了維持與Dock之間的連接以及和Device的資料傳輸而緊急供給VSafe5V。
 ![alt text](image-17.png)
 
-## *SOP* Communication*
+## *SOP Communication*
 Source 與 Sink 之間使用 SOP 訊息，靠近 Vconn Source (負責供電給線材中 e-Marker) 訊息使用 SOP’，與較遠端 e-Marker 的訊息則用 SOP’’。
 
 並非每一條線材都有搭載 e-Marker，若該線材支援 SuperSpeed 或大於 3 安培的電流，依規定就必須有 eMarker
 ![alt text](image-18.png)
 
-## *Explicit PD Contract*
-Source/Sink 供電協議會受到中間線材條件限制，舉例來說，若 source 電流最高可供 5A，但使用的線材最多只能承受 3A 的電流，那麼 source 就不能以 5A 的條件與 Sink 協議。通常 Source 會先以 SOP’ 發送 Discover ID Request，並透過 e-Marker 回傳的 Discover ID ACK 讀取線材資訊。
-![alt text](image-19.png)
-Source 參考線材可支援的條件，送出 Source Capabilities 給 Sink 表示當下狀態的供電能力，Sink 會依需求從中選擇且回 Request 向 Source 要求當下需要的電壓電流，Source 收到後確認可以此條件供電就會回覆Accept，並且在狀態準備好之後再發 PS RDY。至此步驟 Explicit PD Contract 完成，在這之後雙方可再視狀況，重新協議新的 PD contract。
-![alt text](image-20.png)
+## *實際範例*
+![alt text](image-58.png)
+![alt text](image-59.png)
+![alt text](image-60.png)

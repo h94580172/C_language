@@ -872,7 +872,7 @@ int main() {
 #include <stdio.h>
 
 int main() {
-    printf("ans=%d\n",fun(456)+fun(123)+fun(789));
+    printf("ans=%d\n",fun(456)+fun(123)+fun(789));  //15
 }
 
 int fun(int x){
@@ -1120,6 +1120,7 @@ int main() {
 ## 61. 費式數列，寫一個函數，輸入值是位置的值"n"，要找出相對應的值
 
 ```c
+費事數列 :0、 1、 1、 2、 3、 5、 8、 13、 21、 34、 55、 89
 //一般解法
 #include <stdio.h>
 
