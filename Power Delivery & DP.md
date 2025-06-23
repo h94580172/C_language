@@ -3,6 +3,10 @@
 ---
 ## *USB Type-C Power/Data 角色介紹*
 
+![alt text](image-78.png)
+![alt text](image-75.png)
+![alt text](image-76.png)
+![alt text](image-77.png)
 ![alt text](image-11.png)
 ![alt text](image-9.png)
 ![alt text](image-10.png)
