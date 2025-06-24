@@ -6,6 +6,8 @@
 ![alt text](image-78.png)
 ![alt text](image-75.png)
 ![alt text](image-76.png)
+![alt text](image-79.png)
+![alt text](image-80.png)
 ![alt text](image-77.png)
 ![alt text](image-11.png)
 ![alt text](image-9.png)
@@ -15,17 +17,30 @@ Source 參考線材可支援的條件，送出 Source Capabilities 給 Sink 表�
 
 ## *Enter Alternate Modes介紹*
 
-1. DFP會先發出Discover Identity Request訊息來確認UFP的身份和能力，在UFP回覆的Discover Identity ACK訊息中有個Modal Operation Supported的欄位，用來表示UFP是否支援Alternate Modes。
+1. DFP會先發出Discover Identity Request訊息來確認UFP的身份和能力，在UFP回覆的Discover Identity ACK訊息中有個Modal Operation Supported的欄位，用來表示UFP是否支援Alternate Modes。![alt text](image-81.png)
 2. Discover階段可以分成兩部分，第一階段DFP會先發出Discover SVID Request訊息來確認UFP支援多少Alternate Modes。SVID包含由協會制定的SID和協會所提供各家廠商的VID，常見的SVID有0x8087 (Thunderbolt mode)、0xFF01 (Displayport mode)。確認UFP回覆的SVID後，第二階段DFP會發出Discover Modes訊息，其中包含DFP支援的SVID，目的是為了確認雙方都有支援這些Mode，UFP會以Discover Modes Ack訊息來表示有支援。
 3. DFP發出Enter Mode來告知UFP要切換的Mode，確認到UFP的Enter Modes Ack訊息後，雙方切換成溝通好的Mode。直到要結束工作模式，DFP會以Exit Mode訊息來告知UFP。
 ![alt text](image-8.png)
+![alt text](image-84.png)
+![alt text](image-85.png)
+![alt text](image-86.png)
+![alt text](image-83.png)
+![alt text](image-97.png)
+![alt text](image-82.png)
 
 ## *實際範例*
 
-![alt text](image-58.png)
-![alt text](image-59.png)
-![alt text](image-60.png)
-
+![alt text](image-87.png)
+![alt text](image-88.png)
+![alt text](image-89.png)
+![alt text](image-90.png)
+![alt text](image-91.png)
+![alt text](image-92.png)
+![alt text](image-93.png)
+![alt text](image-94.png)
+![alt text](image-95.png)
+![alt text](image-96.png)
+![alt text](image-98.png)
 
 ## *Power Role Swap 介紹*
 
